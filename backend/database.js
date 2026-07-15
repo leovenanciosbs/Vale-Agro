@@ -2,7 +2,8 @@ const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 const fs = require('fs');
 
-const databaseDir = path.join(__dirname, '../database');
+// No Vercel, usar /tmp para persistência temporária
+const databaseDir = process.env.VERCEL ? '/tmp' : path.join(__dirname, '../database');
 const dbPath = path.join(databaseDir, 'valeagro.db');
 
 if (!fs.existsSync(databaseDir)) {
