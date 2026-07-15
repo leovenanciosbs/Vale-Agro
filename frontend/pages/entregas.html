@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Entregas - VALE AGRO</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<div class="layout">
+    <aside class="sidebar">
+        <div class="logo">
+            <img src="../img/logo-vale-agro.jpg" alt="VALE AGRO">
+        </div>
+
+        <nav>
+            <a href="../index.html">Dashboard</a>
+            <a href="estoque.html">Estoque</a>
+            <a href="vendas.html">Vendas</a>
+            <a href="orcamentos.html">Orçamentos</a>
+            <a href="entregas.html" class="ativo">Entregas</a>
+            <a href="fiados.html">A Prazo</a>
+            <a href="movimentacoes.html">Movimentações</a>
+            <a href="financeiro.html">Financeiro</a>
+        </nav>
+    </aside>
+
+    <main class="conteudo pagina-entregas">
+        <div class="page-hero page-hero-entregas">
+            <div>
+                <span class="eyebrow">Logística da loja</span>
+                <h1>Controle de Entregas</h1>
+                <p>Acompanhe entregas pendentes, pagamentos a receber e histórico de finalizadas.</p>
+            </div>
+        </div>
+
+        <div class="cards cards-resumo-entregas">
+            <div class="card card-entrega-resumo pendentes">
+                <h3>Pendentes</h3>
+                <p id="resumoEntregasPendentes">0</p>
+            </div>
+
+            <div class="card card-entrega-resumo saiu-entrega">
+                <h3>Saiu para Entrega</h3>
+                <p id="resumoSaiuEntrega">0</p>
+            </div>
+
+            <div class="card card-entrega-resumo a-receber">
+                <h3>Entregues sem Pagamento</h3>
+                <p id="resumoEntregasAReceber">0</p>
+            </div>
+
+            <div class="card card-entrega-resumo finalizadas">
+                <h3>Finalizadas</h3>
+                <p id="resumoEntregasFinalizadas">0</p>
+            </div>
+
+            <div class="card card-entrega-resumo valor-receber">
+                <h3>Valor a Receber</h3>
+                <p id="resumoValorAReceber">R$ 0,00</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Filtros</h2>
+
+            <div class="form-grid">
+                <input
+                    id="buscaEntrega"
+                    placeholder="Buscar por cliente, telefone, endereço ou cidade"
+                    oninput="carregarEntregas()"
+                    autocomplete="off"
+                >
+
+                <select id="filtroStatusEntrega" onchange="carregarEntregas()">
+                    <option value="">Todos os status de entrega</option>
+                    <option value="PENDENTE">Pendente</option>
+                    <option value="SAIU_ENTREGA">Saiu para entrega</option>
+                    <option value="ENTREGUE">Entregue</option>
+                    <option value="CANCELADA">Cancelada</option>
+                </select>
+
+                <select id="filtroStatusPagamento" onchange="carregarEntregas()">
+                    <option value="">Todos os status de pagamento</option>
+                    <option value="PAGO_NA_COMPRA">Pago na compra</option>
+                    <option value="A_RECEBER_NA_ENTREGA">A receber na entrega</option>
+                    <option value="RECEBIDO_NA_ENTREGA">Recebido na entrega</option>
+                    <option value="FIADO">A Prazo</option>
+                </select>
+
+                <input id="dataInicialEntrega" type="date" onchange="carregarEntregas()">
+                <input id="dataFinalEntrega" type="date" onchange="carregarEntregas()">
+            </div>
+
+            <button onclick="limparFiltrosEntregas()">Limpar Filtros</button>
+        </div>
+
+        <div class="card">
+            <h2>Entregas em Aberto</h2>
+
+            <div class="tabela-scroll tabela-scroll-entregas">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Cliente</th>
+                            <th>Telefone</th>
+                            <th>Endereço</th>
+                            <th>Bairro/Cidade</th>
+                            <th>Entrega</th>
+                            <th>Pagamento</th>
+                            <th>Valor</th>
+                            <th>Observação</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabelaEntregasAbertas"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card card-entregas-pagamento-pendente">
+            <div class="titulo-card-linha">
+                <div>
+                    <h2>Entregues com Pagamento Pendente</h2>
+                    <p>Use esta opcao quando a entrega ja foi feita, mas o cliente pediu para deixar o valor em A Prazo.</p>
+                </div>
+            </div>
+
+            <div class="tabela-scroll tabela-scroll-entregas">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Cliente</th>
+                            <th>Telefone</th>
+                            <th>Endereco</th>
+                            <th>Bairro/Cidade</th>
+                            <th>Entrega</th>
+                            <th>Pagamento</th>
+                            <th>Valor</th>
+                            <th>Observacao</th>
+                            <th>Acoes</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabelaEntregasPagamentoPendente"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Entregas Finalizadas</h2>
+
+            <div class="tabela-scroll tabela-scroll-entregas">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Cliente</th>
+                            <th>Telefone</th>
+                            <th>Endereço</th>
+                            <th>Bairro/Cidade</th>
+                            <th>Entrega</th>
+                            <th>Pagamento</th>
+                            <th>Valor</th>
+                            <th>Observação</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabelaEntregasFinalizadas"></tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+</div>
+
+<div id="modalReceberEntrega" class="modal">
+    <div class="modal-conteudo">
+        <h2>Receber Pagamento da Entrega</h2>
+
+        <input id="entregaRecebimentoId" type="hidden">
+
+        <div class="produto-selecionado">
+            <strong>Cliente:</strong> <span id="clienteRecebimentoEntrega">-</span><br>
+            <strong>Valor:</strong> <span id="valorRecebimentoEntrega">R$ 0,00</span>
+        </div>
+
+        <div class="form-grid">
+            <select id="formaRecebimentoEntrega">
+                <option value="DINHEIRO">Dinheiro</option>
+                <option value="PIX">PIX</option>
+                <option value="CARTAO_CREDITO">Cartão Crédito</option>
+                <option value="CARTAO_DEBITO">Cartão Débito</option>
+            </select>
+
+            <input
+                id="observacaoRecebimentoEntrega"
+                placeholder="Observação do recebimento, se houver"
+            >
+        </div>
+
+        <button onclick="confirmarRecebimentoEntrega()">Confirmar Recebimento</button>
+        <button onclick="fecharModalRecebimentoEntrega()" class="btn-secondary">Cancelar</button>
+    </div>
+</div>
+
+<script src="../js/consulta-produto.js"></script>
+<script src="../js/ui-feedback.js"></script>
+<script src="../js/entregas.js"></script>
+
+</body>
+</html>

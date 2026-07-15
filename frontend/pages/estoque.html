@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Estoque - VALE AGRO</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<div class="layout">
+    <aside class="sidebar">
+        <div class="logo">
+            <img src="../img/logo-vale-agro.jpg" alt="VALE AGRO">
+        </div>
+
+        <nav>
+            <a href="../index.html">Dashboard</a>
+            <a href="estoque.html" class="ativo">Estoque</a>
+            <a href="vendas.html">Vendas</a>
+            <a href="orcamentos.html">Orçamentos</a>
+            <a href="entregas.html">Entregas</a>
+            <a href="fiados.html">A Prazo</a>
+            <a href="movimentacoes.html">Movimentações</a>
+            <a href="financeiro.html">Financeiro</a>
+        </nav>
+    </aside>
+
+    <main class="conteudo pagina-estoque">
+        <div class="cabecalho-pagina-estoque">
+            <div>
+                <span class="eyebrow">Gestao de produtos</span>
+                <h1>Controle de Estoque</h1>
+                <p>Cadastre produtos, acompanhe preços, estoque mínimo e situação dos itens da loja.</p>
+            </div>
+        </div>
+
+        <div class="cards cards-resumo-estoque">
+            <div class="card card-resumo-estoque total">
+                <h3>Total de Produtos</h3>
+                <p id="resumoTotalProdutos">0</p>
+            </div>
+
+            <div class="card card-resumo-estoque baixo">
+                <h3>Estoque Baixo</h3>
+                <p id="resumoEstoqueBaixo">0</p>
+            </div>
+
+            <div class="card card-resumo-estoque ativos">
+                <h3>Produtos Ativos</h3>
+                <p id="resumoProdutosAtivos">0</p>
+            </div>
+
+            <div class="card card-resumo-estoque valor">
+                <h3>Valor em Estoque</h3>
+                <p id="resumoValorEstoque">R$ 0,00</p>
+            </div>
+        </div>
+
+        <div class="card card-cadastro-produto">
+            <div class="titulo-card-linha">
+                <div>
+                    <h2>Cadastrar Produto</h2>
+                    <p>Preencha os dados principais do produto. O campo de código pode ficar em branco se não houver código cadastrado.</p>
+                </div>
+            </div>
+
+            <div class="form-grid form-grid-estoque-cadastro">
+                <input id="nome" placeholder="Nome do Produto">
+                <input id="codigo" placeholder="Código">
+                <input id="categoria" placeholder="Categoria">
+                <select id="unidadeMedida" aria-label="Unidade de medida">
+                    <option value="UN">Unidade de medida: UN</option>
+                    <option value="KG">Unidade de medida: KG</option>
+                    <option value="G">Unidade de medida: G</option>
+                    <option value="L">Unidade de medida: L</option>
+                    <option value="ML">Unidade de medida: ML</option>
+                    <option value="M">Unidade de medida: M</option>
+                </select>
+                <select id="permiteFracionado" aria-label="Permite venda fracionada">
+                    <option value="0">Venda fracionada: Não</option>
+                    <option value="1">Venda fracionada: Sim</option>
+                </select>
+                <input id="custo" placeholder="Preço de Custo">
+                <input id="preco" placeholder="Preço de Venda">
+                <input id="estoque" placeholder="Estoque Inicial">
+                <input id="estoqueMinimo" placeholder="Estoque Mínimo">
+            </div>
+
+            <textarea id="descricao" placeholder="Descrição / observação do produto"></textarea>
+
+            <div class="acoes-cadastro-produto">
+                <button onclick="salvarProduto()">Salvar Produto</button>
+            </div>
+        </div>
+
+        <div class="card card-produtos-cadastrados">
+            <div class="titulo-card-linha">
+                <div>
+                    <h2>Produtos Cadastrados</h2>
+                    <p>Consulte, edite ou remova produtos cadastrados no estoque.</p>
+                </div>
+            </div>
+
+            <div class="barra-produtos-estoque">
+                <input
+                    id="buscaProduto"
+                    placeholder="Buscar por nome, código, categoria ou observação..."
+                    oninput="filtrarProdutos()"
+                >
+            </div>
+
+            <div class="tabela-scroll tabela-scroll-estoque">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Produto</th>
+                            <th>Categoria</th>
+                            <th>Estoque</th>
+                            <th>Mínimo</th>
+                            <th>Custo</th>
+                            <th>Venda</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabelaProdutos"></tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+</div>
+
+<div id="modalEdicaoProduto" class="modal">
+    <div class="modal-conteudo modal-produto-edicao">
+        <h2>Editar Produto</h2>
+
+        <div class="form-grid form-grid-estoque-edicao">
+            <input id="editNome" placeholder="Nome do Produto">
+            <input id="editCodigo" placeholder="Código">
+            <input id="editCategoria" placeholder="Categoria">
+            <select id="editUnidadeMedida" aria-label="Unidade de medida">
+                <option value="UN">Unidade de medida: UN</option>
+                <option value="KG">Unidade de medida: KG</option>
+                <option value="G">Unidade de medida: G</option>
+                <option value="L">Unidade de medida: L</option>
+                <option value="ML">Unidade de medida: ML</option>
+                <option value="M">Unidade de medida: M</option>
+            </select>
+            <select id="editPermiteFracionado" aria-label="Permite venda fracionada">
+                <option value="0">Venda fracionada: Não</option>
+                <option value="1">Venda fracionada: Sim</option>
+            </select>
+            <input id="editCusto" placeholder="Preço de Custo">
+            <input id="editPreco" placeholder="Preço de Venda">
+            <input id="editEstoqueMinimo" placeholder="Estoque Mínimo">
+
+            <select id="editAtivo">
+                <option value="1">Ativo</option>
+                <option value="0">Desativado</option>
+            </select>
+        </div>
+
+        <textarea id="editDescricao" placeholder="Descrição / observação do produto"></textarea>
+
+        <div class="acoes-modal-produto">
+            <button onclick="salvarEdicaoProduto()">Salvar Alterações</button>
+            <button onclick="fecharModalEdicao()" class="btn-secondary">Cancelar</button>
+        </div>
+    </div>
+</div>
+
+<script src="../js/consulta-produto.js"></script>
+<script src="../js/ui-feedback.js"></script>
+<script src="../js/estoque.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vendas - VALE AGRO</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<div class="layout">
+    <aside class="sidebar">
+        <div class="logo">
+            <img src="../img/logo-vale-agro.jpg" alt="VALE AGRO">
+        </div>
+
+        <nav>
+            <a href="../index.html">Dashboard</a>
+            <a href="estoque.html">Estoque</a>
+            <a href="vendas.html" class="ativo">Vendas</a>
+            <a href="orcamentos.html">Orçamentos</a>
+            <a href="entregas.html">Entregas</a>
+            <a href="fiados.html">A Prazo</a>
+            <a href="movimentacoes.html">Movimentações</a>
+            <a href="financeiro.html">Financeiro</a>
+        </nav>
+    </aside>
+
+    <main class="conteudo pagina-vendas">
+        <div class="page-hero page-hero-vendas">
+            <div>
+                <span class="eyebrow">PDV VALE AGRO</span>
+                <h1>Caixa de Vendas</h1>
+                <p>Busque produtos, revise o carrinho e finalize a venda com o total sempre em destaque.</p>
+            </div>
+        </div>
+
+        <div class="card card-busca-venda">
+            <h2>Buscar Produto</h2>
+
+            <input
+                id="produtoBuscaVenda"
+                placeholder="Digite o nome, código, categoria ou observação do produto"
+                oninput="pesquisarProdutoVenda()"
+                autocomplete="off"
+            >
+
+            <div id="resultadosProdutosVenda" class="resultados-produtos"></div>
+        </div>
+
+        <div class="card card-carrinho-venda">
+            <h2>Carrinho</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Produto</th>
+                        <th>Qtd</th>
+                        <th>Preço cadastrado</th>
+                        <th>Unitário vendido</th>
+                        <th>Total</th>
+                        <th>Ação</th>
+                    </tr>
+                </thead>
+                <tbody id="tabelaCarrinho"></tbody>
+            </table>
+
+            <div class="venda-finalizacao desconto-venda-box">
+                <div class="campo-venda">
+                    <label>Desconto geral</label>
+                    <input
+                        id="descontoVendaGeral"
+                        placeholder="0,00"
+                        oninput="atualizarCarrinho(); calcularTroco();"
+                    >
+                </div>
+            </div>
+        </div>
+
+        <div class="card card-entrega-venda">
+            <h2>Entrega</h2>
+
+            <label class="checkbox-entrega">
+                <input
+                    id="temEntregaVenda"
+                    type="checkbox"
+                    onchange="verificarEntregaVenda()"
+                >
+                Esta venda terá entrega
+            </label>
+
+            <div id="areaEntregaVenda" class="area-entrega-venda" style="display:none;">
+                <div class="venda-grid">
+                    <div class="campo-venda campo-sugestao">
+                        <label>Cliente da entrega</label>
+                        <input
+                            id="clienteEntregaVenda"
+                            placeholder="Nome do cliente"
+                            oninput="pesquisarClienteEntregaVenda()"
+                            autocomplete="off"
+                        >
+                        <div id="resultadosClientesEntregaVenda" class="resultados-produtos sugestoes-venda" style="display:none;"></div>
+                    </div>
+
+                    <div class="campo-venda">
+                        <label>Telefone</label>
+                        <input id="telefoneEntregaVenda" placeholder="Telefone do cliente">
+                    </div>
+
+                    <div class="campo-venda campo-sugestao">
+                        <label>Bairro / Cidade</label>
+                        <input
+                            id="bairroCidadeEntregaVenda"
+                            placeholder="Bairro ou cidade"
+                            oninput="pesquisarCidadeEntregaVenda()"
+                            autocomplete="off"
+                        >
+                        <div id="resultadosCidadesEntregaVenda" class="resultados-produtos sugestoes-venda" style="display:none;"></div>
+                    </div>
+                </div>
+
+                <div class="venda-grid venda-grid-entrega">
+                    <div class="campo-venda campo-endereco-entrega">
+                        <label>Endereço da entrega</label>
+                        <input
+                            id="enderecoEntregaVenda"
+                            placeholder="Rua, número, sítio, bairro ou referência"
+                        >
+                    </div>
+
+                    <div class="campo-venda">
+                        <label>Pagamento da entrega</label>
+                        <select id="pagamentoEntregaVenda" onchange="verificarPagamentoEntrega()">
+                            <option value="PAGO_NA_COMPRA">Pago durante a compra</option>
+                            <option value="A_RECEBER_NA_ENTREGA">Pagar na entrega</option>
+                            <option value="FIADO">A Prazo</option>
+                        </select>
+                    </div>
+
+                    <div class="campo-venda">
+                        <label>Frete</label>
+                        <input
+                            id="freteEntregaVenda"
+                            placeholder="R$ 0,00"
+                            inputmode="decimal"
+                            oninput="atualizarCarrinho(); calcularTroco();"
+                        >
+                    </div>
+                </div>
+
+                <div class="campo-venda">
+                    <label>Observação da entrega</label>
+                    <textarea
+                        id="observacaoEntregaVenda"
+                        placeholder="Ex: entregar no sítio, deixar com funcionário, ligar antes de sair..."
+                    ></textarea>
+                </div>
+
+                <div id="clienteEntregaSelecionadoInfo" class="produto-selecionado" style="display:none;"></div>
+
+                <div id="avisoPagamentoEntrega" class="notificacao-alerta" style="display:none;"></div>
+            </div>
+        </div>
+
+        <div class="card card-finalizar-venda">
+            <h2>Finalizar Venda</h2>
+
+            <div class="venda-finalizacao">
+                <div class="campo-venda">
+                    <label>Forma de pagamento</label>
+                    <select id="formaPagamento" onchange="verificarFormaPagamento()">
+                        <option value="DINHEIRO">Dinheiro</option>
+                        <option value="PIX">PIX</option>
+                        <option value="CARTAO">Cartão</option>
+                        <option value="FIADO">A Prazo</option>
+                        <option value="ABATIMENTO_DIVIDA">Abatimento de Dívida</option>
+                    </select>
+                </div>
+
+                <div class="campo-venda">
+                    <label id="labelTipoCartao" style="display:none;">Tipo de cartão</label>
+                    <select id="tipoCartao" style="display:none;">
+                        <option value="">Selecione crédito ou débito</option>
+                        <option value="CREDITO">Crédito</option>
+                        <option value="DEBITO">Débito</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="areaDinheiro" class="caixa-dinheiro" style="display:none;">
+                <div class="mini-card-caixa card-total-venda">
+                    <span>Total da venda</span>
+                    <strong id="totalVendaFinalizacao">R$ 0,00</strong>
+                </div>
+
+                <div class="mini-card-caixa campo-dinheiro-venda">
+                    <span>Valor recebido</span>
+                    <input
+                        id="valorRecebido"
+                        placeholder="Digite o valor"
+                        oninput="calcularTroco()"
+                    >
+                </div>
+
+                <div class="mini-card-caixa destaque-troco campo-dinheiro-venda">
+                    <span>Troco</span>
+                    <input
+                        id="trocoVenda"
+                        placeholder="R$ 0,00"
+                        readonly
+                    >
+                </div>
+            </div>
+
+            <div id="areaFiado" class="venda-grid" style="display:none;">
+                <div class="campo-venda campo-sugestao cliente-prazo-autocomplete">
+                    <input
+                        id="clienteVenda"
+                        placeholder="Nome do cliente para venda a prazo"
+                        oninput="pesquisarClienteVenda()"
+                        autocomplete="off"
+                    >
+                    <div id="resultadosClientesVenda" class="resultados-produtos sugestoes-venda cliente-prazo-sugestoes" style="display:none;"></div>
+                </div>
+
+                <div class="campo-venda">
+                    <input id="telefoneClienteVenda" placeholder="Telefone do cliente">
+                </div>
+
+                <div class="campo-venda campo-sugestao">
+                    <input
+                        id="cidadeClienteVenda"
+                        placeholder="Cidade do cliente"
+                        oninput="pesquisarCidadeVenda()"
+                        autocomplete="off"
+                    >
+                    <div id="resultadosCidadesVenda" class="resultados-produtos sugestoes-venda" style="display:none;"></div>
+                </div>
+            </div>
+
+            <div id="clienteSelecionadoInfo" class="produto-selecionado" style="display:none;"></div>
+
+            <div id="areaAbatimento" class="venda-grid" style="display:none; margin-top:15px;">
+                <div class="campo-venda campo-sugestao">
+                    <input
+                        id="clienteAbatimentoVenda"
+                        placeholder="Nome do cliente do abatimento"
+                        oninput="pesquisarClienteAbatimentoVenda()"
+                        autocomplete="off"
+                    >
+                    <div id="resultadosClientesAbatimentoVenda" class="resultados-produtos sugestoes-venda" style="display:none;"></div>
+                </div>
+
+                <div class="campo-venda">
+                    <input id="telefoneClienteAbatimentoVenda" placeholder="Telefone do cliente">
+                </div>
+
+                <div class="campo-venda campo-sugestao">
+                    <input
+                        id="cidadeClienteAbatimentoVenda"
+                        placeholder="Cidade do cliente"
+                        oninput="pesquisarCidadeAbatimentoVenda()"
+                        autocomplete="off"
+                    >
+                    <div id="resultadosCidadesAbatimentoVenda" class="resultados-produtos sugestoes-venda" style="display:none;"></div>
+                </div>
+
+                <div class="campo-venda" style="grid-column: 1 / -1;">
+                    <input
+                        id="observacaoAbatimentoVenda"
+                        placeholder="Observação obrigatória. Ex: Abatido da dívida que a loja tinha com o cliente."
+                    >
+                </div>
+            </div>
+
+            <div id="clienteAbatimentoSelecionadoInfo" class="produto-selecionado" style="display:none;"></div>
+
+            <button onclick="finalizarVenda()" class="btn-finalizar-venda">Finalizar Venda</button>
+
+            <div id="areaComprovanteVenda" class="produto-selecionado" style="display:none; margin-top:15px;">
+                <strong>Venda finalizada com sucesso.</strong><br>
+                <span>Você pode imprimir o comprovante desta venda.</span><br><br>
+                <button onclick="imprimirComprovanteVenda()">Imprimir Comprovante</button>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script src="../js/consulta-produto.js"></script>
+<script src="../js/ui-feedback.js"></script>
+<script src="../js/vendas.js"></script>
+
+</body>
+</html>

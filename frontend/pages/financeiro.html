@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Financeiro - VALE AGRO</title>
+<link rel="stylesheet" href="../css/style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<div class="layout">
+    <aside class="sidebar">
+        <div class="logo">
+            <img src="../img/logo-vale-agro.jpg" alt="VALE AGRO">
+        </div>
+
+        <nav>
+            <a href="../index.html">Dashboard</a>
+            <a href="estoque.html">Estoque</a>
+            <a href="vendas.html">Vendas</a>
+            <a href="orcamentos.html">Orçamentos</a>
+            <a href="entregas.html">Entregas</a>
+            <a href="fiados.html">A Prazo</a>
+            <a href="movimentacoes.html">Movimentações</a>
+            <a href="financeiro.html" class="ativo">Financeiro</a>
+        </nav>
+    </aside>
+
+    <main class="conteudo pagina-financeiro">
+        <div class="cabecalho-pagina-financeiro">
+            <div>
+                <span class="eyebrow">Painel financeiro</span>
+                <h1>Financeiro</h1>
+                <p>Acompanhe recebimentos, vendas pagas, entradas a prazo, entregas e histórico financeiro.</p>
+            </div>
+        </div>
+
+        <div class="card card-filtro-financeiro">
+            <div class="titulo-card-linha">
+                <div>
+                    <h2>Filtros</h2>
+                    <p>Selecione o período para atualizar os indicadores financeiros.</p>
+                </div>
+            </div>
+
+            <div class="form-grid form-grid-filtro-financeiro">
+                <select id="filtroPeriodo" onchange="verificarFiltrosFinanceiro()">
+                    <option value="HOJE">Hoje</option>
+                    <option value="7DIAS">Últimos 7 dias</option>
+                    <option value="30DIAS">Últimos 30 dias</option>
+                    <option value="MES">Este mês</option>
+                    <option value="ANO">Este ano</option>
+                    <option value="MES_ANO">Mês e ano exato</option>
+                    <option value="PERSONALIZADO">Personalizado</option>
+                </select>
+
+                <select id="filtroAno" style="display:none;"></select>
+
+                <select id="filtroMes" style="display:none;">
+                    <option value="01">Janeiro</option>
+                    <option value="02">Fevereiro</option>
+                    <option value="03">Março</option>
+                    <option value="04">Abril</option>
+                    <option value="05">Maio</option>
+                    <option value="06">Junho</option>
+                    <option value="07">Julho</option>
+                    <option value="08">Agosto</option>
+                    <option value="09">Setembro</option>
+                    <option value="10">Outubro</option>
+                    <option value="11">Novembro</option>
+                    <option value="12">Dezembro</option>
+                </select>
+
+                <input id="dataInicial" type="date" style="display:none;">
+                <input id="dataFinal" type="date" style="display:none;">
+
+                <button onclick="carregarFinanceiro()">Filtrar</button>
+            </div>
+        </div>
+
+        <div class="cards cards-financeiro-principal">
+            <div class="card card-financeiro-resumo total">
+                <h3>Total Recebido</h3>
+                <p id="totalRecebido">R$ 0,00</p>
+            </div>
+
+            <div class="card card-financeiro-resumo venda">
+                <h3>Vendas Recebidas</h3>
+                <p id="vendasRecebidas">R$ 0,00</p>
+            </div>
+
+            <div class="card card-financeiro-resumo prazo">
+                <h3>Recebimento A Prazo</h3>
+                <p id="recebimentosFiados">R$ 0,00</p>
+            </div>
+
+            <div class="card card-financeiro-resumo entrega">
+                <h3>Recebimento de Entregas</h3>
+                <p id="recebimentosEntregas">R$ 0,00</p>
+            </div>
+        </div>
+
+        <div class="cards cards-financeiro-secundario">
+            <div class="card card-financeiro-resumo abatimento">
+                <h3>Abatimento de Dívida</h3>
+                <p id="abatimentosDivida">R$ 0,00</p>
+            </div>
+
+            <div class="card card-financeiro-resumo gerado">
+                <h3>A Prazo Gerado</h3>
+                <p id="fiadosGerados">R$ 0,00</p>
+            </div>
+
+            <div class="card card-financeiro-resumo vendas">
+                <h3>Total de Vendas</h3>
+                <p id="totalVendas">0</p>
+            </div>
+
+            <div class="card card-financeiro-resumo ticket">
+                <h3>Ticket Médio</h3>
+                <p id="ticketMedio">R$ 0,00</p>
+            </div>
+        </div>
+
+        <div class="financeiro-grid-analise">
+            <div class="card card-resumo-periodo-financeiro">
+                <div class="titulo-card-linha">
+                    <div>
+                        <h2>Resumo do Período</h2>
+                        <p>Visão consolidada das entradas e movimentações financeiras do período selecionado.</p>
+                    </div>
+                </div>
+
+                <table class="tabela-resumo-financeiro">
+                    <tbody id="tabelaResumoFinanceiro"></tbody>
+                </table>
+            </div>
+
+            <div class="card card-grafico-financeiro">
+                <div class="titulo-card-linha">
+                    <div>
+                        <h2>Entradas por Forma</h2>
+                        <p>Distribuição das entradas financeiras registradas no período.</p>
+                    </div>
+                </div>
+
+                <div class="area-grafico-financeiro">
+                    <canvas id="graficoFinanceiro"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="card card-historico-financeiro">
+            <div class="titulo-card-linha">
+                <div>
+                    <h2>Histórico Financeiro</h2>
+                    <p>Consulte os lançamentos financeiros, salve em PDF e confira o total filtrado.</p>
+                </div>
+            </div>
+
+            <div class="form-grid form-grid-historico-financeiro">
+                <select id="historicoPeriodo" onchange="verificarFiltrosHistorico()">
+                    <option value="HOJE">Hoje</option>
+                    <option value="7DIAS">Últimos 7 dias</option>
+                    <option value="30DIAS">Últimos 30 dias</option>
+                    <option value="MES">Este mês</option>
+                    <option value="ANO">Este ano</option>
+                    <option value="MES_ANO">Mês e ano exato</option>
+                    <option value="PERSONALIZADO">Personalizado</option>
+                </select>
+
+                <select id="historicoAno" style="display:none;"></select>
+
+                <select id="historicoMes" style="display:none;">
+                    <option value="01">Janeiro</option>
+                    <option value="02">Fevereiro</option>
+                    <option value="03">Março</option>
+                    <option value="04">Abril</option>
+                    <option value="05">Maio</option>
+                    <option value="06">Junho</option>
+                    <option value="07">Julho</option>
+                    <option value="08">Agosto</option>
+                    <option value="09">Setembro</option>
+                    <option value="10">Outubro</option>
+                    <option value="11">Novembro</option>
+                    <option value="12">Dezembro</option>
+                </select>
+
+                <input id="historicoDataInicial" type="date" style="display:none;">
+                <input id="historicoDataFinal" type="date" style="display:none;">
+
+                <button onclick="carregarHistoricoFinanceiro()">Filtrar Histórico</button>
+                <button onclick="gerarPDFHistoricoFinanceiro()" class="botao-pdf-financeiro">Salvar em PDF</button>
+            </div>
+
+            <div class="tabela-scroll tabela-scroll-financeiro">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Data/Hora</th>
+                            <th>Origem</th>
+                            <th>Tipo</th>
+                            <th>Cliente</th>
+                            <th>Valor</th>
+                            <th>Observação</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabelaHistoricoFinanceiro"></tbody>
+                </table>
+            </div>
+
+            <div class="total-historico-financeiro">
+                <div>
+                    <span>Total do Histórico Filtrado</span>
+                    <strong id="totalHistoricoFinanceiro">R$ 0,00</strong>
+                </div>
+
+                <small id="quantidadeLancamentos">0 lançamentos</small>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script src="../js/consulta-produto.js"></script>
+<script src="../js/ui-feedback.js"></script>
+<script src="../js/financeiro.js"></script>
+
+</body>
+</html>

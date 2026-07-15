@@ -1,0 +1,7202 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Segoe UI,sans-serif;
+}
+
+body{
+    background:#0a192f;
+    color:white;
+    overflow-x:hidden;
+}
+
+.layout{
+    display:flex;
+    min-height:100vh;
+}
+
+.conteudo{
+    flex:1;
+    padding:30px;
+}
+
+h1{
+    margin-bottom:25px;
+}
+
+.card{
+    background:#172a45;
+    padding:22px;
+    border-radius:10px;
+    margin-bottom:20px;
+}
+
+.card h2{
+    margin-bottom:18px;
+}
+
+.cards{
+    margin-top:30px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:20px;
+}
+
+.card h3{
+    margin-bottom:10px;
+    color:#00a865;
+}
+
+.card p{
+    font-size:28px;
+    font-weight:bold;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:12px;
+    margin-bottom:15px;
+}
+
+input, select{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:6px;
+    margin-bottom:10px;
+    background:#f4f6f9;
+    color:#111;
+}
+
+input[readonly]{
+    background:#d9dee8;
+    font-weight:bold;
+}
+
+button{
+    background:#008751;
+    color:white;
+    border:none;
+    padding:12px 18px;
+    border-radius:6px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+button:hover{
+    background:#00a865;
+}
+
+button:disabled{
+    opacity:0.5;
+    cursor:not-allowed;
+}
+
+button:disabled:hover{
+    background:#008751;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:15px;
+}
+
+th,td{
+    padding:13px;
+    border-bottom:1px solid rgba(255,255,255,0.1);
+    text-align:left;
+}
+
+th{
+    color:#00a865;
+}
+
+td small{
+    color:#d0d6e2;
+}
+
+.estoque-baixo{
+    background:rgba(255,77,77,0.15);
+}
+
+.resultados-produtos{
+    background:#0a192f;
+    border-radius:8px;
+    margin-bottom:15px;
+    max-height:260px;
+    overflow-y:auto;
+    border:1px solid rgba(255,255,255,0.08);
+}
+
+.item-produto-busca{
+    padding:12px;
+    border-bottom:1px solid rgba(255,255,255,0.08);
+    cursor:pointer;
+}
+
+.item-produto-busca:hover{
+    background:#008751;
+}
+
+.item-produto-busca strong{
+    display:block;
+    margin-bottom:4px;
+}
+
+.item-produto-busca span{
+    color:#d0d6e2;
+    font-size:14px;
+}
+
+.produto-selecionado{
+    background:#0a192f;
+    border-left:4px solid #00a865;
+    padding:15px;
+    border-radius:8px;
+    margin-bottom:15px;
+}
+
+.resumo-fiado{
+    margin-top:20px;
+    background:#0a192f;
+    padding:18px;
+    border-radius:8px;
+    border-left:4px solid #00a865;
+}
+
+.resumo-fiado p{
+    font-size:18px;
+    margin-bottom:8px;
+}
+
+textarea{
+    width:100%;
+    min-height:90px;
+    padding:12px;
+    border:none;
+    border-radius:6px;
+    margin-bottom:12px;
+    background:#f4f6f9;
+    color:#111;
+    resize:vertical;
+}
+
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.65);
+    align-items:center;
+    justify-content:center;
+    z-index:999;
+}
+
+.modal-conteudo{
+    background:#172a45;
+    padding:25px;
+    border-radius:10px;
+    width:90%;
+    max-width:850px;
+}
+
+/* MODAIS E MENSAGENS DO SISTEMA - VALE AGRO */
+.sistema-confirmacao-overlay{
+    position:fixed;
+    inset:0;
+    z-index:2100;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:22px;
+    background:rgba(10,25,47,0.64);
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .18s ease;
+}
+
+.sistema-confirmacao-overlay.visivel{
+    opacity:1;
+    pointer-events:auto;
+}
+
+.sistema-confirmacao-dialog{
+    width:min(440px,100%);
+    padding:24px;
+    border:1px solid rgba(31,51,71,0.12);
+    border-radius:14px;
+    background:#fbfaf5;
+    color:#1f3347;
+    box-shadow:0 24px 70px rgba(10,25,47,0.28);
+    transform:translateY(8px) scale(.98);
+    transition:transform .18s ease;
+}
+
+.sistema-confirmacao-overlay.visivel .sistema-confirmacao-dialog{
+    transform:translateY(0) scale(1);
+}
+
+.sistema-confirmacao-titulo{
+    margin:0 0 9px;
+    color:#1f3347;
+    font-size:22px;
+    line-height:1.2;
+}
+
+.sistema-confirmacao-mensagem{
+    margin:0;
+    color:#465b70;
+    font-size:15px;
+    font-weight:600;
+    line-height:1.45;
+}
+
+.sistema-prompt-campo{
+    display:block;
+    margin-top:16px;
+}
+
+.sistema-prompt-campo span{
+    display:block;
+    margin-bottom:7px;
+    color:#344b61;
+    font-size:12px;
+    font-weight:800;
+    text-transform:uppercase;
+    letter-spacing:.03em;
+}
+
+.sistema-prompt-campo input,
+.sistema-prompt-campo textarea{
+    width:100%;
+    min-height:44px;
+    margin:0;
+    padding:11px 12px;
+    border:1.5px solid rgba(10,25,47,0.18);
+    border-radius:10px;
+    background:#ffffff;
+    color:#1f3347;
+    font-size:15px;
+    font-weight:650;
+}
+
+.sistema-prompt-campo textarea{
+    min-height:92px;
+    resize:vertical;
+}
+
+.sistema-prompt-campo input:focus,
+.sistema-prompt-campo textarea:focus{
+    outline:none;
+    border-color:#1f3347;
+    box-shadow:0 0 0 3px rgba(31,51,71,0.1);
+}
+
+.sistema-confirmacao-acoes{
+    display:flex;
+    justify-content:flex-end;
+    gap:10px;
+    margin-top:22px;
+}
+
+.sistema-confirmacao-acoes button{
+    min-width:104px;
+    margin:0;
+}
+
+.sistema-confirmacao-cancelar{
+    background:#ffffff !important;
+    color:#1f3347 !important;
+    border:1px solid rgba(31,51,71,0.18) !important;
+}
+
+.sistema-confirmacao-confirmar{
+    background:#1f3347 !important;
+    color:#ffffff !important;
+    border:1px solid #1f3347;
+}
+
+.sistema-confirmacao-confirmar:hover{
+    background:#172b41;
+}
+
+.sistema-confirmacao-confirmar-perigo,
+.sistema-confirmacao-confirmar-erro{
+    background:#942a2a;
+    border-color:#942a2a;
+}
+
+.sistema-confirmacao-confirmar-perigo:hover,
+.sistema-confirmacao-confirmar-erro:hover{
+    background:#7b2424;
+}
+
+.sistema-toast-area{
+    position:fixed;
+    top:22px;
+    right:22px;
+    z-index:2200;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    width:min(360px,calc(100vw - 32px));
+    pointer-events:none;
+}
+
+.sistema-toast{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:12px;
+    padding:13px 14px;
+    border:1px solid rgba(31,51,71,0.12);
+    border-left:5px solid #1f3347;
+    border-radius:12px;
+    background:#ffffff;
+    color:#1f3347;
+    box-shadow:0 16px 38px rgba(10,25,47,0.18);
+    opacity:0;
+    pointer-events:auto;
+    transform:translateY(-8px);
+    transition:opacity .18s ease, transform .18s ease;
+}
+
+.sistema-toast.visivel{
+    opacity:1;
+    transform:translateY(0);
+}
+
+.sistema-toast p{
+    margin:0;
+    color:#1f3347;
+    font-size:14px;
+    font-weight:700;
+    line-height:1.35;
+}
+
+.sistema-toast-fechar{
+    min-width:auto;
+    padding:2px 4px;
+    border:0;
+    background:transparent;
+    color:#64778a;
+    font-size:12px;
+    line-height:1;
+    box-shadow:none !important;
+}
+
+.sistema-toast-fechar:hover{
+    background:transparent;
+    color:#1f3347;
+}
+
+.sistema-toast-sucesso{
+    border-left-color:#137a4b;
+}
+
+.sistema-toast-erro,
+.sistema-toast-perigo{
+    border-left-color:#942a2a;
+}
+
+.sistema-toast-aviso{
+    border-left-color:#b07818;
+}
+
+.sistema-toast-info{
+    border-left-color:#1f5f8f;
+}
+
+.status-ok{
+    background:rgba(0,135,81,0.18);
+}
+
+.status-proximo{
+    background:rgba(255,193,7,0.22);
+}
+
+.status-atrasado{
+    background:rgba(255,77,77,0.22);
+}
+
+.status-atrasado td{
+    background:rgba(255,77,77,0.08);
+}
+
+.notificacao-ok{
+    background:rgba(0,135,81,0.18);
+    border-left:4px solid #00a865;
+    padding:14px;
+    border-radius:8px;
+}
+
+.notificacao-alerta{
+    background:rgba(255,193,7,0.18);
+    border-left:4px solid #ffc107;
+    padding:14px;
+    border-radius:8px;
+    margin-bottom:12px;
+}
+
+.notificacao-perigo{
+    background:rgba(255,77,77,0.18);
+    border-left:4px solid #ff4d4d;
+    padding:14px;
+    border-radius:8px;
+}
+
+.notificacao-alerta p,
+.notificacao-perigo p{
+    margin-top:8px;
+}
+
+.dashboard-topo{
+    display:grid;
+    grid-template-columns:1fr 1.3fr 1.3fr;
+    gap:20px;
+    margin-bottom:25px;
+    align-items:stretch;
+}
+
+.dashboard-topo-4{
+    grid-template-columns:1fr 1.15fr 1.15fr 1.15fr;
+}
+
+.filtro-dashboard{
+    margin-bottom:0;
+}
+
+.filtro-dashboard h2{
+    margin-bottom:14px;
+}
+
+.filtro-dashboard select,
+.filtro-dashboard input{
+    margin-bottom:10px;
+}
+
+.alerta-dashboard{
+    margin-bottom:0;
+    cursor:pointer;
+    transition:0.25s;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    min-height:170px;
+}
+
+.alerta-dashboard:hover{
+    transform:translateY(-3px);
+    box-shadow:0 8px 18px rgba(0,0,0,0.25);
+}
+
+.alerta-dashboard h3{
+    font-size:20px;
+}
+
+.alerta-dashboard p{
+    font-size:30px;
+    margin:8px 0;
+}
+
+.alerta-dashboard span,
+.alerta-dashboard strong{
+    display:block;
+    color:#d0d6e2;
+    margin-bottom:12px;
+}
+
+.alerta-dashboard button{
+    width:max-content;
+    margin-top:auto;
+}
+
+.alerta-estoque{
+    background:linear-gradient(135deg, rgba(255,193,7,0.22), #172a45);
+    border-left:5px solid #ffc107;
+}
+
+.alerta-fiado{
+    background:linear-gradient(135deg, rgba(255,77,77,0.24), #172a45);
+    border-left:5px solid #ff4d4d;
+}
+
+.alerta-entrega{
+    background:linear-gradient(135deg, rgba(0,168,101,0.22), #172a45);
+    border-left:5px solid #00a865;
+}
+
+.card-click{
+    cursor:pointer;
+    transition:0.25s;
+}
+
+.card-click:hover{
+    transform:translateY(-3px);
+    box-shadow:0 8px 18px rgba(0,0,0,0.25);
+}
+
+@media(max-width:1150px){
+    .dashboard-topo,
+    .dashboard-topo-4{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:950px){
+    .dashboard-topo{
+        grid-template-columns:1fr;
+    }
+}
+
+.venda-finalizacao{
+    display:grid;
+    grid-template-columns:260px 260px;
+    gap:12px;
+    align-items:start;
+    margin-bottom:18px;
+}
+
+.venda-finalizacao label,
+.campo-venda label{
+    display:block;
+    margin-bottom:6px;
+    font-weight:bold;
+    color:#d0d6e2;
+    font-size:14px;
+}
+
+.venda-grid{
+    display:grid;
+    grid-template-columns:repeat(3, minmax(220px, 1fr));
+    gap:12px;
+    align-items:start;
+    margin-bottom:15px;
+}
+
+.campo-venda{
+    position:relative;
+    min-height:52px;
+}
+
+.campo-venda input,
+.campo-venda select{
+    height:42px;
+    margin-bottom:0;
+}
+
+.campo-sugestao{
+    position:relative;
+    z-index:100;
+}
+
+.sugestoes-venda{
+    position:absolute;
+    top:48px;
+    left:0;
+    right:0;
+    z-index:999;
+    max-height:160px;
+    overflow-y:auto;
+    margin-bottom:0;
+    box-shadow:0 10px 25px rgba(0,0,0,0.35);
+}
+
+.caixa-dinheiro{
+    display:grid;
+    grid-template-columns:repeat(3, minmax(220px, 260px));
+    gap:14px;
+    align-items:stretch;
+    margin-bottom:18px;
+}
+
+.mini-card-caixa{
+    background:#0a192f;
+    border-left:4px solid #00a865;
+    padding:14px;
+    border-radius:8px;
+    min-height:95px;
+}
+
+.mini-card-caixa span{
+    display:block;
+    color:#d0d6e2;
+    font-size:14px;
+    margin-bottom:10px;
+    font-weight:600;
+}
+
+.mini-card-caixa strong{
+    font-size:24px;
+    color:white;
+}
+
+.mini-card-caixa input{
+    height:42px;
+    margin-bottom:0;
+    font-weight:bold;
+}
+
+.destaque-troco{
+    border-left-color:#ffc107;
+}
+
+.destaque-troco input{
+    background:#d9dee8;
+    color:#111;
+}
+
+@media(max-width:1100px){
+    .venda-finalizacao,
+    .venda-grid,
+    .caixa-dinheiro{
+        grid-template-columns:1fr;
+    }
+}
+
+#areaFiado{
+    margin-bottom:25px;
+    width:100%;
+    max-width:100%;
+    grid-template-columns:1fr;
+    gap:12px;
+    box-sizing:border-box;
+    overflow:visible;
+}
+
+#areaFiado > *,
+#areaFiado .campo-venda,
+#areaFiado input{
+    min-width:0;
+    width:100%;
+    max-width:100%;
+    box-sizing:border-box;
+}
+
+#areaFiado .sugestoes-venda{
+    position:absolute;
+    top:calc(100% + 6px);
+    left:0;
+    right:0;
+    z-index:9999;
+    width:100%;
+    margin-top:0;
+    max-height:230px;
+    overflow-y:auto;
+}
+
+#areaAbatimento{
+    width:100%;
+    max-width:100%;
+    grid-template-columns:1fr;
+    gap:12px;
+    box-sizing:border-box;
+    overflow:visible;
+}
+
+#areaAbatimento > *,
+#areaAbatimento .campo-venda,
+#areaAbatimento input{
+    min-width:0;
+    max-width:100%;
+    box-sizing:border-box;
+}
+
+#areaAbatimento .campo-venda{
+    width:100%;
+}
+
+#areaAbatimento #observacaoAbatimentoVenda{
+    width:100%;
+    max-width:100%;
+    box-sizing:border-box;
+}
+
+#areaAbatimento .sugestoes-venda{
+    position:absolute;
+    top:calc(100% + 6px);
+    left:0;
+    right:0;
+    z-index:9999;
+    max-width:100%;
+    box-sizing:border-box;
+    background:#ffffff;
+    border-radius:12px;
+    box-shadow:0 14px 30px rgba(0,0,0,0.18);
+    overflow-y:auto;
+}
+
+.card-finalizar-venda{
+    overflow:visible;
+}
+
+.card-finalizar-venda .campo-sugestao{
+    position:relative;
+    z-index:50;
+}
+
+.card-finalizar-venda .campo-sugestao:focus-within{
+    z-index:10000;
+}
+
+/* VENDAS - AUTOCOMPLETE CLIENTE A PRAZO */
+.cliente-prazo-autocomplete{
+    position:relative;
+    z-index:10000;
+}
+
+#areaFiado .cliente-prazo-sugestoes{
+    position:absolute;
+    top:calc(100% + 6px);
+    left:0;
+    right:0;
+    z-index:9999;
+    width:100%;
+    margin-top:0;
+    max-height:230px;
+    overflow-y:auto;
+    background:#ffffff;
+    border:1px solid rgba(31, 51, 71, 0.18);
+    border-radius:12px;
+    box-shadow:0 14px 30px rgba(0,0,0,0.18);
+    display:none;
+}
+
+#areaFiado .cliente-prazo-sugestoes.ativo{
+    display:block;
+}
+
+.card > button[onclick="finalizarVenda()"]{
+    display:inline-block !important;
+    margin-top:15px;
+    position:relative;
+    z-index:10;
+}
+
+.checkbox-entrega{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    color:#d0d6e2;
+    font-weight:bold;
+    margin-bottom:15px;
+    cursor:pointer;
+}
+
+.checkbox-entrega input{
+    width:auto;
+    margin:0;
+    transform:scale(1.2);
+}
+
+.area-entrega-venda{
+    background:#0a192f;
+    border-left:4px solid #00a865;
+    padding:18px;
+    border-radius:8px;
+    margin-top:12px;
+}
+
+.venda-grid-entrega{
+    grid-template-columns:2fr 1fr;
+}
+
+.campo-endereco-entrega{
+    grid-column:auto;
+}
+
+.area-entrega-venda textarea{
+    min-height:80px;
+    margin-bottom:0;
+}
+
+#avisoPagamentoEntrega{
+    margin-top:12px;
+}
+
+@media(max-width:1100px){
+    .venda-grid-entrega{
+        grid-template-columns:1fr;
+    }
+}
+
+.tabela-scroll{
+    width:100%;
+    overflow:auto;
+    border-radius:8px;
+    border:1px solid rgba(136,146,176,0.18);
+}
+
+.tabela-scroll table{
+    margin-bottom:0;
+    min-width:900px;
+}
+
+.tabela-scroll thead th{
+    position:sticky;
+    top:0;
+    z-index:5;
+    background:#172a45;
+}
+
+.tabela-scroll::-webkit-scrollbar{
+    width:10px;
+    height:10px;
+}
+
+.tabela-scroll::-webkit-scrollbar-track{
+    background:#0a192f;
+    border-radius:10px;
+}
+
+.tabela-scroll::-webkit-scrollbar-thumb{
+    background:#8892b0;
+    border-radius:10px;
+}
+
+.tabela-scroll::-webkit-scrollbar-thumb:hover{
+    background:#00a865;
+}
+
+.tabela-scroll-estoque{
+    max-height:520px;
+}
+
+.tabela-scroll-estoque table{
+    min-width:1050px;
+}
+
+.tabela-scroll-movimentacoes{
+    max-height:480px;
+}
+
+.tabela-scroll-movimentacoes table{
+    min-width:1150px;
+}
+
+.tabela-scroll-fiados{
+    max-height:480px;
+}
+
+.tabela-scroll-fiados table{
+    min-width:1050px;
+}
+
+/* A PRAZO EM ATRASO - RESUMO DE COBRANÇA */
+
+.pagina-fiados-atrasados .cards-resumo-cobranca{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:stretch;
+    gap:16px;
+    max-width:720px;
+    margin:0 0 24px;
+}
+
+.pagina-fiados-atrasados .card-resumo-cobranca{
+    flex:1 1 300px;
+    min-width:280px;
+    min-height:118px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    gap:8px;
+    margin-bottom:0;
+    padding:20px 22px;
+    background:#fffefb;
+    border:1px solid #e4ebe0;
+    border-radius:14px;
+    box-shadow:0 12px 28px rgba(23,43,65,0.08);
+}
+
+.pagina-fiados-atrasados .card-clientes-atraso{
+    background:#fff6f4;
+    border-color:#f0c8c3;
+    border-left:5px solid #ba4b45;
+}
+
+.pagina-fiados-atrasados .card-resumo-cobranca h3{
+    margin:0;
+    color:#172b41;
+    font-size:14px;
+    font-weight:850;
+    line-height:1.2;
+}
+
+.pagina-fiados-atrasados .card-resumo-cobranca p{
+    margin:0;
+    color:#172b41;
+    font-size:32px;
+    font-weight:900;
+    line-height:1.05;
+}
+
+.pagina-fiados-atrasados .card-clientes-atraso p{
+    color:#8f2f2a;
+}
+
+.pagina-fiados-atrasados .card-clientes-cobranca{
+    margin-top:0;
+}
+
+/* A PRAZO EM ATRASO - COBRANÇA */
+
+.tabela-scroll-fiados-atrasados{
+    max-height:480px;
+}
+
+.tabela-scroll-fiados-atrasados table{
+    min-width:980px;
+}
+
+.pagina-fiados-atrasados .tabela-scroll-fiados-atrasados table{
+    border-collapse:separate;
+    border-spacing:0 8px;
+    margin-top:8px;
+}
+
+.pagina-fiados-atrasados .tabela-scroll-fiados-atrasados th{
+    background:#f3f7f1;
+    color:#172b41;
+    font-size:12px;
+    font-weight:900;
+    letter-spacing:.04em;
+    text-transform:uppercase;
+    border-bottom:1px solid #dfe8dc;
+}
+
+.pagina-fiados-atrasados .linha-cobranca-atraso td{
+    padding:12px 13px;
+    background:#fffefb;
+    color:#1f3347;
+    border-top:1px solid #e7ede4;
+    border-bottom:1px solid #e7ede4;
+    vertical-align:middle;
+}
+
+.pagina-fiados-atrasados .linha-cobranca-atraso td:first-child{
+    border-left:4px solid #ba4b45;
+    border-radius:10px 0 0 10px;
+}
+
+.pagina-fiados-atrasados .linha-cobranca-atraso td:last-child{
+    border-right:1px solid #e7ede4;
+    border-radius:0 10px 10px 0;
+}
+
+.pagina-fiados-atrasados .coluna-cliente-cobranca{
+    min-width:220px;
+}
+
+.pagina-fiados-atrasados .cliente-cobranca-nome{
+    display:block;
+    margin-top:6px;
+    color:#172b41;
+    font-size:15px;
+    font-weight:900;
+    line-height:1.25;
+}
+
+.pagina-fiados-atrasados .texto-secundario-cobranca{
+    color:#52616f;
+    font-size:13px;
+    font-weight:700;
+}
+
+.pagina-fiados-atrasados .badge-cobranca-atraso,
+.pagina-fiados-atrasados .badge-dias-cobranca{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:max-content;
+    border-radius:999px;
+    font-weight:900;
+    line-height:1;
+    white-space:nowrap;
+}
+
+.pagina-fiados-atrasados .badge-cobranca-atraso{
+    padding:5px 8px;
+    background:#fff0ee;
+    color:#9c3a34;
+    font-size:10px;
+    letter-spacing:.04em;
+}
+
+.pagina-fiados-atrasados .badge-dias-cobranca{
+    padding:7px 10px;
+    background:#fff0ee;
+    color:#8f2f2a;
+    font-size:12px;
+}
+
+.pagina-fiados-atrasados .coluna-saldo-cobranca{
+    min-width:230px;
+}
+
+.pagina-fiados-atrasados .saldo-atraso-cobranca{
+    display:block;
+    margin-bottom:4px;
+    color:#8f2f2a;
+    font-size:17px;
+    font-weight:900;
+    line-height:1.2;
+}
+
+.pagina-fiados-atrasados .coluna-saldo-cobranca small{
+    display:block;
+    color:#52616f;
+    font-size:12px;
+    font-weight:700;
+    line-height:1.35;
+}
+
+.pagina-fiados-atrasados .acoes-cobranca-atraso{
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.pagina-fiados-atrasados .acoes-cobranca-atraso button{
+    min-height:34px;
+    padding:8px 11px;
+    font-size:12px;
+    border-radius:9px;
+}
+
+.tabela-scroll-financeiro{
+    max-height:420px;
+}
+
+.tabela-scroll-financeiro table{
+    min-width:1050px;
+}
+
+.tabela-scroll-financeiro th,
+.tabela-scroll-financeiro td{
+    vertical-align:middle;
+}
+
+.tabela-scroll-detalhe-menor{
+    max-height:none;
+}
+
+.tabela-scroll-detalhe-historico{
+    max-height:none;
+}
+
+.tabela-scroll-detalhe-menor table,
+.tabela-scroll-detalhe-historico table{
+    min-width:850px;
+}
+
+.tabela-scroll-estoque-baixo{
+    max-height:480px;
+}
+
+.tabela-scroll-estoque-baixo table{
+    min-width:1100px;
+}
+
+.tabela-scroll-entregas{
+    max-height:520px;
+}
+
+.tabela-scroll-entregas table{
+    min-width:1250px;
+}
+
+.tag-status{
+    display:inline-block;
+    padding:6px 10px;
+    border-radius:999px;
+    font-size:12px;
+    font-weight:bold;
+    white-space:nowrap;
+}
+
+.acoes-entrega,
+.acoes-financeiro,
+.acoes-movimentacao,
+.acoes-tabela{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    min-width:220px;
+}
+
+.acoes-entrega button,
+.acoes-financeiro button,
+.acoes-movimentacao button,
+.acoes-tabela button{
+    padding:8px 10px;
+    font-size:12px;
+}
+
+.detalhe-fiado-grid-topo{
+    display:grid;
+    grid-template-columns:1fr 2fr;
+    gap:18px;
+    align-items:stretch;
+    margin-bottom:18px;
+}
+
+.detalhe-fiado-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+    align-items:start;
+}
+
+.detalhe-fiado-grid-baixo{
+    display:grid;
+    grid-template-columns:0.85fr 1.15fr;
+    gap:18px;
+    align-items:start;
+}
+
+.card-acoes-fiado,
+.card-pagamento-fiado{
+    min-height:180px;
+}
+
+.botoes-fiado-detalhe{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+    margin-top:15px;
+}
+
+@media(max-width:1200px){
+    .detalhe-fiado-grid-topo,
+    .detalhe-fiado-grid,
+    .detalhe-fiado-grid-baixo{
+        grid-template-columns:1fr;
+    }
+}
+
+/* AJUSTE COMPACTO - TELA DE DETALHE DO A PRAZO */
+
+body:has(#nomeClienteFiado) {
+    overflow-x: hidden;
+}
+
+body:has(#nomeClienteFiado) .layout {
+    max-width: 100vw;
+    overflow-x: hidden;
+}
+
+body:has(#nomeClienteFiado) .conteudo {
+    max-width: calc(100vw - 180px);
+    overflow-x: hidden;
+    padding: 22px 28px;
+}
+
+body:has(#nomeClienteFiado) h1 {
+    margin-bottom: 22px;
+    font-size: 30px;
+}
+
+body:has(#nomeClienteFiado) .cards {
+    grid-template-columns: repeat(6, minmax(120px, 1fr));
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+body:has(#nomeClienteFiado) .card {
+    padding: 18px 20px;
+    min-width: 0;
+}
+
+body:has(#nomeClienteFiado) .card h3 {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+body:has(#nomeClienteFiado) .card p {
+    font-size: 27px;
+}
+
+body:has(#nomeClienteFiado) .detalhe-fiado-grid-topo {
+    grid-template-columns: minmax(300px, 0.6fr) minmax(0, 1.4fr);
+    gap: 14px;
+    margin-bottom: 16px;
+}
+
+body:has(#nomeClienteFiado) .detalhe-fiado-grid,
+body:has(#nomeClienteFiado) .detalhe-fiado-grid-baixo {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 14px;
+    margin-bottom: 16px;
+}
+
+body:has(#nomeClienteFiado) .detalhe-fiado-grid > .card,
+body:has(#nomeClienteFiado) .detalhe-fiado-grid-baixo > .card,
+body:has(#nomeClienteFiado) .detalhe-fiado-grid-topo > .card {
+    min-width: 0;
+}
+
+body:has(#nomeClienteFiado) .card-acoes-fiado,
+body:has(#nomeClienteFiado) .card-pagamento-fiado {
+    min-height: auto;
+}
+
+body:has(#nomeClienteFiado) .form-grid {
+    grid-template-columns: repeat(4, minmax(120px, 1fr));
+    gap: 10px;
+}
+
+body:has(#nomeClienteFiado) input {
+    min-width: 0;
+}
+
+body:has(#nomeClienteFiado) button {
+    padding: 12px 18px;
+}
+
+body:has(#nomeClienteFiado) .tabela-scroll {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+body:has(#nomeClienteFiado) .tabela-scroll table {
+    width: 100%;
+}
+
+body:has(#nomeClienteFiado) .tabela-scroll-detalhe-menor table {
+    min-width: 650px;
+}
+
+body:has(#nomeClienteFiado) .tabela-scroll-detalhe-historico table {
+    min-width: 820px;
+}
+
+/* ENTREGAS - TABELAS E STATUS */
+
+.pagina-entregas .tabela-scroll-entregas table{
+    width:100%;
+    min-width:1280px;
+    table-layout:fixed;
+}
+
+.pagina-entregas .tabela-scroll-entregas th,
+.pagina-entregas .tabela-scroll-entregas td{
+    padding:7px 9px;
+    white-space:normal;
+    word-break:normal;
+    overflow-wrap:break-word;
+    vertical-align:middle;
+}
+
+.pagina-entregas .tabela-scroll-entregas th{
+    font-size:12.5px;
+    font-weight:850;
+    letter-spacing:.03em;
+    color:#1f3347;
+    text-transform:uppercase;
+}
+
+.pagina-entregas .tabela-scroll-entregas td{
+    font-size:13.5px;
+    line-height:1.28;
+    color:#243548;
+}
+
+.pagina-entregas .tabela-scroll-entregas th:nth-child(1){ width:7.5%; text-align:center; }
+.pagina-entregas .tabela-scroll-entregas th:nth-child(2){ width:12.5%; text-align:left; }
+.pagina-entregas .tabela-scroll-entregas th:nth-child(3){ width:9%; text-align:center; }
+.pagina-entregas .tabela-scroll-entregas th:nth-child(4){ width:16%; text-align:left; }
+.pagina-entregas .tabela-scroll-entregas th:nth-child(5){ width:10%; text-align:left; }
+.pagina-entregas .tabela-scroll-entregas th:nth-child(6){ width:10.5%; text-align:center; }
+.pagina-entregas .tabela-scroll-entregas th:nth-child(7){ width:11.5%; text-align:center; }
+.pagina-entregas .tabela-scroll-entregas th:nth-child(8){ width:8.5%; text-align:right; }
+.pagina-entregas .tabela-scroll-entregas th:nth-child(9){ width:8.5%; text-align:left; }
+.pagina-entregas .tabela-scroll-entregas th:nth-child(10){ width:6%; text-align:center; }
+
+.pagina-entregas .entrega-col-data,
+.pagina-entregas .entrega-col-telefone,
+.pagina-entregas .entrega-col-status,
+.pagina-entregas .entrega-col-pagamento,
+.pagina-entregas .entrega-col-acoes{
+    text-align:center;
+}
+
+.pagina-entregas .entrega-col-cliente,
+.pagina-entregas .entrega-col-endereco,
+.pagina-entregas .entrega-col-cidade,
+.pagina-entregas .entrega-col-observacao{
+    text-align:left;
+}
+
+.pagina-entregas .entrega-col-valor{
+    text-align:right;
+}
+
+.pagina-entregas .entrega-data-bloco{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:1px;
+}
+
+.pagina-entregas .entrega-status-bloco,
+.pagina-entregas .entrega-pagamento-bloco{
+    min-height:58px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:flex-start;
+    gap:4px;
+}
+
+.pagina-entregas .entrega-data-dia{
+    color:#1f3347;
+    font-size:14px;
+    font-weight:800;
+    line-height:1.12;
+}
+
+.pagina-entregas .entrega-data-hora{
+    color:#536577;
+    font-size:13px;
+    font-weight:700;
+    line-height:1.12;
+}
+
+.pagina-entregas .entrega-cliente-nome{
+    color:#1f3347;
+    display:-webkit-box;
+    -webkit-line-clamp:2;
+    -webkit-box-orient:vertical;
+    overflow:hidden;
+    font-size:14px;
+    font-weight:800;
+    line-height:1.25;
+}
+
+.pagina-entregas .entrega-texto-secundario,
+.pagina-entregas .entrega-observacao-texto{
+    color:#34495e;
+    font-size:13px;
+    font-weight:600;
+    line-height:1.22;
+}
+
+.pagina-entregas .entrega-status-badge,
+.pagina-entregas .entrega-pagamento-badge{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    min-width:86px;
+    height:28px;
+    padding:0 10px;
+    border:1px solid transparent;
+    border-radius:999px;
+    font-size:12px;
+    font-weight:850;
+    line-height:1;
+    letter-spacing:.025em;
+    white-space:nowrap;
+    text-transform:uppercase;
+}
+
+.pagina-entregas .entrega-status-data,
+.pagina-entregas .entrega-pagamento-detalhe{
+    display:block;
+    margin-top:0;
+    color:#536577;
+    font-size:13px;
+    font-weight:700;
+    line-height:1.2;
+    text-align:center;
+}
+
+.pagina-entregas .entrega-status-pendente,
+.pagina-entregas .entrega-pagamento-a-receber-na-entrega{
+    background:#fff3d8;
+    border-color:#ead59b;
+    color:#79530f !important;
+}
+
+.pagina-entregas .entrega-status-saiu-entrega{
+    background:#ffe4cc;
+    border-color:#efbf8a;
+    color:#7a4312 !important;
+}
+
+.pagina-entregas .entrega-status-entregue,
+.pagina-entregas .entrega-pagamento-pago-na-compra,
+.pagina-entregas .entrega-pagamento-recebido-na-entrega{
+    background:#e1f4e8;
+    border-color:#bfe2ca;
+    color:#1f6b42 !important;
+}
+
+.pagina-entregas .entrega-status-cancelada{
+    background:#fae9e6;
+    border-color:#efc9c4;
+    color:#983b35 !important;
+}
+
+.pagina-entregas .entrega-pagamento-fiado{
+    background:#e7f0f8;
+    border-color:#bfd2e3;
+    color:#17324a !important;
+}
+
+.pagina-entregas .entrega-valor-destaque{
+    color:#172b41;
+    font-size:16.5px;
+    font-weight:900;
+    white-space:nowrap;
+}
+
+.pagina-entregas .tabela-scroll-entregas .acoes-entrega{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    align-items:center;
+    gap:5px;
+    min-width:0;
+}
+
+.pagina-entregas .tabela-scroll-entregas .acoes-entrega button{
+    font-size:11px;
+    padding:6px 8px;
+    min-width:auto;
+    box-shadow:0 8px 18px rgba(23,155,99,0.12);
+}
+
+/* ESTOQUE - TABELA DE PRODUTOS */
+
+.produto-info-estoque{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    gap:3px;
+    width:100%;
+    max-width:620px;
+    min-width:0;
+}
+
+.pagina-estoque .card-produtos-cadastrados table th:nth-child(2),
+.pagina-estoque .card-produtos-cadastrados table td:nth-child(2){
+    width:36%;
+    max-width:620px;
+}
+
+.produto-nome-estoque{
+    color:#0a192f;
+    font-size:15px;
+    font-weight:800;
+    line-height:1.25;
+}
+
+.produto-meta-estoque{
+    color:#52657a;
+    font-size:12px;
+    font-weight:600;
+    line-height:1.25;
+}
+
+.produto-obs-estoque{
+    display:block;
+    width:100%;
+    max-width:560px;
+    box-sizing:border-box;
+    margin-top:4px;
+    padding:5px 9px;
+    border-radius:8px;
+    background:rgba(10,25,47,0.04);
+    color:#33475f;
+    font-size:12px;
+    font-weight:600;
+    line-height:1.35;
+    word-break:normal;
+    overflow-wrap:anywhere;
+}
+
+.produto-obs-estoque strong{
+    color:#1f3347;
+    font-weight:800;
+}
+
+/* PAGAMENTO POR PRODUTOS SELECIONADOS - A PRAZO */
+
+.pagina-fiado-detalhe{
+    padding-top:22px;
+}
+
+.cabecalho-fiado-detalhe{
+    display:flex;
+    align-items:flex-start;
+    gap:16px;
+    margin-bottom:16px;
+}
+
+.cabecalho-fiado-detalhe button{
+    height:42px;
+    min-width:90px;
+}
+
+.cabecalho-fiado-detalhe h1{
+    margin-bottom:4px;
+}
+
+.cabecalho-fiado-detalhe p{
+    margin:0;
+    color:#8892b0;
+    font-size:14px;
+}
+
+.card-baixa-produtos-fiado{
+    border-left:5px solid #00a865;
+    margin-bottom:16px;
+}
+
+.barra-acoes-baixa-fiado{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:14px;
+}
+
+.barra-acoes-baixa-fiado button{
+    height:38px;
+    padding:0 14px;
+    font-size:13px;
+    border-radius:7px;
+}
+
+.resumo-baixa-produtos-fiado{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+    margin-top:14px;
+    margin-bottom:14px;
+}
+
+.resumo-baixa-produtos-fiado div{
+    background:#0a192f;
+    border:1px solid rgba(0,168,101,0.35);
+    border-radius:10px;
+    padding:14px 16px;
+}
+
+.resumo-baixa-produtos-fiado span{
+    display:block;
+    color:#8892b0;
+    font-size:13px;
+    font-weight:700;
+    margin-bottom:5px;
+}
+
+.resumo-baixa-produtos-fiado strong{
+    display:block;
+    color:#ffffff;
+    font-size:25px;
+}
+
+.form-grid-pagamento-itens-fiado{
+    display:grid;
+    grid-template-columns:180px 180px 180px 150px 1fr;
+    gap:10px;
+    align-items:center;
+    margin-top:12px;
+}
+
+.form-grid-pagamento-itens-fiado select,
+.form-grid-pagamento-itens-fiado input{
+    height:42px;
+    margin:0;
+}
+
+.aviso-baixa-produtos-fiado{
+    display:block;
+    margin-top:10px;
+    color:#d0d6e2;
+    font-size:13px;
+    line-height:1.4;
+}
+
+.texto-explicativo-fiado{
+    font-size:14px;
+    font-weight:400;
+    color:#d0d6e2;
+    line-height:1.5;
+    margin-bottom:14px;
+}
+
+.checkbox-pagamento-fiado{
+    width:18px;
+    height:18px;
+    cursor:pointer;
+}
+
+.linha-produto-selecionado-fiado{
+    background:rgba(0,168,101,0.10) !important;
+}
+
+.valor-pago-fiado{
+    color:#00ff9d;
+    font-weight:800;
+}
+
+.saldo-aberto-fiado{
+    color:#ffc107;
+    font-weight:900;
+}
+
+.saldo-quitado-fiado{
+    color:#00ff9d;
+    font-weight:900;
+}
+
+@media(max-width:1200px){
+    .form-grid-pagamento-itens-fiado{
+        grid-template-columns:repeat(2, 1fr);
+    }
+
+    .resumo-baixa-produtos-fiado{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:850px){
+    .cabecalho-fiado-detalhe{
+        flex-direction:column;
+    }
+
+    .form-grid-pagamento-itens-fiado{
+        grid-template-columns:1fr;
+    }
+}
+/* LIMPEZA DA TELA DETALHE A PRAZO */
+
+.tabela-scroll-produtos-abater{
+    max-height:300px !important;
+}
+
+.card-baixa-produtos-fiado{
+    margin-bottom:14px !important;
+}
+
+.card-baixa-produtos-fiado .titulo-card-linha{
+    margin-bottom:10px !important;
+}
+
+.barra-acoes-baixa-fiado{
+    margin-bottom:10px !important;
+}
+
+.resumo-baixa-produtos-fiado{
+    margin-top:10px !important;
+    margin-bottom:10px !important;
+}
+
+.resumo-baixa-produtos-fiado div{
+    padding:10px 14px !important;
+}
+
+.resumo-baixa-produtos-fiado strong{
+    font-size:22px !important;
+}
+
+.form-grid-pagamento-itens-fiado{
+    margin-top:8px !important;
+}
+
+.card-pagamento-fiado,
+.card-acoes-fiado{
+    min-height:auto !important;
+}
+
+.card-pagamentos-fiado{
+    border-left:5px solid #ffc107;
+}
+
+.card-historico-completo-fiado{
+    border-left:5px solid #8892b0;
+}
+/* LIMPEZA FINAL - PAGAMENTO ÚNICO A PRAZO */
+
+.grid-pagamento-extrato-fiado{
+    display:grid;
+    grid-template-columns:minmax(0, 1fr) 360px;
+    gap:14px;
+    margin-bottom:16px;
+}
+
+.card-pagamento-unico-fiado{
+    margin-bottom:0 !important;
+}
+
+.card-extrato-limpo-fiado{
+    border-left:5px solid #8892b0;
+}
+
+.card-extrato-limpo-fiado p{
+    color:#d0d6e2;
+    font-size:14px;
+    line-height:1.5;
+    margin-bottom:16px;
+}
+
+.form-grid-tipo-pagamento-fiado{
+    display:grid;
+    grid-template-columns:230px 180px 170px 170px 140px 1fr;
+    gap:10px;
+    align-items:center;
+    margin-bottom:12px;
+}
+
+.form-grid-tipo-pagamento-fiado select,
+.form-grid-tipo-pagamento-fiado input{
+    height:42px;
+    margin:0;
+}
+
+.area-produtos-pagamento-fiado{
+    margin-top:8px;
+}
+
+.tabela-scroll-produtos-abater{
+    max-height:255px !important;
+}
+
+.resumo-baixa-produtos-fiado{
+    grid-template-columns:1fr 1fr !important;
+    margin-top:10px !important;
+    margin-bottom:10px !important;
+}
+
+.resumo-baixa-produtos-fiado div{
+    padding:10px 14px !important;
+}
+
+.resumo-baixa-produtos-fiado strong{
+    font-size:22px !important;
+}
+
+.aviso-pagamento-geral-fiado{
+    margin:10px 0;
+    padding:12px 14px;
+    border-radius:10px;
+    background:#0a192f;
+    border:1px solid rgba(136,146,176,0.35);
+    color:#d0d6e2;
+    font-size:14px;
+}
+
+.card-pagamento-unico-fiado .botoes-fiado-detalhe{
+    margin-top:10px;
+}
+
+.card-pagamentos-fiado{
+    border-left:5px solid #ffc107;
+}
+
+.card-historico-completo-fiado{
+    border-left:5px solid #8892b0;
+}
+
+@media(max-width:1400px){
+    .grid-pagamento-extrato-fiado{
+        grid-template-columns:1fr;
+    }
+
+    .form-grid-tipo-pagamento-fiado{
+        grid-template-columns:repeat(3, 1fr);
+    }
+}
+
+@media(max-width:850px){
+    .form-grid-tipo-pagamento-fiado{
+        grid-template-columns:1fr;
+    }
+
+    .resumo-baixa-produtos-fiado{
+        grid-template-columns:1fr !important;
+    }
+}
+
+/* SISTEMA VISUAL PREMIUM - VALE AGRO
+   Camada final de refinamento visual. Mantem IDs, rotas e estrutura funcional. */
+
+:root{
+    --va-bg:#08140f;
+    --va-bg-soft:#0d1d16;
+    --va-surface:#13271f;
+    --va-surface-2:#183127;
+    --va-surface-3:#1f3a2f;
+    --va-border:rgba(214,228,218,0.12);
+    --va-border-strong:rgba(127,174,145,0.28);
+    --va-text:#f6fbf7;
+    --va-text-soft:#c9d8cf;
+    --va-muted:#8fa69a;
+    --va-primary:#179b63;
+    --va-primary-strong:#11b877;
+    --va-primary-soft:rgba(23,155,99,0.14);
+    --va-warning:#dca928;
+    --va-warning-soft:rgba(220,169,40,0.14);
+    --va-danger:#c64f4a;
+    --va-danger-strong:#e05f5a;
+    --va-danger-soft:rgba(198,79,74,0.16);
+    --va-info:#4aa3c7;
+    --va-neutral:#6f7f76;
+    --va-radius-sm:7px;
+    --va-radius:10px;
+    --va-radius-lg:14px;
+    --va-shadow-sm:0 8px 18px rgba(0,0,0,0.18);
+    --va-shadow:0 18px 45px rgba(0,0,0,0.24);
+    --va-transition:160ms ease;
+}
+
+body{
+    background:
+        radial-gradient(circle at top left, rgba(23,155,99,0.12), transparent 34rem),
+        linear-gradient(180deg, #0b1b14 0%, var(--va-bg) 48%, #06100c 100%);
+    color:var(--va-text);
+    font-size:15px;
+}
+
+.layout{
+    background:linear-gradient(90deg, rgba(255,255,255,0.015), transparent 32rem);
+}
+
+.conteudo{
+    padding:28px;
+}
+
+h1{
+    margin-bottom:18px;
+    font-size:30px;
+    line-height:1.15;
+    letter-spacing:0;
+}
+
+h2{
+    line-height:1.2;
+}
+
+.card{
+    background:linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.012)), var(--va-surface);
+    border:1px solid var(--va-border);
+    border-radius:var(--va-radius-lg);
+    box-shadow:0 10px 30px rgba(0,0,0,0.13);
+    padding:20px;
+    margin-bottom:18px;
+}
+
+.card:hover{
+    border-color:rgba(127,174,145,0.22);
+}
+
+.card h2{
+    margin-bottom:12px;
+    font-size:20px;
+}
+
+.card h3{
+    color:var(--va-text-soft);
+    font-size:14px;
+    font-weight:800;
+    letter-spacing:.01em;
+}
+
+.card p{
+    color:var(--va-text);
+    font-size:26px;
+    line-height:1.1;
+}
+
+.cards{
+    gap:16px;
+    margin-top:18px;
+}
+
+.card-click{
+    transition:transform var(--va-transition), box-shadow var(--va-transition), border-color var(--va-transition);
+}
+
+.card-click:hover{
+    transform:translateY(-2px);
+    box-shadow:var(--va-shadow);
+    border-color:var(--va-border-strong);
+}
+
+input,
+select,
+textarea{
+    min-height:42px;
+    border:1px solid rgba(13,29,22,0.12);
+    border-radius:var(--va-radius-sm);
+    background:#f7faf7;
+    color:#15211a;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,0.8);
+    transition:border-color var(--va-transition), box-shadow var(--va-transition), background var(--va-transition);
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+    outline:none;
+    border-color:var(--va-primary);
+    box-shadow:0 0 0 3px rgba(23,155,99,0.18), inset 0 1px 0 rgba(255,255,255,0.8);
+}
+
+input::placeholder,
+textarea::placeholder{
+    color:#6f7f76;
+}
+
+button,
+.btn{
+    min-height:38px;
+    border-radius:var(--va-radius-sm);
+    background:linear-gradient(135deg, var(--va-primary), #0f8454);
+    color:#fff;
+    border:1px solid rgba(255,255,255,0.08);
+    box-shadow:0 8px 18px rgba(11,83,52,0.22);
+    font-weight:800;
+    transition:transform var(--va-transition), box-shadow var(--va-transition), background var(--va-transition), border-color var(--va-transition), opacity var(--va-transition);
+}
+
+button:hover,
+.btn:hover{
+    background:linear-gradient(135deg, var(--va-primary-strong), var(--va-primary));
+    transform:translateY(-1px);
+    box-shadow:0 12px 22px rgba(11,83,52,0.28);
+}
+
+button:focus-visible,
+.btn:focus-visible{
+    outline:3px solid rgba(23,155,99,0.30);
+    outline-offset:2px;
+}
+
+.btn-secondary,
+.botao-secundario-mov,
+.botao-pdf-financeiro,
+.botao-reimprimir-financeiro,
+.botao-voltar-importacao{
+    background:linear-gradient(135deg, #6f7f76, #586961) !important;
+    box-shadow:0 8px 18px rgba(0,0,0,0.16);
+}
+
+.btn-secondary:hover,
+.botao-secundario-mov:hover,
+.botao-pdf-financeiro:hover,
+.botao-reimprimir-financeiro:hover,
+.botao-voltar-importacao:hover{
+    background:linear-gradient(135deg, #83948b, #6f7f76) !important;
+}
+
+.btn-danger,
+.botao-cancelar-financeiro,
+.botao-remover-importacao{
+    background:linear-gradient(135deg, var(--va-danger), #9e3e3a) !important;
+    box-shadow:0 8px 18px rgba(145,46,42,0.22);
+}
+
+.btn-danger:hover,
+.botao-cancelar-financeiro:hover,
+.botao-remover-importacao:hover{
+    background:linear-gradient(135deg, var(--va-danger-strong), var(--va-danger)) !important;
+}
+
+.btn-warning{
+    background:linear-gradient(135deg, var(--va-warning), #b88916) !important;
+    color:#14120a !important;
+}
+
+.botao-tabela-compacto{
+    min-height:30px;
+    padding:6px 9px;
+    font-size:11px;
+    line-height:1.1;
+    box-shadow:none;
+}
+
+table{
+    border-collapse:separate;
+    border-spacing:0;
+}
+
+th,
+td{
+    border-bottom:1px solid var(--va-border);
+}
+
+th{
+    color:#9fe0bd;
+    background:rgba(8,20,15,0.72);
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:.035em;
+}
+
+td{
+    color:var(--va-text-soft);
+}
+
+tbody tr{
+    transition:background var(--va-transition);
+}
+
+tbody tr:hover{
+    background:rgba(23,155,99,0.055);
+}
+
+.tabela-scroll{
+    border-color:var(--va-border);
+    background:rgba(8,20,15,0.28);
+    border-radius:var(--va-radius);
+}
+
+.tabela-scroll thead th{
+    background:#102419;
+}
+
+.tag-status,
+.status-fiado-badge{
+    border-radius:999px;
+    letter-spacing:.01em;
+}
+
+.status-ok{
+    background:rgba(23,155,99,0.10);
+}
+
+.status-proximo{
+    background:var(--va-warning-soft);
+}
+
+.status-atrasado,
+.estoque-baixo{
+    background:var(--va-danger-soft);
+}
+
+.notificacao-ok,
+.produto-selecionado,
+.resumo-fiado{
+    background:rgba(8,20,15,0.72);
+    border-left-color:var(--va-primary);
+}
+
+.notificacao-alerta,
+.aviso-movimentacao{
+    background:var(--va-warning-soft);
+    border-left-color:var(--va-warning);
+}
+
+.notificacao-perigo{
+    background:var(--va-danger-soft);
+    border-left-color:var(--va-danger);
+}
+
+.titulo-card-linha p,
+.cabecalho-pagina-estoque p,
+.cabecalho-pagina-fiados p,
+.cabecalho-pagina-movimentacoes p,
+.cabecalho-fiado-detalhe p,
+.cabecalho-importar-fiado p,
+td small{
+    color:var(--va-muted);
+}
+
+.dashboard-topo,
+.cards-resumo-estoque,
+.cards-movimentacao-resumo,
+.cards-resumo-fiados,
+.cards-resumo-fiado-detalhe{
+    gap:14px;
+}
+
+.alerta-dashboard{
+    border:1px solid var(--va-border);
+    min-height:155px;
+}
+
+.alerta-dashboard:hover{
+    transform:translateY(-2px);
+    box-shadow:var(--va-shadow);
+}
+
+.alerta-estoque{
+    background:linear-gradient(135deg, rgba(220,169,40,0.18), var(--va-surface));
+    border-left-color:var(--va-warning);
+}
+
+.alerta-fiado,
+.card-retirada-resumo{
+    background:linear-gradient(135deg, rgba(198,79,74,0.16), var(--va-surface));
+    border-left-color:var(--va-danger);
+}
+
+.alerta-entrega,
+.card-caixa-liquido{
+    background:linear-gradient(135deg, rgba(23,155,99,0.16), var(--va-surface));
+    border-left-color:var(--va-primary);
+}
+
+.card-resumo-mov,
+.card-resumo-estoque,
+.card-resumo-fiado{
+    background:linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.01)), var(--va-surface);
+    border:1px solid var(--va-border);
+    border-radius:var(--va-radius-lg);
+}
+
+.card-resumo-mov::before,
+.card-resumo-estoque::before,
+.card-resumo-fiado::before{
+    width:4px;
+}
+
+.form-grid{
+    gap:10px;
+}
+
+.modal{
+    backdrop-filter:blur(4px);
+}
+
+.modal-conteudo{
+    background:var(--va-surface);
+    border:1px solid var(--va-border-strong);
+    box-shadow:var(--va-shadow);
+}
+
+.resultados-produtos{
+    background:#08140f;
+    border-color:var(--va-border);
+    box-shadow:var(--va-shadow-sm);
+}
+
+.item-produto-busca{
+    transition:background var(--va-transition);
+}
+
+.item-produto-busca:hover{
+    background:rgba(23,155,99,0.22);
+}
+
+.area-entrega-venda,
+.mini-card-caixa,
+.aviso-pagamento-geral-fiado,
+.total-importacao-box,
+.resumo-baixa-produtos-fiado div{
+    background:rgba(8,20,15,0.72);
+    border-color:var(--va-border-strong);
+}
+
+@media(max-width:850px){
+    .conteudo{
+        padding:18px;
+    }
+
+    h1{
+        font-size:25px;
+    }
+
+    .card{
+        padding:16px;
+    }
+}
+
+/* REDESIGN COMERCIAL 2.0 - produto premium, claro e guiado */
+
+:root{
+    --agro-page:#f3f6ef;
+    --agro-page-2:#e8efe4;
+    --agro-ink:#16251c;
+    --agro-text:#26382d;
+    --agro-muted:#6d7d72;
+    --agro-line:#dbe5d8;
+    --agro-card:#ffffff;
+    --agro-card-soft:#f8fbf6;
+    --agro-green:#137a4b;
+    --agro-green-2:#1ca66a;
+    --agro-green-3:#e7f5ec;
+    --agro-gold:#c59022;
+    --agro-gold-soft:#fff3d7;
+    --agro-red:#ba4b45;
+    --agro-red-soft:#fde9e7;
+    --agro-blue:#2f7ea3;
+    --agro-radius:16px;
+    --agro-radius-sm:10px;
+    --agro-shadow:0 18px 48px rgba(24,45,32,0.12);
+    --agro-shadow-soft:0 8px 24px rgba(24,45,32,0.08);
+}
+
+body{
+    background:
+        radial-gradient(circle at 18% 0%, rgba(28,166,106,0.14), transparent 28rem),
+        linear-gradient(135deg, var(--agro-page), #fbfcf8 42%, var(--agro-page-2));
+    color:var(--agro-text);
+}
+
+.layout{
+    min-height:100vh;
+    background:transparent;
+}
+
+.conteudo{
+    padding:30px 34px;
+    color:var(--agro-text);
+}
+
+.page-hero,
+.cabecalho-pagina-estoque,
+.cabecalho-pagina-fiados,
+.cabecalho-pagina-movimentacoes,
+.cabecalho-pagina-financeiro,
+.cabecalho-importar-fiado,
+.cabecalho-fiado-detalhe{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:18px;
+    margin-bottom:22px;
+    padding:22px 24px;
+    border:1px solid rgba(19,122,75,0.12);
+    border-radius:24px;
+    background:
+        linear-gradient(135deg, rgba(255,255,255,0.92), rgba(240,248,239,0.88)),
+        radial-gradient(circle at right, rgba(28,166,106,0.16), transparent 18rem);
+    box-shadow:var(--agro-shadow-soft);
+}
+
+.page-hero h1,
+.cabecalho-pagina-estoque h1,
+.cabecalho-pagina-fiados h1,
+.cabecalho-pagina-movimentacoes h1,
+.cabecalho-pagina-financeiro h1,
+.cabecalho-importar-fiado h1,
+.cabecalho-fiado-detalhe h1{
+    margin:4px 0 6px;
+    color:var(--agro-ink);
+    font-size:32px;
+}
+
+.page-hero p,
+.cabecalho-pagina-estoque p,
+.cabecalho-pagina-fiados p,
+.cabecalho-pagina-movimentacoes p,
+.cabecalho-pagina-financeiro p,
+.cabecalho-importar-fiado p,
+.cabecalho-fiado-detalhe p{
+    margin:0;
+    color:var(--agro-muted);
+    font-size:14px;
+}
+
+.eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    color:var(--agro-green);
+    font-size:12px;
+    font-weight:900;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+}
+
+.eyebrow::before{
+    content:"";
+    width:18px;
+    height:2px;
+    border-radius:999px;
+    background:var(--agro-green-2);
+}
+
+/* CONSULTA RAPIDA DE PRODUTO */
+.btn-consulta-produto-global{
+    flex-shrink:0;
+    background:#17324d;
+    color:#ffffff;
+    border:1px solid rgba(23,50,77,0.22);
+    border-radius:12px;
+    padding:12px 18px;
+    box-shadow:0 12px 24px rgba(15,35,54,0.16);
+    font-size:14px;
+    font-weight:800;
+    white-space:nowrap;
+}
+
+.btn-consulta-produto-global:hover{
+    background:#0f253a;
+    color:#ffffff;
+}
+
+.modal-consulta-produto{
+    display:none;
+    position:fixed;
+    inset:0;
+    z-index:1200;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+    background:rgba(10,25,47,0.68);
+    backdrop-filter:blur(3px);
+}
+
+.modal-consulta-produto.ativo{
+    display:flex;
+}
+
+.consulta-produto-conteudo{
+    width:min(760px, 100%);
+    max-height:88vh;
+    overflow:auto;
+    border:1px solid rgba(31,51,71,0.12);
+    border-radius:20px;
+    background:#fbfaf5;
+    color:#1f3347;
+    box-shadow:0 28px 70px rgba(10,25,47,0.34);
+    padding:24px;
+}
+
+.consulta-produto-topo{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:18px;
+    margin-bottom:18px;
+}
+
+.consulta-produto-topo h2{
+    margin:6px 0 0;
+    color:#1f3347;
+    font-size:26px;
+    line-height:1.2;
+}
+
+.fechar-consulta-produto{
+    width:40px;
+    height:40px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    padding:0;
+    border-radius:999px;
+    background:#ffffff;
+    color:#1f3347;
+    border:1px solid rgba(31,51,71,0.14);
+    box-shadow:none;
+    font-size:26px;
+    line-height:1;
+}
+
+.fechar-consulta-produto:hover{
+    background:#eef3f6;
+    color:#1f3347;
+}
+
+.input-consulta-produto{
+    width:100%;
+    margin:0 0 16px;
+    padding:14px 16px;
+    border:1px solid rgba(31,51,71,0.16);
+    border-radius:12px;
+    background:#ffffff;
+    color:#1f3347;
+    font-size:16px;
+    font-weight:650;
+}
+
+.resultado-consulta-produto{
+    display:grid;
+    gap:12px;
+}
+
+.mensagem-consulta-produto{
+    margin:0;
+    padding:14px 16px;
+    border-radius:12px;
+    background:#ffffff;
+    color:#4f6274;
+    font-size:15px;
+    font-weight:600;
+}
+
+.mensagem-consulta-produto.erro{
+    color:#8b1e1e;
+}
+
+.card-consulta-produto{
+    border:1px solid rgba(31,51,71,0.1);
+    border-radius:14px;
+    background:#ffffff;
+    padding:16px;
+    box-shadow:0 12px 26px rgba(10,25,47,0.08);
+}
+
+.card-consulta-produto-cabecalho{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:12px;
+    margin-bottom:12px;
+}
+
+.card-consulta-produto-cabecalho strong{
+    color:#1f3347;
+    font-size:18px;
+    line-height:1.25;
+}
+
+.status-consulta-ativo,
+.status-consulta-inativo{
+    flex-shrink:0;
+    border-radius:999px;
+    padding:5px 10px;
+    font-size:12px;
+    font-weight:850;
+}
+
+.status-consulta-ativo{
+    background:rgba(19,122,75,0.12);
+    color:#137a4b;
+}
+
+.status-consulta-inativo{
+    background:rgba(122,39,19,0.12);
+    color:#7a2713;
+}
+
+.grid-consulta-produto{
+    display:grid;
+    grid-template-columns:repeat(4, minmax(0, 1fr));
+    gap:10px;
+}
+
+.grid-consulta-produto p,
+.observacao-consulta-produto{
+    margin:0;
+    color:#1f3347;
+    font-size:15px;
+    font-weight:750;
+}
+
+.grid-consulta-produto span,
+.observacao-consulta-produto span{
+    display:block;
+    margin-bottom:3px;
+    color:#64778a;
+    font-size:12px;
+    font-weight:850;
+    text-transform:uppercase;
+    letter-spacing:.04em;
+}
+
+.observacao-consulta-produto{
+    margin-top:12px;
+    padding-top:12px;
+    border-top:1px solid rgba(31,51,71,0.1);
+    line-height:1.4;
+}
+
+@media (max-width: 760px){
+    .btn-consulta-produto-global{
+        width:100%;
+        justify-content:center;
+    }
+
+    .consulta-produto-conteudo{
+        padding:20px;
+    }
+
+    .consulta-produto-topo{
+        align-items:center;
+    }
+
+    .grid-consulta-produto{
+        grid-template-columns:repeat(2, minmax(0, 1fr));
+    }
+}
+
+/* ORCAMENTOS - VALE AGRO */
+.pagina-orcamentos .page-hero{
+    padding:18px 22px;
+    margin-bottom:16px;
+}
+
+.pagina-orcamentos .page-hero p{
+    font-size:13px;
+    font-weight:500;
+    line-height:1.35;
+}
+
+.card-novo-orcamento,
+.card-lista-orcamentos{
+    padding:18px;
+    border:1px solid rgba(31,51,71,0.13);
+}
+
+.card-lista-orcamentos{
+    margin-top:16px;
+}
+
+.pagina-orcamentos .titulo-card-linha{
+    margin-bottom:12px;
+}
+
+.pagina-orcamentos .titulo-card-linha h2{
+    font-size:22px;
+}
+
+.orcamento-secao{
+    margin-top:13px;
+    padding-top:13px;
+    border-top:1px solid rgba(31,51,71,0.1);
+}
+
+.orcamento-secao:first-of-type{
+    border-top:0;
+    padding-top:0;
+}
+
+.orcamento-secao h3{
+    margin:0 0 10px;
+    color:#1f3347;
+    font-size:16px;
+    line-height:1.2;
+}
+
+.pagina-orcamentos label{
+    display:block;
+    color:#1f3347;
+    font-weight:800;
+}
+
+.pagina-orcamentos label > span,
+.campo-sugestao-orcamento > label{
+    display:block;
+    margin-bottom:5px;
+    color:#344b61;
+    font-size:12px;
+    font-weight:800;
+    text-transform:uppercase;
+    letter-spacing:.03em;
+}
+
+.pagina-orcamentos input,
+.pagina-orcamentos select{
+    width:100%;
+    min-height:43px;
+    margin-bottom:0;
+    padding:10px 12px;
+    border:1.5px solid rgba(10,25,47,0.22);
+    border-radius:10px;
+    background:#ffffff;
+    color:#1f3347;
+    font-size:15px;
+    font-weight:650;
+}
+
+.pagina-orcamentos input::placeholder{
+    color:#7d8b99;
+    font-weight:600;
+}
+
+.pagina-orcamentos input:focus,
+.pagina-orcamentos select:focus{
+    outline:none;
+    border-color:#0a192f;
+    box-shadow:0 0 0 3px rgba(10,25,47,0.1);
+}
+
+.form-grid-orcamento-cliente{
+    grid-template-columns:1.2fr .75fr 1fr;
+    gap:11px;
+    margin-bottom:0;
+}
+
+.form-grid-orcamento-produto{
+    grid-template-columns:minmax(260px,1.6fr) minmax(105px,.55fr) minmax(145px,.7fr) auto;
+    gap:11px;
+    align-items:end;
+    margin-bottom:0;
+}
+
+.form-grid-orcamento-produto button{
+    min-height:43px;
+    margin-bottom:0;
+}
+
+/* ORÇAMENTOS - BUSCAS E AUTOCOMPLETE */
+
+.pagina-orcamentos .orcamento-secao-cliente{
+    position:relative;
+    z-index:80;
+}
+
+.pagina-orcamentos .orcamento-secao-cliente:focus-within{
+    z-index:12000;
+}
+
+.campo-sugestao-orcamento{
+    position:relative;
+    z-index:30;
+}
+
+.campo-sugestao-orcamento:focus-within{
+    z-index:10000;
+}
+
+.resultado-produtos-orcamento{
+    display:none;
+    position:absolute;
+    top:calc(100% + 6px);
+    left:0;
+    right:0;
+    z-index:9999;
+    max-height:280px;
+    overflow-y:auto;
+    padding:8px;
+    border:1px solid #efd9b9;
+    border-radius:12px;
+    background:#fff8ed;
+    box-shadow:0 14px 30px rgba(31,47,37,0.10);
+}
+
+.resultado-clientes-orcamento{
+    display:none;
+    position:absolute;
+    top:calc(100% + 6px);
+    left:0;
+    right:0;
+    z-index:9999;
+    max-height:230px;
+    overflow-y:auto;
+    padding:6px;
+    border:1px solid #d9d9d9;
+    border-radius:12px;
+    background:#ffffff;
+    box-shadow:0 14px 30px rgba(0,0,0,0.12);
+    pointer-events:auto;
+}
+
+.pagina-orcamentos .campo-cliente-orcamento{
+    z-index:12000;
+}
+
+.pagina-orcamentos .resultado-cliente-orcamento{
+    width:100%;
+    display:block;
+    margin:0 0 6px;
+    padding:11px 12px;
+    border:1px solid #e2e2e2;
+    border-radius:10px;
+    background:#ffffff;
+    color:#111111;
+    text-align:left;
+    box-shadow:none;
+    cursor:pointer;
+    pointer-events:auto;
+    user-select:none;
+}
+
+.pagina-orcamentos .resultado-cliente-orcamento:last-child{
+    margin-bottom:0;
+}
+
+.pagina-orcamentos .resultado-cliente-orcamento:hover{
+    background:#f7f7f7;
+    border-color:#d4d4d4;
+}
+
+.pagina-orcamentos .resultado-cliente-orcamento strong,
+.pagina-orcamentos .resultado-cliente-orcamento span{
+    display:block;
+}
+
+.pagina-orcamentos .resultado-cliente-orcamento strong{
+    margin-bottom:4px;
+    color:#111111;
+    font-size:14px;
+    font-weight:800;
+}
+
+.pagina-orcamentos .resultado-cliente-orcamento span{
+    color:#222222;
+    font-size:13px;
+    font-weight:600;
+    line-height:1.35;
+}
+
+.pagina-orcamentos .resultado-produto-orcamento{
+    width:100%;
+    display:block;
+    margin:0 0 8px;
+    padding:14px 15px;
+    border:1px solid #edcf9d !important;
+    border-left:5px solid #f28c1a !important;
+    border-radius:10px;
+    background:linear-gradient(135deg, #fff3df 0%, #fffaf2 100%) !important;
+    color:#1f2f25 !important;
+    text-align:left;
+    box-shadow:0 8px 18px rgba(89,61,21,0.08) !important;
+    cursor:pointer;
+}
+
+.pagina-orcamentos .resultado-produto-orcamento:last-child{
+    margin-bottom:0;
+}
+
+.pagina-orcamentos .resultado-produto-orcamento:hover{
+    background:linear-gradient(135deg, #ffebc9 0%, #fff6e8 100%) !important;
+    border-color:#e8bd75 !important;
+    color:#1f2f25 !important;
+    transform:translateY(-1px);
+}
+
+.pagina-orcamentos .resultado-produto-orcamento strong,
+.pagina-orcamentos .resultado-produto-orcamento span{
+    display:block;
+}
+
+.pagina-orcamentos .resultado-produto-orcamento strong{
+    margin-bottom:5px;
+    color:#15251b !important;
+    font-size:14px;
+    font-weight:900;
+}
+
+.pagina-orcamentos .resultado-produto-orcamento span{
+    color:#52616f !important;
+    font-size:13px;
+    font-weight:600;
+    line-height:1.35;
+}
+
+.pagina-orcamentos .resultado-produto-orcamento.vazio{
+    cursor:default;
+}
+
+.pagina-orcamentos .resultado-produto-orcamento.vazio:hover{
+    background:linear-gradient(135deg, #fff3df 0%, #fffaf2 100%) !important;
+    border-color:#edcf9d !important;
+    transform:none;
+}
+
+.produto-selecionado-orcamento{
+    margin-top:10px;
+    padding:10px 12px;
+    border-left:4px solid #137a4b;
+    border-radius:10px;
+    background:#fbfaf5;
+    color:#1f3347;
+    font-size:13px;
+    font-weight:600;
+}
+
+.produto-selecionado-orcamento strong,
+.produto-selecionado-orcamento span{
+    margin-right:10px;
+}
+
+.tabela-scroll-orcamentos table{
+    margin-top:0;
+}
+
+.tabela-scroll-orcamentos th,
+.tabela-scroll-orcamentos td{
+    padding:9px;
+}
+
+.tabela-scroll-orcamentos input{
+    min-width:100px;
+    margin:0;
+    padding:8px 9px;
+}
+
+.orcamento-totalizadores{
+    display:grid;
+    grid-template-columns:minmax(150px,1fr) 160px 160px minmax(170px,1fr);
+    gap:12px;
+    align-items:end;
+    padding:12px;
+    border:1px solid rgba(31,51,71,0.1);
+    border-radius:12px;
+    background:#fbfaf5;
+}
+
+.orcamento-totalizadores span,
+.orcamento-totalizadores label{
+    display:block;
+    margin-bottom:4px;
+    color:#64778a;
+    font-size:12px;
+    font-weight:800;
+    text-transform:uppercase;
+    letter-spacing:.035em;
+}
+
+.orcamento-totalizadores strong{
+    color:#1f3347;
+    font-size:23px;
+}
+
+.orcamento-totalizadores input{
+    margin:0;
+}
+
+.total-final-orcamento{
+    text-align:right;
+}
+
+.total-final-orcamento strong{
+    font-size:27px;
+}
+
+.acoes-orcamento,
+.acoes-tabela-orcamento{
+    display:flex;
+    flex-wrap:wrap;
+    gap:9px;
+    align-items:center;
+}
+
+.acoes-orcamento{
+    justify-content:flex-end;
+    margin-top:14px;
+}
+
+.acoes-tabela-orcamento button{
+    padding:8px 11px;
+    font-size:13px;
+}
+
+.btn-remover-orcamento{
+    min-width:34px;
+    padding:8px 10px !important;
+    border:1px solid rgba(148,42,42,0.22);
+    border-radius:9px;
+    background:rgba(148,42,42,0.08);
+    color:#942a2a;
+    font-size:13px;
+    font-weight:900;
+    line-height:1;
+    box-shadow:none;
+}
+
+.btn-remover-orcamento:hover{
+    border-color:rgba(148,42,42,0.34);
+    background:rgba(148,42,42,0.14);
+    color:#7b2424;
+}
+
+.status-orcamento{
+    display:inline-flex;
+    align-items:center;
+    border-radius:999px;
+    padding:6px 10px;
+    font-size:12px;
+    font-weight:850;
+}
+
+.status-orcamento-aberto{ background:rgba(19,122,75,0.12); color:#137a4b; }
+.status-orcamento-aprovado{ background:rgba(23,50,77,0.12); color:#17324d; }
+.status-orcamento-cancelado{ background:rgba(148,42,42,0.12); color:#942a2a; }
+.status-orcamento-expirado{ background:rgba(130,96,26,0.14); color:#82601a; }
+
+.modal-detalhe-orcamento{
+    background:#fbfaf5 !important;
+    color:#1f3347;
+    max-width:980px;
+    max-height:90vh;
+    overflow:auto;
+}
+
+.detalhe-orcamento-topo{
+    display:flex;
+    justify-content:space-between;
+    gap:18px;
+    align-items:flex-start;
+    margin-bottom:16px;
+}
+
+.detalhe-orcamento-topo h2{
+    margin:5px 0;
+    color:#1f3347;
+}
+
+.detalhe-orcamento-topo p{
+    margin:0;
+    color:#64778a;
+    font-weight:650;
+}
+
+.grid-dados-orcamento,
+.resumo-detalhe-orcamento{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+    gap:10px;
+}
+
+.grid-dados-orcamento{
+    margin-bottom:16px;
+}
+
+.resumo-detalhe-orcamento{
+    margin-top:14px;
+}
+
+.grid-dados-orcamento p,
+.resumo-detalhe-orcamento p{
+    margin:0;
+    padding:10px 12px;
+    border-radius:12px;
+    background:#ffffff;
+    color:#1f3347;
+    font-weight:750;
+}
+
+.grid-dados-orcamento span,
+.resumo-detalhe-orcamento span{
+    display:block;
+    margin-bottom:4px;
+    color:#64778a;
+    font-size:12px;
+    font-weight:850;
+    text-transform:uppercase;
+}
+
+.resumo-detalhe-orcamento .total{
+    background:#172b41 !important;
+    color:#ffffff !important;
+}
+
+.resumo-detalhe-orcamento .total span{
+    color:rgba(255,255,255,0.78);
+}
+
+.observacao-detalhe-orcamento{
+    margin-top:14px;
+    padding:12px;
+    border-radius:12px;
+    background:#ffffff;
+    color:#1f3347;
+}
+
+@media (max-width: 980px){
+    .form-grid-orcamento-cliente,
+    .form-grid-orcamento-produto,
+    .orcamento-totalizadores{
+        grid-template-columns:1fr;
+    }
+
+    .total-final-orcamento{
+        text-align:left;
+    }
+}
+
+.card{
+    background:var(--agro-card);
+    border:1px solid rgba(22,37,28,0.08);
+    border-radius:var(--agro-radius);
+    color:var(--agro-text);
+    box-shadow:var(--agro-shadow-soft);
+    padding:22px;
+    margin-bottom:18px;
+}
+
+.card:hover{
+    border-color:rgba(19,122,75,0.20);
+}
+
+.card h2{
+    color:var(--agro-ink);
+    font-size:19px;
+    margin-bottom:14px;
+}
+
+.card h3{
+    color:var(--agro-muted);
+    font-size:13px;
+}
+
+.card p{
+    color:var(--agro-ink);
+    font-size:28px;
+}
+
+.titulo-card-linha h2{
+    color:var(--agro-ink);
+}
+
+.titulo-card-linha p,
+td small{
+    color:var(--agro-muted);
+}
+
+input,
+select,
+textarea{
+    background:#ffffff;
+    color:var(--agro-ink);
+    border:1px solid #d5e1d2;
+    border-radius:12px;
+    min-height:44px;
+    padding:11px 13px;
+    box-shadow:none;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+    border-color:var(--agro-green-2);
+    box-shadow:0 0 0 4px rgba(28,166,106,0.14);
+}
+
+button,
+.btn{
+    min-height:40px;
+    border-radius:12px;
+    background:linear-gradient(135deg, var(--agro-green-2), var(--agro-green));
+    border:0;
+    box-shadow:0 12px 24px rgba(19,122,75,0.20);
+    color:#fff;
+}
+
+button:hover,
+.btn:hover{
+    background:linear-gradient(135deg, #22b976, var(--agro-green));
+    box-shadow:0 16px 30px rgba(19,122,75,0.25);
+}
+
+.btn-secondary,
+.botao-secundario-mov,
+.botao-pdf-financeiro,
+.botao-reimprimir-financeiro,
+.botao-voltar-importacao{
+    background:#eef3ed !important;
+    color:var(--agro-text) !important;
+    border:1px solid #d7e2d4 !important;
+    box-shadow:none !important;
+}
+
+.btn-secondary:hover,
+.botao-secundario-mov:hover,
+.botao-pdf-financeiro:hover,
+.botao-reimprimir-financeiro:hover,
+.botao-voltar-importacao:hover{
+    background:#e3ece0 !important;
+}
+
+.btn-danger,
+.botao-cancelar-financeiro,
+.botao-remover-importacao{
+    background:var(--agro-red-soft) !important;
+    color:#992f2a !important;
+    border:1px solid #f2c5c2 !important;
+    box-shadow:none !important;
+}
+
+.btn-danger:hover,
+.botao-cancelar-financeiro:hover,
+.botao-remover-importacao:hover{
+    background:#f8d5d2 !important;
+}
+
+table{
+    border-collapse:separate;
+    border-spacing:0;
+}
+
+th{
+    background:#f1f6ef !important;
+    color:#52665a;
+    border-bottom:1px solid var(--agro-line);
+}
+
+td{
+    color:#2f4035;
+    border-bottom:1px solid #edf2eb;
+}
+
+tbody tr:hover{
+    background:#f8fbf6;
+}
+
+.tabela-scroll{
+    background:#ffffff;
+    border:1px solid var(--agro-line);
+    border-radius:16px;
+    box-shadow:none;
+}
+
+.tabela-scroll::-webkit-scrollbar-track{
+    background:#eef4ec;
+}
+
+.tabela-scroll::-webkit-scrollbar-thumb{
+    background:#b7c7bc;
+}
+
+.tag-status,
+.status-fiado-badge{
+    box-shadow:none !important;
+}
+
+.produto-selecionado,
+.area-entrega-venda,
+.mini-card-caixa,
+.aviso-pagamento-geral-fiado,
+.aviso-movimentacao,
+.total-importacao-box,
+.resumo-baixa-produtos-fiado div{
+    background:var(--agro-card-soft);
+    border:1px solid var(--agro-line);
+    border-left:4px solid var(--agro-green-2);
+    color:var(--agro-text);
+}
+
+.notificacao-alerta{
+    background:var(--agro-gold-soft);
+    border-left-color:var(--agro-gold);
+    color:#6b4c08;
+}
+
+.status-atrasado,
+.estoque-baixo{
+    background:var(--agro-red-soft);
+}
+
+/* Dashboard executivo */
+
+.pagina-dashboard{
+    display:grid;
+    grid-template-columns:minmax(0, 1.15fr) minmax(360px, .85fr);
+    gap:18px;
+    align-items:start;
+}
+
+.pagina-dashboard .page-hero{
+    grid-column:1 / -1;
+}
+
+.btn-hero{
+    min-width:150px;
+}
+
+.dashboard-topo{
+    grid-column:1 / -1;
+    display:grid;
+    grid-template-columns:minmax(260px, .9fr) repeat(3, minmax(220px, 1fr));
+    gap:14px;
+    margin:0;
+}
+
+.filtro-dashboard{
+    background:#123d2b;
+    color:#fff;
+}
+
+.filtro-dashboard h2{
+    color:#fff;
+}
+
+.filtro-dashboard select,
+.filtro-dashboard input{
+    background:rgba(255,255,255,0.96);
+}
+
+.alerta-dashboard{
+    min-height:164px;
+    color:var(--agro-text);
+    position:relative;
+    overflow:hidden;
+}
+
+.alerta-dashboard::after{
+    content:"";
+    position:absolute;
+    right:-36px;
+    top:-36px;
+    width:110px;
+    height:110px;
+    border-radius:999px;
+    background:rgba(255,255,255,0.42);
+}
+
+.alerta-dashboard h3{
+    color:var(--agro-ink);
+    font-size:16px;
+}
+
+.alerta-dashboard p{
+    font-size:31px;
+}
+
+.alerta-dashboard span,
+.alerta-dashboard strong{
+    color:var(--agro-muted);
+}
+
+.alerta-estoque{
+    background:linear-gradient(135deg, #fff7df, #fffdf7);
+    border-left:0;
+}
+
+.alerta-fiado{
+    background:linear-gradient(135deg, #ffeceb, #fffafa);
+    border-left:0;
+}
+
+.alerta-entrega{
+    background:linear-gradient(135deg, #e7f8ee, #fbfffc);
+    border-left:0;
+}
+
+.dashboard-kpis{
+    grid-column:1;
+    grid-template-columns:repeat(3, minmax(0, 1fr));
+    margin:0;
+}
+
+.dashboard-kpis .card{
+    min-height:126px;
+}
+
+.dashboard-kpis .card:first-child{
+    grid-column:span 2;
+    background:linear-gradient(135deg, #123d2b, #176b46);
+}
+
+.dashboard-kpis .card:first-child h3,
+.dashboard-kpis .card:first-child p{
+    color:#fff;
+}
+
+.painel-secundario{
+    grid-column:2;
+    grid-row:3 / span 2;
+}
+
+.card-dashboard-grafico{
+    grid-column:1;
+}
+
+.card-dashboard-ranking{
+    grid-column:1 / -1;
+}
+
+/* Vendas como PDV */
+
+.pagina-vendas{
+    display:grid;
+    grid-template-columns:minmax(0, 1fr) minmax(380px, 430px);
+    grid-template-areas:
+        "hero hero"
+        "busca finalizar"
+        "carrinho finalizar"
+        "entrega finalizar";
+    gap:18px;
+    align-items:start;
+}
+
+.pagina-vendas .page-hero{
+    grid-area:hero;
+    margin-bottom:0;
+}
+
+.card-busca-venda{
+    grid-area:busca;
+    margin-bottom:0;
+}
+
+.card-carrinho-venda{
+    grid-area:carrinho;
+    margin-bottom:0;
+}
+
+.card-entrega-venda{
+    grid-area:entrega;
+    margin-bottom:0;
+}
+
+.card-finalizar-venda{
+    grid-area:finalizar;
+    position:sticky;
+    top:24px;
+    margin-bottom:0;
+    background:linear-gradient(180deg, #123d2b, #0e2e22);
+    color:#fff;
+    border:0;
+    box-shadow:0 24px 55px rgba(18,61,43,0.28);
+}
+
+.card-finalizar-venda h2,
+.card-finalizar-venda label{
+    color:#fff;
+}
+
+.card-finalizar-venda input,
+.card-finalizar-venda select{
+    background:#f9fbf7;
+}
+
+.card-finalizar-venda .produto-selecionado,
+.card-finalizar-venda .notificacao-alerta{
+    color:var(--agro-text);
+}
+
+.card-finalizar-venda .venda-finalizacao{
+    grid-template-columns:1fr;
+}
+
+.desconto-venda-box{
+    margin-top:14px;
+    max-width:260px;
+}
+
+.caixa-dinheiro{
+    grid-template-columns:1fr;
+}
+
+.mini-card-caixa{
+    min-height:86px;
+    background:rgba(255,255,255,0.10);
+    border:1px solid rgba(255,255,255,0.14);
+    border-left:4px solid #89e8b3;
+}
+
+.mini-card-caixa span,
+.mini-card-caixa strong{
+    color:#fff;
+}
+
+.mini-card-caixa strong{
+    font-size:30px;
+}
+
+.btn-finalizar-venda{
+    width:100%;
+    min-height:56px;
+    margin-top:10px;
+    font-size:17px;
+    background:linear-gradient(135deg, #37c986, #1ca66a);
+    box-shadow:0 18px 34px rgba(28,166,106,0.26);
+}
+
+.card-carrinho-venda table{
+    margin-top:0;
+}
+
+.card-carrinho-venda th,
+.card-carrinho-venda td{
+    padding:11px 10px;
+}
+
+.checkbox-entrega{
+    background:#f4f8f2;
+    border:1px solid var(--agro-line);
+    color:var(--agro-text);
+    border-radius:14px;
+    padding:13px 14px;
+}
+
+/* Abas do detalhe A Prazo */
+
+.tabs-fiado-detalhe{
+    display:flex;
+    gap:8px;
+    padding:8px;
+    margin-bottom:18px;
+    border:1px solid var(--agro-line);
+    border-radius:18px;
+    background:#fff;
+    box-shadow:var(--agro-shadow-soft);
+}
+
+.tab-fiado{
+    flex:1;
+    background:transparent;
+    color:var(--agro-muted);
+    box-shadow:none;
+    border:1px solid transparent;
+}
+
+.tab-fiado:hover{
+    background:#f3f8f1;
+    color:var(--agro-ink);
+    box-shadow:none;
+}
+
+.tab-fiado.ativo{
+    background:linear-gradient(135deg, var(--agro-green-2), var(--agro-green));
+    color:#fff;
+    box-shadow:0 10px 24px rgba(19,122,75,0.18);
+}
+
+.painel-fiado-tab{
+    display:none;
+    animation:agroFadeUp 180ms ease both;
+}
+
+.painel-fiado-tab.ativo{
+    display:block;
+}
+
+.grid-pagamento-extrato-fiado.painel-fiado-tab.ativo{
+    display:grid;
+}
+
+.pagina-fiado-detalhe .cards-resumo-fiado-detalhe{
+    grid-template-columns:repeat(3, minmax(0, 1fr));
+    margin-top:0;
+}
+
+.pagina-fiado-detalhe .cards-resumo-fiado-detalhe .card{
+    margin-bottom:0;
+}
+
+.card-pagamento-unico-fiado{
+    border-left:0;
+}
+
+.card-extrato-limpo-fiado{
+    background:linear-gradient(135deg, #f7faf4, #fff);
+}
+
+.barra-acoes-baixa-fiado,
+.botoes-fiado-detalhe{
+    display:flex;
+    gap:9px;
+    flex-wrap:wrap;
+}
+
+/* Estoque, entregas e operacionais */
+
+.pagina-estoque .card-cadastro-produto,
+.card-nova-movimentacao,
+.card-filtro-financeiro,
+.card-busca-fiados,
+body:has(#tabelaEntregasAbertas) .card:nth-of-type(2){
+    background:#fbfdf9;
+    border-style:dashed;
+}
+
+.card-importacao-fiado,
+.card-aviso-importacao{
+    background:linear-gradient(135deg, #fff8e7, #fff);
+    border-color:#f0dfb4;
+}
+
+.card-finalizar-importacao{
+    background:linear-gradient(135deg, #123d2b, #176b46);
+    color:#fff;
+}
+
+.card-finalizar-importacao h2,
+.card-finalizar-importacao p{
+    color:#fff;
+}
+
+.card-clientes-fiados table button,
+.card-produtos-cadastrados table button,
+.acoes-financeiro button,
+.acoes-movimentacao button,
+.acoes-entrega button,
+.botao-tabela-compacto{
+    min-height:32px;
+    padding:7px 10px;
+    border-radius:10px;
+    font-size:11px;
+}
+
+.pagina-acao-rapida .cards{
+    grid-template-columns:repeat(5, minmax(0, 1fr));
+    margin-top:0;
+}
+
+.pagina-acao-rapida .cards .card{
+    margin-bottom:0;
+}
+
+.pagina-acao-rapida:not(.pagina-fiados-atrasados) .cards .card:first-child{
+    background:linear-gradient(135deg, #123d2b, #176b46);
+}
+
+.pagina-acao-rapida:not(.pagina-fiados-atrasados) .cards .card:first-child h3,
+.pagina-acao-rapida:not(.pagina-fiados-atrasados) .cards .card:first-child p{
+    color:#fff;
+}
+
+.pagina-entregas > .card:nth-of-type(2),
+.pagina-estoque-baixo > .card:last-child,
+.pagina-fiados-atrasados > .card:last-child{
+    border-top:5px solid var(--agro-green-2);
+}
+
+.pagina-entregas .page-hero{
+    background:
+        linear-gradient(135deg, rgba(255,255,255,0.94), rgba(239,250,244,0.92)),
+        radial-gradient(circle at right, rgba(47,126,163,0.16), transparent 18rem);
+}
+
+.pagina-acao-rapida .page-hero{
+    background:
+        linear-gradient(135deg, rgba(255,255,255,0.94), rgba(255,248,231,0.90)),
+        radial-gradient(circle at right, rgba(197,144,34,0.16), transparent 18rem);
+}
+
+.pagina-fiados-atrasados .page-hero{
+    background:
+        linear-gradient(135deg, rgba(255,255,255,0.94), rgba(253,233,231,0.92)),
+        radial-gradient(circle at right, rgba(186,75,69,0.16), transparent 18rem);
+}
+
+.pagina-importar-fiado{
+    counter-reset:import-step;
+}
+
+.pagina-importar-fiado .card-dados-importacao,
+.pagina-importar-fiado .card-itens-importacao,
+.pagina-importar-fiado .card-finalizar-importacao{
+    position:relative;
+    padding-left:76px;
+}
+
+.pagina-importar-fiado .card-dados-importacao::before,
+.pagina-importar-fiado .card-itens-importacao::before,
+.pagina-importar-fiado .card-finalizar-importacao::before{
+    counter-increment:import-step;
+    content:counter(import-step);
+    position:absolute;
+    left:22px;
+    top:22px;
+    width:36px;
+    height:36px;
+    border-radius:999px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:var(--agro-green-3);
+    color:var(--agro-green);
+    font-weight:900;
+}
+
+.pagina-importar-fiado .card-finalizar-importacao::before{
+    background:rgba(255,255,255,0.16);
+    color:#fff;
+}
+
+.pagina-movimentacoes .card-nova-movimentacao{
+    background:linear-gradient(135deg, #ffffff, #f4faf5);
+}
+
+.pagina-movimentacoes .card-historico-movimentacoes,
+.pagina-estoque .card-produtos-cadastrados,
+.card-clientes-fiados{
+    border-top:5px solid var(--agro-green-2);
+}
+
+@keyframes agroFadeUp{
+    from{
+        opacity:0;
+        transform:translateY(8px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+@media(max-width:1280px){
+    .pagina-dashboard,
+    .pagina-vendas{
+        grid-template-columns:1fr;
+        grid-template-areas:none;
+    }
+
+    .pagina-vendas .page-hero,
+    .card-busca-venda,
+    .card-carrinho-venda,
+    .card-entrega-venda,
+    .card-finalizar-venda{
+        grid-area:auto;
+    }
+
+    .card-finalizar-venda{
+        position:static;
+    }
+
+    .dashboard-kpis,
+    .painel-secundario,
+    .card-dashboard-grafico,
+    .card-dashboard-ranking{
+        grid-column:auto;
+        grid-row:auto;
+    }
+}
+
+@media(max-width:900px){
+    .layout{
+        flex-direction:column;
+    }
+
+    .conteudo{
+        padding:18px;
+    }
+
+    .page-hero,
+    .cabecalho-pagina-estoque,
+    .cabecalho-pagina-fiados,
+    .cabecalho-pagina-movimentacoes,
+    .cabecalho-importar-fiado,
+    .cabecalho-fiado-detalhe{
+        align-items:flex-start;
+        flex-direction:column;
+        border-radius:18px;
+    }
+
+    .dashboard-topo,
+    .dashboard-kpis,
+    .pagina-fiado-detalhe .cards-resumo-fiado-detalhe{
+        grid-template-columns:1fr;
+    }
+
+    .tabs-fiado-detalhe{
+        flex-direction:column;
+    }
+}
+
+body:has(#nomeClienteFiado) .conteudo.pagina-fiado-detalhe{
+    max-width:none;
+    padding:30px 34px;
+    overflow-x:visible;
+}
+
+body:has(#nomeClienteFiado) .pagina-fiado-detalhe .cards-resumo-fiado-detalhe{
+    grid-template-columns:repeat(3, minmax(0, 1fr));
+    gap:14px;
+}
+
+body:has(#nomeClienteFiado) .pagina-fiado-detalhe .card{
+    min-width:0;
+}
+
+
+:root{
+    --premium-bg:#f5f7f2;
+    --premium-panel:#ffffff;
+    --premium-panel-soft:#f7faf5;
+    --premium-ink:#1f2f25;
+    --premium-text:#33463a;
+    --premium-muted:#66786d;
+    --premium-faint:#eef3eb;
+    --premium-line:#d8e2d5;
+    --premium-green:#256f4a;
+    --premium-green-strong:#168052;
+    --premium-green-soft:#e6f1ea;
+    --premium-gold:#a97816;
+    --premium-gold-soft:#fff4d9;
+    --premium-red:#a8423d;
+    --premium-red-soft:#f9e6e4;
+    --premium-focus:rgba(37,111,74,0.18);
+}
+
+body{
+    background:
+        linear-gradient(135deg, rgba(37,111,74,0.08), transparent 26rem),
+        linear-gradient(180deg, #fbfcf7 0%, var(--premium-bg) 100%);
+    color:var(--premium-text);
+    text-rendering:optimizeLegibility;
+}
+
+.layout{
+    align-items:stretch;
+}
+
+.conteudo{
+    min-width:0;
+}
+
+.card,
+.page-hero,
+.cabecalho-pagina-estoque,
+.cabecalho-pagina-fiados,
+.cabecalho-pagina-movimentacoes,
+.cabecalho-pagina-financeiro,
+.cabecalho-importar-fiado,
+.cabecalho-fiado-detalhe{
+    max-width:100%;
+    overflow:visible;
+}
+
+.card{
+    color:var(--premium-text);
+}
+
+.card h2,
+.card h3,
+.page-hero h1,
+.cabecalho-pagina-estoque h1,
+.cabecalho-pagina-fiados h1,
+.cabecalho-pagina-movimentacoes h1,
+.cabecalho-pagina-financeiro h1,
+.cabecalho-importar-fiado h1,
+.cabecalho-fiado-detalhe h1{
+    color:var(--premium-ink);
+}
+
+.card h3{
+    color:#53675c;
+}
+
+.card p,
+.card-resumo-estoque p,
+.card-resumo-mov p,
+.card-resumo-fiado p{
+    color:#24372c;
+    font-weight:850;
+}
+
+.dashboard-kpis .card:first-child p,
+.dashboard-kpis .card:first-child h3,
+.pagina-acao-rapida:not(.pagina-fiados-atrasados) .cards .card:first-child p,
+.pagina-acao-rapida:not(.pagina-fiados-atrasados) .cards .card:first-child h3{
+    color:#fff;
+}
+
+.form-grid,
+.venda-grid,
+.dashboard-topo,
+.cards{
+    min-width:0;
+}
+
+.form-grid > *,
+.venda-grid > *,
+.cards > *{
+    min-width:0;
+}
+
+input,
+select,
+textarea{
+    max-width:100%;
+    font-size:15px;
+    color:#203429;
+}
+
+label,
+.campo-venda label,
+.venda-finalizacao label{
+    color:#33463a;
+    font-weight:800;
+}
+
+.card-finalizar-venda label,
+.card-finalizar-venda .campo-venda label,
+.card-finalizar-venda .venda-finalizacao label{
+    color:rgba(255,255,255,0.92);
+}
+
+button{
+    white-space:normal;
+}
+
+.botoes-fiado-detalhe,
+.barra-acoes-baixa-fiado,
+.acoes-retirada-caixa,
+.acoes-cadastro-produto,
+.acoes-modal-produto,
+.acoes-entrega,
+.acoes-financeiro,
+.acoes-movimentacao,
+.acoes-tabela{
+    align-items:center;
+}
+
+.resultados-produtos,
+.sugestoes-venda{
+    background:#ffffff;
+    color:var(--premium-text);
+    border:1px solid var(--premium-line);
+    border-radius:14px;
+    box-shadow:0 18px 42px rgba(31,47,37,0.14);
+    overflow:auto;
+}
+
+.sugestoes-venda{
+    top:calc(100% + 6px);
+    max-height:220px;
+}
+
+.item-produto-busca{
+    color:var(--premium-text);
+    padding:13px 14px;
+    border-bottom:1px solid #edf2eb;
+}
+
+.item-produto-busca:hover{
+    background:#edf7ef;
+}
+
+.item-produto-busca strong{
+    color:var(--premium-ink);
+}
+
+.item-produto-busca span{
+    color:var(--premium-muted);
+}
+
+/* BUSCA DE PRODUTO - VENDAS */
+
+#resultadosProdutosVenda{
+    width:100%;
+    max-height:280px;
+    margin:8px 0 0;
+    padding:8px;
+    overflow-y:auto;
+    background:#fff8ed;
+    border:1px solid #efd9b9;
+    border-radius:12px;
+    box-shadow:0 14px 30px rgba(31,47,37,0.10);
+}
+
+#resultadosProdutosVenda:empty{
+    display:none !important;
+}
+
+#resultadosProdutosVenda .item-produto-busca{
+    display:block;
+    width:100%;
+    margin:0 0 8px;
+    padding:14px 15px;
+    color:#1f2f25;
+    background:linear-gradient(135deg, #fff3df 0%, #fffaf2 100%);
+    border:1px solid #edcf9d;
+    border-left:5px solid #f28c1a;
+    border-radius:10px;
+    box-shadow:0 8px 18px rgba(89,61,21,0.08);
+    cursor:pointer;
+}
+
+#resultadosProdutosVenda .item-produto-busca:last-child{
+    margin-bottom:0;
+}
+
+#resultadosProdutosVenda .item-produto-busca:hover{
+    background:linear-gradient(135deg, #ffebc9 0%, #fff6e8 100%);
+    border-color:#e8bd75;
+    transform:translateY(-1px);
+}
+
+#resultadosProdutosVenda .item-produto-busca strong{
+    display:block;
+    margin-bottom:5px;
+    color:#15251b;
+    font-size:14px;
+    font-weight:900;
+}
+
+#resultadosProdutosVenda .item-produto-busca span{
+    display:block;
+    color:#52616f;
+    font-size:13px;
+    line-height:1.35;
+}
+
+.tabela-scroll{
+    overflow:auto;
+    max-width:100%;
+}
+
+.tabela-scroll table{
+    table-layout:auto;
+}
+
+th,
+td{
+    line-height:1.35;
+}
+
+th{
+    color:#45594d;
+    font-weight:850;
+}
+
+td{
+    color:#304338;
+}
+
+td strong{
+    color:#1f2f25;
+}
+
+.tag-status,
+.status-fiado-badge{
+    font-weight:850;
+}
+
+.menu-global-acoes-entrega{
+    background:#ffffff !important;
+    border:1px solid var(--premium-line) !important;
+    color:var(--premium-text);
+    box-shadow:0 18px 42px rgba(31,47,37,0.18) !important;
+    border-radius:14px !important;
+    padding:8px !important;
+}
+
+.menu-global-acoes-entrega button{
+    color:#1f2f25 !important;
+    background:#f4f8f2 !important;
+    border:1px solid #e0e8dd !important;
+    text-align:left !important;
+    box-shadow:none !important;
+}
+
+.menu-global-acoes-entrega button:hover{
+    background:#e7f2ea !important;
+}
+
+.menu-global-acoes-entrega .botao-voltar-entrega{
+    background:#eef2ee !important;
+}
+
+.botao-cancelar-entrega-limpo{
+    background:var(--premium-red-soft) !important;
+    color:#87332f !important;
+}
+
+.area-grafico-financeiro,
+.card-dashboard-grafico div:has(canvas){
+    background:linear-gradient(180deg, #ffffff, #f7faf5);
+    border:1px solid var(--premium-line);
+    border-radius:16px;
+    padding:14px;
+}
+
+.card-retirada-caixa,
+.card-filtro-financeiro,
+.card-busca-fiados,
+.card-nova-movimentacao,
+.card-filtros-movimentacao{
+    background:linear-gradient(180deg, #ffffff, #f8fbf6);
+}
+
+.form-retirada-caixa{
+    min-width:0;
+}
+
+.form-retirada-caixa > div{
+    min-width:0;
+}
+
+.page-hero,
+.cabecalho-pagina-estoque,
+.cabecalho-pagina-fiados,
+.cabecalho-pagina-movimentacoes,
+.cabecalho-pagina-financeiro,
+.cabecalho-importar-fiado,
+.cabecalho-fiado-detalhe{
+    border-color:#dce7d9;
+}
+
+/* AJUSTE FINAL DE MARCA - VALE AGRO
+   Azul-marinho do logo como identidade principal, com acentos agro controlados. */
+
+:root{
+    --brand-navy:#172b41;
+    --brand-navy-2:#213b56;
+    --brand-navy-3:#0f2032;
+    --brand-lime:#7ed321;
+    --brand-lime-soft:#eefadf;
+    --brand-orange:#d99032;
+    --brand-orange-soft:#fff1df;
+    --brand-paper:#f6f7f2;
+    --brand-card:#ffffff;
+    --brand-ink:#172431;
+    --brand-text:#314252;
+    --brand-muted:#667484;
+    --brand-line:#dce3e0;
+    --brand-shadow:0 16px 42px rgba(23,43,65,0.12);
+    --brand-shadow-soft:0 8px 22px rgba(23,43,65,0.08);
+}
+
+body{
+    background:
+        radial-gradient(circle at 8% 0%, rgba(126,211,33,0.12), transparent 23rem),
+        radial-gradient(circle at 100% 8%, rgba(217,144,50,0.09), transparent 24rem),
+        linear-gradient(180deg, #fbfcf8 0%, var(--brand-paper) 100%);
+    color:var(--brand-text);
+}
+
+.page-hero,
+.cabecalho-pagina-estoque,
+.cabecalho-pagina-fiados,
+.cabecalho-pagina-movimentacoes,
+.cabecalho-pagina-financeiro,
+.cabecalho-importar-fiado,
+.cabecalho-fiado-detalhe{
+    background:
+        linear-gradient(135deg, rgba(255,255,255,0.96), rgba(249,251,246,0.94)),
+        radial-gradient(circle at right, rgba(126,211,33,0.12), transparent 17rem);
+    border-color:var(--brand-line);
+    box-shadow:var(--brand-shadow-soft);
+}
+
+.page-hero h1,
+.cabecalho-pagina-estoque h1,
+.cabecalho-pagina-fiados h1,
+.cabecalho-pagina-movimentacoes h1,
+.cabecalho-pagina-financeiro h1,
+.cabecalho-importar-fiado h1,
+.cabecalho-fiado-detalhe h1,
+.card h2,
+.card h3{
+    color:var(--brand-ink);
+}
+
+.page-hero p,
+.cabecalho-pagina-estoque p,
+.cabecalho-pagina-fiados p,
+.cabecalho-pagina-movimentacoes p,
+.cabecalho-pagina-financeiro p,
+.cabecalho-importar-fiado p,
+.cabecalho-fiado-detalhe p,
+.titulo-card-linha p,
+td small{
+    color:var(--brand-muted);
+}
+
+.eyebrow{
+    color:var(--brand-navy);
+}
+
+.eyebrow::before{
+    background:var(--brand-orange);
+}
+
+.card{
+    border-color:rgba(23,43,65,0.10);
+    box-shadow:var(--brand-shadow-soft);
+}
+
+.card p,
+.card-resumo-estoque p,
+.card-resumo-mov p,
+.card-resumo-fiado p{
+    color:var(--brand-ink);
+    font-size:clamp(24px, 2vw, 30px);
+}
+
+button,
+.btn,
+.btn-finalizar-venda,
+.btn-hero{
+    background:linear-gradient(135deg, var(--brand-navy-2), var(--brand-navy)) !important;
+    color:#fff !important;
+    box-shadow:0 12px 24px rgba(23,43,65,0.18);
+}
+
+button:hover,
+.btn:hover,
+.btn-finalizar-venda:hover,
+.btn-hero:hover{
+    background:linear-gradient(135deg, #294a69, var(--brand-navy)) !important;
+}
+
+.btn-secondary,
+.botao-secundario-mov,
+.botao-pdf-financeiro,
+.botao-reimprimir-financeiro,
+.botao-voltar-importacao{
+    background:#f2f5f1 !important;
+    color:var(--brand-text) !important;
+    border:1px solid var(--brand-line) !important;
+    box-shadow:none !important;
+}
+
+.btn-danger,
+.botao-cancelar-financeiro,
+.botao-remover-importacao,
+.botao-cancelar-entrega-limpo{
+    background:#fae9e6 !important;
+    color:#9c3a34 !important;
+    border:1px solid #efc9c4 !important;
+    box-shadow:none !important;
+}
+
+input,
+select,
+textarea{
+    border-color:var(--brand-line);
+    color:var(--brand-ink);
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+    border-color:var(--brand-navy-2);
+    box-shadow:0 0 0 4px rgba(23,43,65,0.12);
+}
+
+.dashboard-kpis .card:first-child,
+.pagina-acao-rapida:not(.pagina-fiados-atrasados) .cards .card:first-child,
+.card-finalizar-venda,
+.card-finalizar-importacao{
+    background:linear-gradient(135deg, var(--brand-navy-2), var(--brand-navy-3)) !important;
+}
+
+.dashboard-kpis .card:first-child h3,
+.dashboard-kpis .card:first-child p,
+.pagina-acao-rapida:not(.pagina-fiados-atrasados) .cards .card:first-child h3,
+.pagina-acao-rapida:not(.pagina-fiados-atrasados) .cards .card:first-child p,
+.card-finalizar-importacao h2,
+.card-finalizar-importacao p{
+    color:#fff !important;
+}
+
+.alerta-estoque{
+    background:linear-gradient(135deg, var(--brand-orange-soft), #fffaf2);
+}
+
+.alerta-fiado{
+    background:linear-gradient(135deg, #fae9e6, #fffafa);
+}
+
+.alerta-entrega{
+    background:linear-gradient(135deg, var(--brand-lime-soft), #fbfff7);
+}
+
+.alerta-dashboard p,
+.alerta-dashboard strong{
+    color:var(--brand-ink);
+}
+
+.card-retirada-resumo{
+    background:linear-gradient(135deg, #fae9e6, #ffffff);
+}
+
+.card-caixa-liquido{
+    background:linear-gradient(135deg, var(--brand-lime-soft), #ffffff);
+}
+
+.tabela-scroll,
+.resultados-produtos,
+.sugestoes-venda{
+    border-color:var(--brand-line);
+}
+
+th{
+    color:#435466;
+}
+
+td{
+    color:#314252;
+}
+
+.pagina-dashboard .dashboard-topo,
+.pagina-dashboard .dashboard-kpis,
+.pagina-vendas,
+.pagina-acao-rapida .cards{
+    align-items:stretch;
+}
+
+.dashboard-topo .card,
+.dashboard-kpis .card,
+.pagina-acao-rapida .cards .card:not(.card-resumo-cobranca){
+    min-height:0;
+}
+
+.card button,
+.card .btn,
+.modal-conteudo button,
+.acoes-entrega button,
+.acoes-financeiro button,
+.acoes-movimentacao button,
+.acoes-tabela button{
+    max-width:100%;
+    overflow-wrap:anywhere;
+}
+
+.card .botoes-fiado-detalhe button,
+.card .barra-acoes-baixa-fiado button,
+.card .acoes-modal-produto button,
+.card .acoes-cadastro-produto button,
+.card .acoes-retirada-caixa button{
+    flex:0 1 auto;
+}
+
+.form-grid button,
+.form-grid-filtros-movimentacao button{
+    min-width:0 !important;
+}
+
+.card-carrinho-venda,
+.card-produtos-cadastrados,
+.card-historico-movimentacoes,
+.card-clientes-fiados{
+    overflow:hidden;
+}
+
+@media(max-width:1250px){
+    .dashboard-topo,
+    .dashboard-kpis,
+    .pagina-acao-rapida .cards{
+        grid-template-columns:repeat(2, minmax(0, 1fr));
+    }
+
+    .dashboard-kpis .card:first-child{
+        grid-column:auto;
+    }
+}
+
+@media(max-width:720px){
+    .dashboard-topo,
+    .dashboard-kpis,
+    .pagina-acao-rapida .cards{
+        grid-template-columns:1fr;
+    }
+}
+
+.pagina-dashboard{
+    display:block;
+}
+
+.pagina-dashboard .page-hero{
+    margin-bottom:18px;
+}
+
+.pagina-dashboard .dashboard-topo{
+    display:grid;
+    grid-template-columns:minmax(220px,.85fr) repeat(3,minmax(190px,1fr));
+    gap:14px;
+    margin-bottom:16px;
+}
+
+.pagina-dashboard .dashboard-kpis{
+    display:grid;
+    grid-template-columns:repeat(6,minmax(0,1fr));
+    gap:14px;
+    margin:0 0 16px 0;
+}
+
+.pagina-dashboard .dashboard-kpis .card,
+.pagina-dashboard .dashboard-topo .card{
+    min-width:0;
+    width:100%;
+    margin-bottom:0;
+}
+
+.pagina-dashboard .dashboard-kpis .card:first-child{
+    grid-column:auto;
+}
+
+.pagina-dashboard .dashboard-retirada{
+    width:100%;
+    max-width:100%;
+    margin:0 0 16px 0;
+    grid-column:auto;
+    grid-row:auto;
+    overflow:hidden;
+}
+
+.pagina-dashboard .form-retirada-caixa{
+    display:grid;
+    grid-template-columns:minmax(160px, .8fr) minmax(190px, 1fr) minmax(240px, 1.4fr) auto;
+    gap:12px;
+    align-items:end;
+}
+
+.pagina-dashboard .form-retirada-caixa input,
+.pagina-dashboard .form-retirada-caixa select,
+.pagina-dashboard .form-retirada-caixa button{
+    width:100%;
+    min-width:0;
+    margin:0;
+}
+
+.pagina-dashboard .card-dashboard-grafico,
+.pagina-dashboard .card-dashboard-ranking{
+    width:100%;
+    max-width:100%;
+    margin-bottom:16px;
+}
+
+.pagina-estoque .card-cadastro-produto .titulo-card-linha p,
+.pagina-estoque .card-produtos-cadastrados .titulo-card-linha p{
+    color:#4b5f76;
+    font-size:15px;
+    font-weight:500;
+    line-height:1.4;
+    margin:4px 0 14px;
+    text-align:left;
+}
+
+.card,
+.page-hero,
+.tabela-scroll,
+.resultados-produtos,
+.sugestoes-venda{
+    max-width:100%;
+}
+
+.card *{
+    min-width:0;
+}
+
+.card button,
+.card .btn,
+.form-grid button,
+.venda-grid button,
+.botoes-fiado-detalhe button,
+.barra-acoes-baixa-fiado button{
+    max-width:100%;
+    min-width:0;
+}
+
+.card p,
+.card h2,
+.card h3,
+td,
+th,
+label,
+.titulo-card-linha p{
+    overflow-wrap:anywhere;
+}
+
+.card h3,
+label,
+.campo-venda label,
+.venda-finalizacao label{
+    color:#243548 !important;
+}
+
+.card-finalizar-venda h2,
+.card-finalizar-venda h3,
+.card-finalizar-venda label,
+.card-finalizar-venda .campo-venda label,
+.card-finalizar-venda .venda-finalizacao label{
+    color:#ffffff !important;
+}
+
+.tag-status,
+.status-fiado-badge{
+    color:inherit;
+}
+
+@media(max-width:1450px){
+    .pagina-dashboard .dashboard-kpis{
+        grid-template-columns:repeat(3,minmax(0,1fr));
+    }
+}
+
+@media(max-width:1180px){
+    .pagina-dashboard .dashboard-topo{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+    }
+
+    .pagina-dashboard .form-retirada-caixa{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+    }
+
+    .pagina-dashboard .acoes-retirada-caixa{
+        grid-column:1 / -1;
+    }
+}
+
+@media(max-width:760px){
+    .pagina-dashboard .dashboard-topo,
+    .pagina-dashboard .dashboard-kpis,
+    .pagina-dashboard .form-retirada-caixa{
+        grid-template-columns:1fr;
+    }
+}
+
+/* CORRECOES DE CONTRASTE - leitura acima da decoracao */
+
+.pagina-dashboard .alerta-dashboard::after{
+    display:none !important;
+}
+
+.pagina-dashboard .alerta-dashboard{
+    overflow:hidden;
+}
+
+.pagina-dashboard .alerta-dashboard,
+.pagina-dashboard .card-retirada-resumo,
+.pagina-dashboard .card-caixa-liquido{
+    border:1px solid rgba(23,43,65,0.08);
+    box-shadow:0 16px 34px rgba(23,43,65,0.10);
+}
+
+.pagina-dashboard .alerta-estoque{
+    background:linear-gradient(135deg, #ffe6a8 0%, #fff3d2 48%, #fffaf0 100%) !important;
+    border-color:rgba(213,143,28,0.22);
+}
+
+.pagina-dashboard .alerta-fiado,
+.pagina-dashboard .card-retirada-resumo{
+    background:linear-gradient(135deg, #ffd7d3 0%, #ffebe8 50%, #fff7f5 100%) !important;
+    border-color:rgba(186,75,69,0.20);
+}
+
+.pagina-dashboard .alerta-entrega,
+.pagina-dashboard .card-caixa-liquido{
+    background:linear-gradient(135deg, #d4f4df 0%, #e8f9ee 50%, #fbfff7 100%) !important;
+    border-color:rgba(28,166,106,0.20);
+}
+
+.pagina-dashboard .alerta-dashboard h3,
+.pagina-dashboard .card-retirada-resumo h3,
+.pagina-dashboard .card-caixa-liquido h3{
+    color:#172431 !important;
+}
+
+.pagina-dashboard .alerta-dashboard p,
+.pagina-dashboard .alerta-dashboard strong,
+.pagina-dashboard .alerta-dashboard span,
+.pagina-dashboard .card-retirada-resumo p,
+.pagina-dashboard .card-caixa-liquido p{
+    color:#162536 !important;
+}
+
+.pagina-fiados .card-importacao-fiado{
+    background:linear-gradient(135deg, #ffe8ae 0%, #fff3d2 48%, #fffaf0 100%) !important;
+    border:1px solid rgba(217,144,50,0.22) !important;
+    border-left:5px solid #d99032 !important;
+    box-shadow:0 16px 34px rgba(114,82,28,0.10);
+}
+
+.pagina-fiados .conteudo-importacao-fiado{
+    display:grid;
+    grid-template-columns:minmax(0, 1fr) auto;
+    align-items:center;
+    gap:28px;
+}
+
+.pagina-fiados .conteudo-importacao-fiado h2{
+    margin-bottom:8px;
+    color:#172431 !important;
+}
+
+.pagina-fiados .conteudo-importacao-fiado p{
+    max-width:760px;
+    color:#4f5f56 !important;
+    font-size:14px;
+    line-height:1.48;
+}
+
+.pagina-fiados .botao-importar-fiado{
+    min-width:190px;
+    height:44px;
+    background:linear-gradient(135deg, #d99032, #b86f18) !important;
+    color:#ffffff !important;
+    box-shadow:0 12px 24px rgba(184,111,24,0.24) !important;
+}
+
+.pagina-fiados .card-clientes-fiados{
+    border-left:5px solid #256f4a;
+}
+
+.pagina-fiados .barra-clientes-fiados{
+    margin:2px 0 16px;
+}
+
+.pagina-fiados .barra-clientes-fiados input{
+    height:44px;
+    margin:0;
+    background:#fbfdf9;
+    border:1px solid var(--brand-line);
+    border-radius:10px;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,0.86);
+}
+
+@media(max-width:900px){
+    .pagina-fiados .conteudo-importacao-fiado{
+        grid-template-columns:1fr;
+        gap:18px;
+    }
+
+    .pagina-fiados .botao-importar-fiado{
+        width:100%;
+    }
+}
+
+.resumo-baixa-produtos-fiado span,
+.resumo-baixa-produtos-fiado strong{
+    color:#172431 !important;
+}
+
+.resumo-baixa-produtos-fiado span{
+    font-weight:850 !important;
+    letter-spacing:.01em;
+}
+
+.resumo-baixa-produtos-fiado strong{
+    font-size:24px !important;
+    font-weight:950 !important;
+}
+
+.btn-finalizar-venda,
+.card-finalizar-venda .btn-finalizar-venda,
+button.btn-finalizar-venda{
+    background:linear-gradient(135deg, #d99032, #b86f18) !important;
+    color:#ffffff !important;
+    text-shadow:0 1px 1px rgba(0,0,0,0.22);
+    border:1px solid rgba(255,255,255,0.16) !important;
+    box-shadow:0 16px 34px rgba(184,111,24,0.30) !important;
+}
+
+.btn-finalizar-venda:hover,
+.card-finalizar-venda .btn-finalizar-venda:hover,
+button.btn-finalizar-venda:hover{
+    background:linear-gradient(135deg, #eea348, #c67b1f) !important;
+    color:#ffffff !important;
+    transform:translateY(-1px);
+}
+
+.card-finalizar-venda .produto-selecionado,
+.card-finalizar-venda .notificacao-alerta{
+    color:#172431 !important;
+}
+
+.card-finalizar-venda .produto-selecionado strong,
+.card-finalizar-venda .notificacao-alerta strong{
+    color:#172b41 !important;
+}
+
+.tag-status,
+.status-fiado-badge{
+    color:#172431 !important;
+}
+
+body:has(#nomeClienteFiado) .conteudo.pagina-fiado-detalhe{
+    padding:24px 30px !important;
+    overflow-x:hidden !important;
+}
+
+.pagina-fiado-detalhe .cabecalho-fiado-detalhe{
+    align-items:center;
+    gap:14px;
+    margin-bottom:14px;
+    padding:0;
+    background:transparent;
+    border:0;
+    box-shadow:none;
+}
+
+.pagina-fiado-detalhe .cabecalho-fiado-detalhe h1{
+    margin:0 0 3px;
+    color:#172431 !important;
+    font-size:clamp(24px, 2vw, 32px);
+    line-height:1.1;
+}
+
+.pagina-fiado-detalhe .cabecalho-fiado-detalhe p{
+    color:#536273 !important;
+    font-weight:700;
+}
+
+.pagina-fiado-detalhe .cabecalho-fiado-detalhe .btn-secondary{
+    min-width:88px;
+    height:40px;
+}
+
+body:has(#nomeClienteFiado) .pagina-fiado-detalhe .cards-resumo-fiado-detalhe,
+.pagina-fiado-detalhe .cards-resumo-fiado-detalhe{
+    display:grid;
+    grid-template-columns:1.25fr repeat(5, minmax(0, .9fr));
+    gap:12px;
+    margin:0 0 14px;
+}
+
+.pagina-fiado-detalhe .cards-resumo-fiado-detalhe .card{
+    min-height:96px;
+    padding:15px 16px;
+    border:1px solid rgba(23,43,65,0.08);
+    box-shadow:0 10px 24px rgba(23,43,65,0.08);
+}
+
+.pagina-fiado-detalhe .cards-resumo-fiado-detalhe .card h3{
+    margin-bottom:7px;
+    color:#4d5f70 !important;
+    font-size:13px;
+    font-weight:900;
+}
+
+.pagina-fiado-detalhe .cards-resumo-fiado-detalhe .card p{
+    color:#172431 !important;
+    font-size:clamp(20px, 1.5vw, 26px);
+    line-height:1.08;
+}
+
+.pagina-fiado-detalhe .card-saldo-principal-fiado{
+    order:-1;
+    background:linear-gradient(135deg, #d4f4df 0%, #effbf3 100%) !important;
+    border-color:rgba(28,166,106,0.22) !important;
+}
+
+.pagina-fiado-detalhe .card-saldo-principal-fiado p{
+    font-size:clamp(25px, 2vw, 32px) !important;
+    font-weight:950;
+}
+
+.pagina-fiado-detalhe .card-valor-vencido-fiado{
+    background:linear-gradient(135deg, #fff7f5, #ffffff) !important;
+}
+
+.pagina-fiado-detalhe .card-valor-vencido-fiado.tem-atraso,
+.pagina-fiado-detalhe .card-situacao-fiado.tem-atraso{
+    background:linear-gradient(135deg, #ffd7d3 0%, #fff3f1 100%) !important;
+    border-color:rgba(186,75,69,0.24) !important;
+}
+
+.pagina-fiado-detalhe .card-situacao-fiado p{
+    font-size:18px !important;
+    font-weight:950;
+}
+
+.tabs-fiado-detalhe{
+    display:flex;
+    gap:7px;
+    padding:7px;
+    margin:0 0 14px;
+    border:1px solid #dce3e0;
+    border-radius:14px;
+    background:#ffffff;
+    box-shadow:0 8px 20px rgba(23,43,65,0.07);
+    overflow-x:auto;
+}
+
+.tab-fiado{
+    flex:1 0 auto;
+    min-width:132px;
+    height:42px;
+    padding:0 14px;
+    border-radius:10px;
+    border:1px solid transparent !important;
+    background:#f5f8f3 !important;
+    color:#34495c !important;
+    box-shadow:none !important;
+    font-size:13px;
+    font-weight:900;
+}
+
+.tab-fiado:hover{
+    background:#edf3ea !important;
+    color:#172431 !important;
+    transform:none;
+}
+
+.tab-fiado.ativo{
+    background:linear-gradient(135deg, #213b56, #172b41) !important;
+    color:#ffffff !important;
+    box-shadow:0 10px 20px rgba(23,43,65,0.18) !important;
+}
+
+.painel-fiado-tab{
+    display:none;
+    animation:agroFadeUp 160ms ease both;
+}
+
+.painel-fiado-tab.ativo{
+    display:block;
+}
+
+.pagina-fiado-detalhe .card-pagamento-unico-fiado,
+.pagina-fiado-detalhe .card-produtos-abertos-fiado,
+.pagina-fiado-detalhe .card-pagamentos-fiado,
+.pagina-fiado-detalhe .card-historico-completo-fiado,
+.pagina-fiado-detalhe .card-extrato-limpo-fiado{
+    margin-bottom:0 !important;
+    border-left:0 !important;
+}
+
+.pagina-fiado-detalhe .card-pagamento-unico-fiado{
+    border-top:5px solid #256f4a !important;
+}
+
+.pagina-fiado-detalhe .card-produtos-abertos-fiado{
+    border-top:5px solid #d99032 !important;
+}
+
+.pagina-fiado-detalhe .card-pagamentos-fiado{
+    border-top:5px solid #7b8b9d !important;
+}
+
+.pagina-fiado-detalhe .card-historico-completo-fiado{
+    border-top:5px solid #b7c1cc !important;
+}
+
+.pagina-fiado-detalhe .card-pagamentos-fiado .tabela-scroll-detalhe-menor,
+.pagina-fiado-detalhe .card-historico-completo-fiado .tabela-scroll-detalhe-historico{
+    height:clamp(420px, calc(100vh - 285px), 680px);
+    min-height:420px;
+    max-height:none;
+    overflow-y:auto;
+}
+
+@media(max-height:720px){
+    .pagina-fiado-detalhe .card-pagamentos-fiado .tabela-scroll-detalhe-menor,
+    .pagina-fiado-detalhe .card-historico-completo-fiado .tabela-scroll-detalhe-historico{
+        height:calc(100vh - 240px);
+        min-height:340px;
+    }
+}
+
+.pagina-fiado-detalhe .card-extrato-limpo-fiado{
+    background:linear-gradient(135deg, #f7faf4, #ffffff) !important;
+    border-top:5px solid #213b56 !important;
+}
+
+.pagina-fiado-detalhe .form-grid-tipo-pagamento-fiado{
+    display:grid;
+    grid-template-columns:1.15fr .9fr .8fr .8fr .7fr minmax(180px, 1fr);
+    gap:10px;
+    margin-bottom:14px;
+}
+
+.pagina-fiado-detalhe .form-grid-tipo-pagamento-fiado select,
+.pagina-fiado-detalhe .form-grid-tipo-pagamento-fiado input{
+    height:43px;
+    margin:0;
+}
+
+.pagina-fiado-detalhe .area-produtos-pagamento-fiado{
+    padding-top:4px;
+}
+
+.pagina-fiado-detalhe .barra-acoes-baixa-fiado{
+    gap:8px;
+    margin:0 0 10px !important;
+}
+
+.pagina-fiado-detalhe .barra-acoes-baixa-fiado button{
+    min-height:32px;
+    height:34px;
+    padding:6px 11px;
+    border-radius:9px;
+    font-size:12px;
+    box-shadow:none !important;
+}
+
+.pagina-fiado-detalhe .tabela-scroll-produtos-abater,
+.pagina-fiado-detalhe .tabela-scroll-produtos-consulta-fiado{
+    max-height:310px !important;
+    border-color:#dce3e0;
+}
+
+.pagina-fiado-detalhe table th,
+.pagina-fiado-detalhe table td{
+    color:#26394a !important;
+}
+
+.pagina-fiado-detalhe table td small{
+    color:#4d5f70 !important;
+    font-weight:700;
+}
+
+.pagina-fiado-detalhe .valor-pago-fiado{
+    color:#315c45 !important;
+}
+
+.pagina-fiado-detalhe .saldo-aberto-fiado{
+    color:#8a5714 !important;
+}
+
+.pagina-fiado-detalhe .status-proximo td,
+.pagina-fiado-detalhe tr.status-proximo{
+    background:#fff7dc !important;
+}
+
+.pagina-fiado-detalhe .status-atrasado td,
+.pagina-fiado-detalhe tr.status-atrasado{
+    background:#fff0ee !important;
+}
+
+.pagina-fiado-detalhe .linha-produto-selecionado-fiado td{
+    background:#e8f7ee !important;
+}
+
+.pagina-fiado-detalhe .tabela-scroll-produtos-abater .coluna-pagar-fiado{
+    width:70px;
+    min-width:70px;
+    white-space:nowrap;
+    text-align:center;
+}
+
+.pagina-fiado-detalhe .resumo-baixa-produtos-fiado{
+    grid-template-columns:repeat(2, minmax(0, 1fr)) !important;
+    gap:10px;
+}
+
+.pagina-fiado-detalhe .resumo-baixa-produtos-fiado div{
+    background:#f7faf4 !important;
+    border:1px solid #dce3e0 !important;
+    border-radius:10px;
+}
+
+.pagina-fiado-detalhe .resumo-baixa-produtos-fiado span{
+    color:#536273 !important;
+}
+
+.pagina-fiado-detalhe .resumo-baixa-produtos-fiado strong{
+    color:#172431 !important;
+    font-size:22px !important;
+}
+
+.pagina-fiado-detalhe .botoes-fiado-detalhe{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-top:12px;
+}
+
+.pagina-fiado-detalhe .botoes-fiado-detalhe button:first-child{
+    min-height:42px;
+    background:linear-gradient(135deg, #213b56, #172b41) !important;
+    color:#ffffff !important;
+    box-shadow:0 12px 24px rgba(23,43,65,0.18) !important;
+}
+
+.pagina-fiado-detalhe .botoes-fiado-detalhe .btn-secondary{
+    background:#f2f5f1 !important;
+    color:#27394b !important;
+    border:1px solid #dce3e0 !important;
+    box-shadow:none !important;
+}
+
+.pagina-fiado-detalhe .aviso-baixa-produtos-fiado,
+.pagina-fiado-detalhe .aviso-pagamento-geral-fiado,
+.pagina-fiado-detalhe .extrato-resumo-fiado{
+    display:block;
+    margin-top:12px;
+    padding:12px 14px;
+    border-radius:10px;
+    background:#f7faf4 !important;
+    border:1px solid #dce3e0 !important;
+    color:#415366 !important;
+    font-size:13px;
+    line-height:1.45;
+}
+
+.pagina-fiado-detalhe .grupo-produtos-abertos-fiado{
+    margin-top:14px;
+}
+
+.pagina-fiado-detalhe .grupo-produtos-abertos-fiado h3{
+    margin:0 0 8px;
+    color:#172431 !important;
+    font-size:15px;
+}
+
+.pagina-fiado-detalhe .grupo-vencidos-fiado h3{
+    color:#8d3c36 !important;
+}
+
+.pagina-fiado-detalhe .grupo-prazo-fiado h3{
+    color:#315c45 !important;
+}
+
+/* DETALHE A PRAZO - AGRUPAMENTO POR DATA */
+.pagina-fiado-detalhe .linha-grupo-data-fiado td{
+    background:#f8f5ec !important;
+    border-top:1px solid rgba(31,51,71,0.12) !important;
+    border-bottom:1px solid rgba(31,51,71,0.08) !important;
+    border-left:4px solid #d99032 !important;
+    padding:12px 16px !important;
+}
+
+.pagina-fiado-detalhe .grupo-data-fiado-cabecalho{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:14px;
+    flex-wrap:wrap;
+}
+
+.pagina-fiado-detalhe .grupo-data-fiado-titulo{
+    color:#1f3347 !important;
+    font-weight:850;
+    font-size:14px;
+}
+
+.pagina-fiado-detalhe .grupo-data-fiado-resumo{
+    color:#536577 !important;
+    font-size:13px;
+    font-weight:750;
+}
+
+@media(max-width:1450px){
+    body:has(#nomeClienteFiado) .pagina-fiado-detalhe .cards-resumo-fiado-detalhe,
+    .pagina-fiado-detalhe .cards-resumo-fiado-detalhe{
+        grid-template-columns:repeat(3, minmax(0, 1fr));
+    }
+
+    .pagina-fiado-detalhe .form-grid-tipo-pagamento-fiado{
+        grid-template-columns:repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media(max-width:900px){
+    body:has(#nomeClienteFiado) .conteudo.pagina-fiado-detalhe{
+        padding:18px !important;
+    }
+
+    .pagina-fiado-detalhe .cabecalho-fiado-detalhe{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+
+    body:has(#nomeClienteFiado) .pagina-fiado-detalhe .cards-resumo-fiado-detalhe,
+    .pagina-fiado-detalhe .cards-resumo-fiado-detalhe,
+    .pagina-fiado-detalhe .form-grid-tipo-pagamento-fiado,
+    .pagina-fiado-detalhe .resumo-baixa-produtos-fiado{
+        grid-template-columns:1fr !important;
+    }
+
+    .tab-fiado{
+        flex:1 0 180px;
+    }
+}
+
+.pagina-fiado-detalhe .card-produtos-pagamento-fiado{
+    margin-bottom:14px !important;
+    border-top:5px solid #d99032 !important;
+    border-left:0 !important;
+}
+
+.pagina-fiado-detalhe .card-produtos-pagamento-fiado .titulo-card-linha{
+    margin-bottom:10px !important;
+}
+
+.pagina-fiado-detalhe .card-pagamento-unico-fiado{
+    border-top:5px solid #256f4a !important;
+}
+
+.pagina-fiado-detalhe .card-pagamento-unico-fiado .titulo-card-linha{
+    margin-bottom:12px !important;
+}
+
+.pagina-fiado-detalhe .form-grid-tipo-pagamento-fiado{
+    grid-template-columns:1.15fr .95fr .85fr .85fr .75fr minmax(190px, 1.15fr);
+    align-items:end;
+    padding-bottom:12px;
+    border-bottom:1px solid #e1e8df;
+}
+
+.pagina-fiado-detalhe .resumo-baixa-produtos-fiado{
+    margin:0 0 12px !important;
+}
+
+.pagina-fiado-detalhe .botoes-fiado-detalhe{
+    padding-top:2px;
+}
+
+.pagina-fiado-detalhe .botoes-fiado-detalhe button{
+    max-width:100%;
+}
+
+@media(max-width:1450px){
+    .pagina-fiado-detalhe .form-grid-tipo-pagamento-fiado{
+        grid-template-columns:repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media(max-width:900px){
+    .pagina-fiado-detalhe .form-grid-tipo-pagamento-fiado{
+        grid-template-columns:1fr !important;
+    }
+}
+
+/* DETALHE A PRAZO - PAGAMENTO COMPACTO CENTRALIZADO */
+
+.pagina-fiado-detalhe .pagamento-fiado-finalizacao,
+body:has(#nomeClienteFiado) .pagina-fiado-detalhe .pagamento-fiado-finalizacao{
+    width:100% !important;
+    max-width:none !important;
+    margin:0 !important;
+    padding:24px 26px !important;
+    background:linear-gradient(135deg, #ffffff 0%, #fbfcf8 100%) !important;
+    color:#172431 !important;
+    border:1px solid #dce3e0 !important;
+    border-top:5px solid #172b41 !important;
+    border-radius:16px !important;
+    box-shadow:0 14px 34px rgba(23,43,65,0.08) !important;
+}
+
+.pagina-fiado-detalhe .pagamento-fiado-finalizacao .titulo-card-linha{
+    margin-bottom:18px !important;
+    padding-bottom:14px !important;
+    border-bottom:1px solid #e1e8df !important;
+}
+
+.pagina-fiado-detalhe .pagamento-fiado-finalizacao h2{
+    color:#172b41 !important;
+    font-size:25px !important;
+    font-weight:850 !important;
+    line-height:1.2;
+}
+
+.pagina-fiado-detalhe .pagamento-fiado-finalizacao .titulo-card-linha p{
+    color:#52616f !important;
+    font-size:17px !important;
+    font-weight:600 !important;
+    line-height:1.4 !important;
+    opacity:1 !important;
+}
+
+.pagina-fiado-detalhe .checkout-pagamento-fiado{
+    display:grid;
+    gap:16px;
+    width:100%;
+    max-width:980px;
+    margin:0 auto;
+}
+
+.pagina-fiado-detalhe .checkout-bloco-fiado{
+    min-width:0;
+}
+
+.pagina-fiado-detalhe .checkout-bloco-fiado h3{
+    margin:0 0 10px;
+    color:#172b41 !important;
+    font-size:16px !important;
+    font-weight:850 !important;
+    line-height:1.2;
+}
+
+.pagina-fiado-detalhe .pagamento-fiado-finalizacao .form-grid-forma-pagamento-fiado{
+    display:grid !important;
+    grid-template-columns:minmax(240px, 340px) !important;
+    gap:14px !important;
+    margin:0 !important;
+    padding:0 !important;
+    border-bottom:0 !important;
+}
+
+.pagina-fiado-detalhe .pagamento-fiado-finalizacao .form-grid-valores-pagamento-fiado{
+    display:grid !important;
+    grid-template-columns:repeat(3, minmax(0, 1fr)) !important;
+    gap:16px !important;
+    margin:0 !important;
+    padding:0 !important;
+}
+
+.pagina-fiado-detalhe .pagamento-fiado-finalizacao .campo-pagamento-fiado{
+    min-width:0;
+}
+
+.pagina-fiado-detalhe .pagamento-fiado-finalizacao .campo-pagamento-fiado label{
+    color:#243548 !important;
+    display:block;
+    margin-bottom:6px;
+    opacity:1 !important;
+    font-size:14px !important;
+    font-weight:800 !important;
+    line-height:1.25;
+}
+
+.pagina-fiado-detalhe .pagamento-fiado-finalizacao select,
+.pagina-fiado-detalhe .pagamento-fiado-finalizacao input{
+    width:100%;
+    height:46px !important;
+    min-height:46px !important;
+    margin:0 !important;
+    padding:0 13px !important;
+    background:#ffffff !important;
+    border:1px solid #dce3e0 !important;
+    color:#172431 !important;
+    border-radius:12px !important;
+    font-size:16px !important;
+    box-shadow:none !important;
+}
+
+.pagina-fiado-detalhe .pagamento-fiado-finalizacao input::placeholder{
+    color:#7a8792;
+}
+
+.pagina-fiado-detalhe .pagamento-fiado-finalizacao #valorPagamentoFiadoUnificado,
+.pagina-fiado-detalhe .pagamento-fiado-finalizacao #valorRecebidoFiadoUnificado{
+    background:#fbfaf5 !important;
+    color:#172431 !important;
+}
+
+.pagina-fiado-detalhe .pagamento-fiado-finalizacao .destaque-troco-fiado input{
+    background:#eef5ef !important;
+    border-color:#bfd8c8 !important;
+    color:#172b41 !important;
+    font-weight:900 !important;
+}
+
+.pagina-fiado-detalhe .pagamento-fiado-finalizacao .campo-pagamento-oculto{
+    display:none !important;
+}
+
+.pagina-fiado-detalhe .pagamento-fiado-finalizacao .checkout-bloco-observacao-fiado{
+    padding-top:2px;
+}
+
+.pagina-fiado-detalhe .pagamento-fiado-finalizacao .campo-observacao-fiado{
+    max-width:100%;
+}
+
+.pagina-fiado-detalhe .pagamento-fiado-finalizacao .resumo-baixa-produtos-fiado{
+    display:grid !important;
+    grid-template-columns:minmax(170px, 240px) !important;
+    justify-content:start;
+    gap:14px !important;
+    margin:0 !important;
+    align-items:stretch;
+}
+
+.pagina-fiado-detalhe .pagamento-fiado-finalizacao .resumo-total-selecionado-oculto{
+    display:none !important;
+}
+
+.pagina-fiado-detalhe .pagamento-fiado-finalizacao .resumo-baixa-produtos-fiado div{
+    min-height:68px !important;
+    padding:12px 14px !important;
+    background:#f7faf4 !important;
+    border:1px solid #dce3e0 !important;
+    border-left:4px solid #d99032 !important;
+    border-radius:12px !important;
+    box-shadow:none !important;
+}
+
+.pagina-fiado-detalhe .pagamento-fiado-finalizacao .resumo-baixa-produtos-fiado span{
+    color:#52616f !important;
+    display:block;
+    font-size:13px !important;
+    font-weight:800 !important;
+    line-height:1.2;
+    margin-bottom:6px;
+}
+
+.pagina-fiado-detalhe .pagamento-fiado-finalizacao .resumo-baixa-produtos-fiado strong{
+    color:#172b41 !important;
+    font-size:24px !important;
+    font-weight:900 !important;
+    line-height:1.15;
+}
+
+.pagina-fiado-detalhe .pagamento-fiado-finalizacao .aviso-baixa-produtos-fiado{
+    display:block;
+    margin-top:12px;
+    padding:10px 12px !important;
+    background:#f7faf4 !important;
+    border:1px solid #dce3e0 !important;
+    border-radius:10px !important;
+    color:#415366 !important;
+    font-size:13px !important;
+    font-weight:600 !important;
+    line-height:1.4 !important;
+}
+
+.pagina-fiado-detalhe .pagamento-fiado-finalizacao .botoes-fiado-detalhe{
+    display:flex !important;
+    flex-wrap:wrap !important;
+    align-items:center;
+    gap:12px !important;
+    margin-top:2px !important;
+}
+
+.pagina-fiado-detalhe .pagamento-fiado-finalizacao .botoes-fiado-detalhe button:first-child{
+    width:auto !important;
+    min-width:220px !important;
+    min-height:46px !important;
+    font-size:16px !important;
+    background:linear-gradient(135deg, #213b56, #172b41) !important;
+    box-shadow:0 12px 24px rgba(23,43,65,0.18) !important;
+}
+
+.pagina-fiado-detalhe .pagamento-fiado-finalizacao .botoes-fiado-detalhe .btn-secondary{
+    width:auto !important;
+    min-width:200px !important;
+    min-height:44px !important;
+    background:#f2f5f1 !important;
+    color:#27394b !important;
+    border:1px solid #dce3e0 !important;
+}
+
+.pagina-fiado-detalhe .card-produtos-pagamento-fiado{
+    max-width:100%;
+}
+
+/* DETALHE A PRAZO - PRODUTOS EM ABERTO */
+
+.pagina-fiado-detalhe .card-produtos-pagamento-fiado{
+    margin-bottom:0 !important;
+    padding:24px 26px !important;
+    border-top:5px solid #d99032 !important;
+}
+
+.pagina-fiado-detalhe .card-produtos-pagamento-fiado .titulo-card-linha{
+    margin-bottom:14px !important;
+}
+
+.pagina-fiado-detalhe .card-produtos-pagamento-fiado .titulo-card-linha p{
+    font-size:15px !important;
+    font-weight:650 !important;
+    line-height:1.4;
+    margin-top:2px;
+}
+
+.pagina-fiado-detalhe .barra-acoes-baixa-fiado{
+    display:flex;
+    align-items:center;
+    justify-content:flex-start !important;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:12px !important;
+}
+
+.pagina-fiado-detalhe .grupo-acoes-selecao-fiado{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+/* DETALHE A PRAZO - ACOES DE PAGAMENTO */
+
+.pagina-fiado-detalhe .card-produtos-pagamento-fiado .barra-acoes-baixa-fiado button{
+    height:40px;
+    min-height:40px;
+    padding:0 14px;
+    border-radius:9px;
+    font-size:13px;
+    line-height:1.2;
+}
+
+.pagina-fiado-detalhe .barra-acoes-baixa-fiado .fiado-btn-valor-parcial{
+    width:auto;
+    min-width:260px;
+    max-width:320px;
+    height:40px;
+    min-height:40px;
+    padding:0 18px;
+    border:0;
+    border-radius:9px;
+    background:#0a192f !important;
+    background-image:none !important;
+    color:#ffffff !important;
+    font-size:14px;
+    font-weight:800;
+    line-height:1;
+    cursor:pointer;
+    text-align:center;
+    box-shadow:0 8px 18px rgba(10,25,47,0.12) !important;
+}
+
+.pagina-fiado-detalhe .barra-acoes-baixa-fiado .fiado-btn-valor-parcial:hover{
+    background:#132b4a !important;
+    background-image:none !important;
+    color:#ffffff !important;
+}
+
+.pagina-fiado-detalhe .resumo-selecao-produtos-fiado{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    min-height:48px;
+    margin:10px 0 14px;
+    padding:10px 12px;
+    background:#f7fafc;
+    border:1px solid #dce5ed;
+    border-left:4px solid #1f3347;
+    border-radius:10px;
+}
+
+.pagina-fiado-detalhe .resumo-selecao-info-fiado{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    min-width:0;
+    color:#1f3347;
+}
+
+.pagina-fiado-detalhe .resumo-selecao-produtos-fiado span{
+    color:#4c5e70;
+    font-size:14px;
+    font-weight:750;
+    line-height:1.25;
+}
+
+.pagina-fiado-detalhe .resumo-selecao-produtos-fiado strong{
+    color:#172b41;
+    font-size:15px;
+    font-weight:850;
+    line-height:1.25;
+    white-space:nowrap;
+}
+
+.pagina-fiado-detalhe .resumo-selecao-produtos-fiado strong span{
+    color:inherit;
+    font-size:inherit;
+    font-weight:inherit;
+}
+
+.pagina-fiado-detalhe .resumo-selecao-produtos-fiado.sem-selecao{
+    background:#fbfaf5;
+    border-color:#e2dac8;
+    border-left-color:#d99032;
+}
+
+.pagina-fiado-detalhe .resumo-selecao-produtos-fiado.sem-selecao .resumo-selecao-dados-fiado{
+    display:none;
+}
+
+.pagina-fiado-detalhe .resumo-selecao-produtos-fiado button{
+    min-height:38px;
+    width:auto;
+    padding:0 16px;
+    background:#1f3347 !important;
+    color:#ffffff !important;
+    border:1px solid #1f3347 !important;
+    border-radius:8px;
+    font-size:13px;
+    font-weight:850;
+    box-shadow:0 8px 18px rgba(31,51,71,0.16) !important;
+    white-space:nowrap;
+}
+
+.pagina-fiado-detalhe .tabela-scroll-produtos-abater{
+    max-height:560px !important;
+}
+
+/* PAGAMENTO A PRAZO - CAIXA */
+
+.pagina-fiado-pagamento .cabecalho-fiado-pagamento{
+    display:flex;
+    align-items:flex-start;
+    gap:18px;
+    margin-bottom:18px;
+}
+
+.pagina-fiado-pagamento .cabecalho-fiado-pagamento h1{
+    margin:4px 0 6px;
+    color:#172b41;
+    font-size:36px;
+    font-weight:900;
+    line-height:1.15;
+}
+
+.pagina-fiado-pagamento .cabecalho-fiado-pagamento p{
+    margin:0;
+    color:#52616f;
+    font-size:18px;
+    font-weight:600;
+    line-height:1.4;
+}
+
+.pagina-fiado-pagamento .grid-caixa-fiado{
+    display:grid;
+    grid-template-columns:minmax(0, 1.2fr) minmax(320px, .8fr);
+    gap:16px;
+    margin-bottom:16px;
+}
+
+.pagina-fiado-pagamento .card-cliente-caixa-fiado,
+.pagina-fiado-pagamento .card-resumo-caixa-fiado,
+.pagina-fiado-pagamento .card-itens-caixa-fiado,
+.pagina-fiado-pagamento .card-caixa-pagamento-fiado{
+    border-left:0 !important;
+    border-top:5px solid #172b41 !important;
+    margin-bottom:16px !important;
+}
+
+.pagina-fiado-pagamento .card-cliente-caixa-fiado h2,
+.pagina-fiado-pagamento .card-resumo-caixa-fiado h2{
+    margin:0 0 12px;
+    color:#172b41;
+    font-size:20px;
+    font-weight:900;
+}
+
+.pagina-fiado-pagamento .dados-cliente-caixa-fiado{
+    display:grid;
+    gap:6px;
+}
+
+.pagina-fiado-pagamento .dados-cliente-caixa-fiado strong{
+    color:#172b41;
+    font-size:24px;
+    font-weight:900;
+}
+
+.pagina-fiado-pagamento .dados-cliente-caixa-fiado span{
+    color:#52616f;
+    font-size:15px;
+    font-weight:700;
+}
+
+.pagina-fiado-pagamento .resumo-caixa-fiado{
+    display:grid;
+    grid-template-columns:repeat(2, minmax(0, 1fr));
+    gap:12px;
+}
+
+.pagina-fiado-pagamento .resumo-caixa-fiado div{
+    padding:12px 14px;
+    background:#f8f5ec;
+    border:1px solid #eadfc5;
+    border-left:4px solid #d99032;
+    border-radius:12px;
+}
+
+.pagina-fiado-pagamento .resumo-caixa-fiado span{
+    display:block;
+    margin-bottom:5px;
+    color:#52616f;
+    font-size:13px;
+    font-weight:800;
+}
+
+.pagina-fiado-pagamento .resumo-caixa-fiado strong{
+    color:#172b41;
+    font-size:23px;
+    font-weight:900;
+}
+
+.pagina-fiado-pagamento .tabela-scroll-itens-caixa-fiado{
+    max-height:360px !important;
+}
+
+.pagina-fiado-pagamento .checkout-pagamento-fiado-caixa{
+    display:grid;
+    gap:16px;
+    max-width:1040px;
+}
+
+.pagina-fiado-pagamento .form-grid-forma-pagamento-fiado{
+    display:grid !important;
+    grid-template-columns:minmax(240px, 340px) !important;
+    gap:14px !important;
+}
+
+.pagina-fiado-pagamento .form-grid-valores-pagamento-fiado{
+    display:grid !important;
+    grid-template-columns:repeat(3, minmax(0, 1fr)) !important;
+    gap:16px !important;
+}
+
+.pagina-fiado-pagamento .campo-pagamento-fiado label{
+    display:block;
+    margin-bottom:6px;
+    color:#243548 !important;
+    font-size:14px !important;
+    font-weight:850 !important;
+}
+
+.pagina-fiado-pagamento .campo-pagamento-fiado select,
+.pagina-fiado-pagamento .campo-pagamento-fiado input{
+    width:100%;
+    height:46px !important;
+    min-height:46px !important;
+    margin:0 !important;
+    padding:0 13px !important;
+    background:#ffffff !important;
+    border:1px solid #dce3e0 !important;
+    color:#172431 !important;
+    border-radius:12px !important;
+    font-size:16px !important;
+    box-shadow:none !important;
+}
+
+.pagina-fiado-pagamento #valorPagamentoFiadoUnificado,
+.pagina-fiado-pagamento #valorRecebidoFiadoUnificado{
+    background:#fbfaf5 !important;
+    color:#172431 !important;
+}
+
+.pagina-fiado-pagamento .destaque-troco-fiado input{
+    background:#eef5ef !important;
+    border-color:#bfd8c8 !important;
+    color:#172b41 !important;
+    font-weight:900 !important;
+}
+
+.pagina-fiado-pagamento .campo-pagamento-oculto{
+    display:none !important;
+}
+
+.pagina-fiado-pagamento .checkout-acoes-caixa-fiado .botoes-fiado-detalhe{
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+    margin-top:0;
+}
+
+.pagina-fiado-pagamento .checkout-acoes-caixa-fiado .botoes-fiado-detalhe button:first-child{
+    min-width:220px;
+    min-height:46px;
+    background:linear-gradient(135deg, #213b56, #172b41) !important;
+    color:#ffffff !important;
+    font-size:16px;
+    font-weight:850;
+}
+
+@media(max-width:1100px){
+    .pagina-fiado-pagamento .grid-caixa-fiado,
+    .pagina-fiado-pagamento .form-grid-valores-pagamento-fiado{
+        grid-template-columns:1fr !important;
+    }
+
+    .pagina-fiado-detalhe .resumo-selecao-produtos-fiado{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+
+    .pagina-fiado-detalhe .resumo-selecao-info-fiado{
+        align-items:flex-start;
+        flex-direction:column;
+        gap:4px;
+    }
+
+    .pagina-fiado-detalhe .resumo-selecao-produtos-fiado button{
+        width:100%;
+    }
+
+    .pagina-fiado-pagamento .cabecalho-fiado-pagamento{
+        flex-direction:column;
+    }
+}
+
+@media(max-width:720px){
+    .pagina-fiado-detalhe .pagamento-fiado-finalizacao .form-grid-forma-pagamento-fiado,
+    .pagina-fiado-detalhe .pagamento-fiado-finalizacao .form-grid-valores-pagamento-fiado,
+    .pagina-fiado-detalhe .pagamento-fiado-finalizacao .resumo-baixa-produtos-fiado{
+        grid-template-columns:1fr !important;
+    }
+
+    .pagina-fiado-detalhe .pagamento-fiado-finalizacao .botoes-fiado-detalhe button{
+        width:100% !important;
+    }
+}
+
+/* HIERARQUIA DE TITULOS E TEXTOS - VALE AGRO */
+
+.pagina-movimentacoes .cabecalho-pagina-movimentacoes h1,
+.pagina-fiados .cabecalho-pagina-fiados h1,
+.pagina-importar-fiado .cabecalho-importar-fiado h1{
+    color:#172b41;
+    font-size:36px;
+    font-weight:900;
+    line-height:1.15;
+}
+
+.pagina-movimentacoes .cabecalho-pagina-movimentacoes p,
+.pagina-fiados .cabecalho-pagina-fiados p,
+.pagina-importar-fiado .cabecalho-importar-fiado p{
+    color:#52616f;
+    font-size:18px;
+    font-weight:500;
+    line-height:1.4;
+    max-width:900px;
+}
+
+.pagina-movimentacoes .titulo-card-linha h2,
+.pagina-fiados .card-clientes-fiados .titulo-card-linha h2,
+.pagina-importar-fiado .titulo-card-linha h2,
+.pagina-importar-fiado .card-aviso-importacao h2{
+    color:#172b41 !important;
+    font-size:26px !important;
+    font-weight:800 !important;
+    line-height:1.2;
+    margin:0 0 6px;
+}
+
+.pagina-movimentacoes .titulo-card-linha p,
+.pagina-fiados .card-clientes-fiados .titulo-card-linha p,
+.pagina-importar-fiado .titulo-card-linha p,
+.pagina-importar-fiado .card-aviso-importacao p{
+    color:#52616f !important;
+    font-size:18px !important;
+    font-weight:500 !important;
+    line-height:1.4 !important;
+    margin:4px 0 0;
+    max-width:980px;
+}
+
+.pagina-importar-fiado .card-aviso-importacao p{
+    max-width:900px;
+}
+
+/* IMPORTAR A PRAZO - BUSCA E CARRINHO */
+
+.pagina-importar-fiado .form-grid-importacao-cliente{
+    grid-template-columns:minmax(280px, 1.7fr) minmax(180px, 1fr) minmax(220px, 1.25fr) minmax(150px, 0.55fr);
+    align-items:start;
+}
+
+.pagina-importar-fiado .campo-sugestao-importacao{
+    position:relative;
+    z-index:20;
+    min-width:0;
+}
+
+.pagina-importar-fiado .campo-sugestao-importacao:focus-within{
+    z-index:5000;
+}
+
+.pagina-importar-fiado .campo-sugestao-importacao input{
+    margin-bottom:0;
+}
+
+.pagina-importar-fiado .sugestoes-importacao{
+    display:none;
+    position:absolute;
+    top:calc(100% + 6px);
+    left:0;
+    right:0;
+    z-index:9999;
+    max-height:240px;
+    margin:0;
+    padding:6px;
+    background:#ffffff;
+    border:1px solid #dce3e0;
+    border-radius:12px;
+    box-shadow:0 16px 34px rgba(23,43,65,0.16);
+}
+
+.pagina-importar-fiado .sugestoes-importacao.ativo{
+    display:block;
+}
+
+.pagina-importar-fiado .sugestoes-importacao .item-produto-busca{
+    border-radius:9px;
+    border-bottom:0;
+    padding:10px 11px;
+}
+
+.pagina-importar-fiado .sugestoes-importacao .item-produto-busca + .item-produto-busca{
+    margin-top:4px;
+}
+
+.pagina-importar-fiado .item-busca-vazio-importacao{
+    cursor:default;
+}
+
+.pagina-importar-fiado .item-busca-vazio-importacao:hover{
+    background:#ffffff;
+}
+
+.pagina-importar-fiado .importacao-itens-layout{
+    display:grid;
+    gap:18px;
+    margin-top:18px;
+}
+
+.pagina-importar-fiado .importacao-busca-produto,
+.pagina-importar-fiado .importacao-carrinho{
+    background:#fbfcf9;
+    border:1px solid #dce3e0;
+    border-radius:14px;
+    padding:18px;
+}
+
+.pagina-importar-fiado .titulo-subcard-importacao{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:14px;
+    margin-bottom:14px;
+}
+
+.pagina-importar-fiado .titulo-subcard-importacao h3{
+    color:#172b41;
+    font-size:20px;
+    font-weight:850;
+    line-height:1.2;
+    margin:0 0 5px;
+}
+
+.pagina-importar-fiado .titulo-subcard-importacao p{
+    color:#52616f !important;
+    font-size:15px !important;
+    font-weight:500 !important;
+    line-height:1.35 !important;
+    margin:0;
+}
+
+.pagina-importar-fiado .campo-busca-produto-importacao{
+    position:relative;
+    z-index:30;
+}
+
+.pagina-importar-fiado .campo-busca-produto-importacao input{
+    margin-bottom:0;
+}
+
+.pagina-importar-fiado .resultados-produtos-importacao{
+    margin:8px 0 0;
+    padding:8px;
+    max-height:280px;
+    overflow-y:auto;
+    background:#fff8ed;
+    border:1px solid #efd9b9;
+    border-radius:12px;
+    box-shadow:0 14px 30px rgba(31,47,37,0.10);
+}
+
+.pagina-importar-fiado .resultados-produtos-importacao:empty{
+    display:none !important;
+}
+
+.pagina-importar-fiado .resultados-produtos-importacao .item-produto-busca{
+    display:block;
+    width:100%;
+    margin:0 0 8px;
+    padding:14px 15px;
+    color:#1f2f25;
+    background:linear-gradient(135deg, #fff3df 0%, #fffaf2 100%);
+    border:1px solid #edcf9d;
+    border-left:5px solid #f28c1a;
+    border-radius:10px;
+    box-shadow:0 8px 18px rgba(89,61,21,0.08);
+    cursor:pointer;
+}
+
+.pagina-importar-fiado .resultados-produtos-importacao .item-produto-busca:last-child{
+    margin-bottom:0;
+}
+
+.pagina-importar-fiado .resultados-produtos-importacao .item-produto-busca:hover{
+    background:linear-gradient(135deg, #ffebc9 0%, #fff6e8 100%);
+    border-color:#e8bd75;
+    transform:translateY(-1px);
+}
+
+.pagina-importar-fiado .resultados-produtos-importacao .item-produto-busca strong{
+    display:block;
+    margin-bottom:5px;
+    color:#15251b;
+    font-size:14px;
+    font-weight:900;
+}
+
+.pagina-importar-fiado .resultados-produtos-importacao .item-produto-busca span{
+    display:block;
+    color:#52616f;
+    font-size:13px;
+    font-weight:600;
+    line-height:1.35;
+}
+
+.pagina-importar-fiado .resultados-produtos-importacao .item-busca-vazio-importacao:hover{
+    background:linear-gradient(135deg, #fff3df 0%, #fffaf2 100%);
+    border-color:#edcf9d;
+    transform:none;
+}
+
+.pagina-importar-fiado .titulo-carrinho-importacao{
+    align-items:center;
+}
+
+.pagina-importar-fiado .tabela-carrinho-importacao{
+    width:100%;
+    overflow:visible;
+    border:1px solid #dce3e0;
+    border-radius:12px;
+    background:#ffffff;
+}
+
+.pagina-importar-fiado .tabela-carrinho-importacao table{
+    width:100%;
+    table-layout:fixed;
+    border-collapse:separate;
+    border-spacing:0;
+    margin:0;
+    min-width:0;
+}
+
+.pagina-importar-fiado .tabela-carrinho-importacao th,
+.pagina-importar-fiado .tabela-carrinho-importacao td{
+    padding:11px 10px;
+    border-bottom:1px solid #e7ede4;
+    color:#172b41;
+    vertical-align:middle;
+}
+
+.pagina-importar-fiado .tabela-carrinho-importacao th{
+    background:#eef5ec;
+    font-size:12.5px;
+    font-weight:850;
+    letter-spacing:.02em;
+}
+
+.pagina-importar-fiado .tabela-carrinho-importacao th:nth-child(1){width:25%;}
+.pagina-importar-fiado .tabela-carrinho-importacao th:nth-child(2){width:9%;}
+.pagina-importar-fiado .tabela-carrinho-importacao th:nth-child(3){width:10%;}
+.pagina-importar-fiado .tabela-carrinho-importacao th:nth-child(4){width:13%;}
+.pagina-importar-fiado .tabela-carrinho-importacao th:nth-child(5){width:12%;}
+.pagina-importar-fiado .tabela-carrinho-importacao th:nth-child(6){width:22%;}
+.pagina-importar-fiado .tabela-carrinho-importacao th:nth-child(7){width:9%;}
+
+.pagina-importar-fiado .tabela-carrinho-importacao tr:last-child td{
+    border-bottom:0;
+}
+
+.pagina-importar-fiado .tabela-carrinho-importacao input,
+.pagina-importar-fiado .tabela-carrinho-importacao select{
+    height:40px;
+    margin:0;
+    padding:9px 10px;
+    border:1px solid #d8e0d5;
+    background:#ffffff;
+    color:#172b41;
+}
+
+.pagina-importar-fiado .coluna-produto-importacao strong{
+    display:block;
+    color:#172b41;
+    font-size:14.5px;
+    font-weight:850;
+    line-height:1.25;
+}
+
+.pagina-importar-fiado .coluna-produto-importacao small{
+    display:block;
+    margin-top:3px;
+    color:#52616f;
+    font-size:12px;
+    font-weight:600;
+    line-height:1.25;
+}
+
+.pagina-importar-fiado .campo-qtd-importacao,
+.pagina-importar-fiado .campo-unidade-importacao,
+.pagina-importar-fiado .campo-valor-importacao{
+    text-align:center;
+}
+
+.pagina-importar-fiado .tag-unidade-importacao{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    min-width:48px;
+    height:32px;
+    padding:0 10px;
+    border-radius:999px;
+    background:#edf7ef;
+    color:#15613c;
+    font-size:12px;
+    font-weight:850;
+}
+
+.pagina-importar-fiado .coluna-total-importacao strong{
+    color:#172b41;
+    font-size:14.5px;
+    font-weight:900;
+    white-space:nowrap;
+}
+
+.pagina-importar-fiado .botao-remover-importacao{
+    padding:9px 10px;
+    background:#fff0ed !important;
+    color:#9b2f28 !important;
+    border:1px solid #f2c7c2 !important;
+    box-shadow:none;
+    font-size:12px;
+}
+
+.pagina-importar-fiado .linha-carrinho-vazio-importacao td{
+    padding:20px;
+    color:#52616f;
+    font-size:15px;
+    font-weight:650;
+    text-align:center;
+}
+
+.pagina-importar-fiado .barra-total-importacao{
+    display:flex;
+    align-items:center;
+    justify-content:flex-end;
+    gap:18px;
+    flex-wrap:wrap;
+    margin-top:18px;
+    padding-top:16px;
+    border-top:1px solid #dce3e0;
+}
+
+.pagina-importar-fiado .botao-adicionar-importacao{
+    flex:0 0 auto;
+    min-width:190px;
+}
+
+.pagina-importar-fiado .total-importacao-box{
+    flex:0 1 280px;
+    margin:0;
+    padding:14px 16px;
+    border:1px solid #dce3e0;
+    border-left:4px solid #d99032;
+    border-radius:12px;
+    background:#f8faf5;
+    color:#172b41;
+    text-align:right;
+}
+
+.pagina-importar-fiado .total-importacao-box span{
+    display:block;
+    color:#52616f;
+    font-size:14px;
+    font-weight:700;
+    line-height:1.25;
+    margin-bottom:4px;
+}
+
+.pagina-importar-fiado .total-importacao-box strong{
+    color:#172b41;
+    font-size:24px;
+    font-weight:900;
+    line-height:1.15;
+}
+
+@media(max-width:720px){
+    .pagina-importar-fiado .titulo-subcard-importacao{
+        align-items:stretch;
+        flex-direction:column;
+    }
+
+    .pagina-importar-fiado .tabela-carrinho-importacao{
+        border:0;
+        background:transparent;
+    }
+
+    .pagina-importar-fiado .tabela-carrinho-importacao table,
+    .pagina-importar-fiado .tabela-carrinho-importacao thead,
+    .pagina-importar-fiado .tabela-carrinho-importacao tbody,
+    .pagina-importar-fiado .tabela-carrinho-importacao tr,
+    .pagina-importar-fiado .tabela-carrinho-importacao th,
+    .pagina-importar-fiado .tabela-carrinho-importacao td{
+        display:block;
+        width:100%;
+    }
+
+    .pagina-importar-fiado .tabela-carrinho-importacao thead{
+        display:none;
+    }
+
+    .pagina-importar-fiado .tabela-carrinho-importacao tr{
+        margin-bottom:12px;
+        padding:12px;
+        border:1px solid #dce3e0;
+        border-radius:12px;
+        background:#ffffff;
+    }
+
+    .pagina-importar-fiado .tabela-carrinho-importacao td{
+        display:grid;
+        grid-template-columns:105px minmax(0, 1fr);
+        align-items:center;
+        gap:10px;
+        padding:8px 0;
+        border-bottom:1px solid #edf2eb;
+    }
+
+    .pagina-importar-fiado .tabela-carrinho-importacao td::before{
+        content:attr(data-label);
+        color:#52616f;
+        font-size:12px;
+        font-weight:850;
+        text-transform:uppercase;
+    }
+
+    .pagina-importar-fiado .tabela-carrinho-importacao td:last-child{
+        border-bottom:0;
+    }
+
+    .pagina-importar-fiado .barra-total-importacao{
+        align-items:stretch;
+        flex-direction:column;
+    }
+
+    .pagina-importar-fiado .botao-adicionar-importacao,
+    .pagina-importar-fiado .total-importacao-box{
+        width:100%;
+    }
+
+    .pagina-importar-fiado .total-importacao-box{
+        text-align:left;
+    }
+}
+
+/* IMPORTAR A PRAZO - FINALIZAR IMPORTACAO */
+
+.pagina-importar-fiado .card-finalizar-importacao{
+    background:linear-gradient(135deg, #213b56 0%, #172b41 100%) !important;
+    border:1px solid rgba(255,255,255,0.12) !important;
+    border-radius:16px;
+    box-shadow:0 16px 36px rgba(23,43,65,0.18);
+    color:#ffffff;
+}
+
+.pagina-importar-fiado .finalizar-importacao-conteudo{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:18px;
+}
+
+.pagina-importar-fiado .card-finalizar-importacao h2{
+    color:#ffffff !important;
+    font-size:26px !important;
+    font-weight:850 !important;
+    line-height:1.2;
+    margin:0 0 7px;
+}
+
+.pagina-importar-fiado .card-finalizar-importacao p{
+    color:rgba(255,255,255,0.88) !important;
+    font-size:18px !important;
+    font-weight:600 !important;
+    line-height:1.4 !important;
+    margin:0;
+    max-width:760px;
+}
+
+.pagina-importar-fiado .botao-salvar-importacao{
+    flex:0 0 auto;
+    min-height:46px;
+    padding:0 22px;
+    background:#ffffff !important;
+    color:#172b41 !important;
+    border:1px solid rgba(255,255,255,0.78) !important;
+    border-radius:12px;
+    box-shadow:0 12px 24px rgba(0,0,0,0.16);
+    font-size:15px;
+    font-weight:850;
+}
+
+.pagina-importar-fiado .botao-salvar-importacao:hover{
+    background:#f4f7f2 !important;
+    border-color:#ffffff !important;
+    transform:translateY(-1px);
+    box-shadow:0 16px 30px rgba(0,0,0,0.20);
+}
+
+@media(max-width:760px){
+    .pagina-importar-fiado .finalizar-importacao-conteudo{
+        align-items:stretch;
+        flex-direction:column;
+    }
+
+    .pagina-importar-fiado .botao-salvar-importacao{
+        width:100%;
+    }
+}
+
+/* DASHBOARD - FILTRO E RETIRADA DE CAIXA */
+
+.pagina-dashboard .filtro-dashboard{
+    background:linear-gradient(135deg, #eef5ec 0%, #f8fbf5 100%);
+    color:#203429;
+    border:1px solid #dbe7d7;
+    box-shadow:0 14px 32px rgba(35,58,46,0.09);
+}
+
+.pagina-dashboard .filtro-dashboard h2{
+    color:#172b41;
+}
+
+.pagina-dashboard .filtro-dashboard label,
+.pagina-dashboard .filtro-dashboard h3{
+    color:#172b41;
+}
+
+.pagina-dashboard .filtro-dashboard select,
+.pagina-dashboard .filtro-dashboard input{
+    background:#ffffff;
+    color:#203429;
+    border:1px solid #d5e0d0;
+}
+
+.pagina-dashboard .filtro-dashboard button{
+    background:#ffffff;
+    color:#203429;
+    border:1px solid #bfcfc0;
+    box-shadow:0 8px 18px rgba(35,58,46,0.10);
+    font-weight:850;
+}
+
+.pagina-dashboard .filtro-dashboard button:hover{
+    background:#edf5ea;
+    border-color:#9fb79f;
+    transform:translateY(-1px);
+}
+
+.pagina-dashboard .dashboard-retirada{
+    background:linear-gradient(135deg, #f8fbf5 0%, #edf5ea 100%);
+    border:1px solid #dbe7d7;
+    border-left:5px solid #6f8f72;
+    box-shadow:0 14px 32px rgba(35,58,46,0.08);
+}
+
+.pagina-dashboard .dashboard-retirada .cabecalho-card-retirada p{
+    max-width:760px;
+    color:#5f6f64;
+    font-size:13px;
+    line-height:1.45;
+}
+
+.pagina-dashboard .dashboard-retirada h2{
+    color:#203429;
+}
+
+.pagina-dashboard .dashboard-retirada label{
+    color:#435348;
+}
+
+.pagina-dashboard .dashboard-retirada input,
+.pagina-dashboard .dashboard-retirada select{
+    background:#ffffff;
+}
+
+.pagina-dashboard .dashboard-retirada .acoes-retirada-caixa{
+    min-width:0;
+}
+
+.pagina-dashboard .dashboard-retirada .acoes-retirada-caixa button{
+    width:100%;
+    min-width:0;
+    white-space:normal;
+}
+
+/* ENTREGAS - CARDS DE RESUMO */
+
+.pagina-entregas .cards-resumo-entregas{
+    display:grid;
+    grid-template-columns:repeat(5, minmax(0, 1fr));
+    gap:14px;
+    align-items:stretch;
+    margin-top:0;
+}
+
+.pagina-entregas .card-entrega-resumo{
+    min-height:126px;
+    margin-bottom:0;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    gap:12px;
+    border-radius:12px;
+    border:1px solid transparent;
+    box-shadow:0 14px 30px rgba(35,58,46,0.08);
+}
+
+.pagina-entregas .card-entrega-resumo h3{
+    margin:0;
+    font-size:14px;
+    font-weight:850;
+}
+
+.pagina-entregas .card-entrega-resumo p{
+    margin:0;
+    font-size:clamp(24px, 2vw, 30px);
+    font-weight:900;
+    line-height:1.1;
+}
+
+.pagina-entregas .card-entrega-resumo.pendentes{
+    background:linear-gradient(135deg, #fff3df 0%, #fffaf2 100%);
+    border-color:#efd2a7;
+}
+
+.pagina-entregas .card-entrega-resumo.pendentes h3,
+.pagina-entregas .card-entrega-resumo.pendentes p{
+    color:#744d13;
+}
+
+.pagina-entregas .card-entrega-resumo.finalizadas{
+    background:linear-gradient(135deg, #e7f5ea 0%, #f7fcf7 100%);
+    border-color:#c8e2ce;
+}
+
+.pagina-entregas .card-entrega-resumo.finalizadas h3,
+.pagina-entregas .card-entrega-resumo.finalizadas p{
+    color:#1f6140;
+}
+
+.pagina-entregas .card-entrega-resumo.saiu-entrega{
+    background:linear-gradient(135deg, #ffe0bf 0%, #ffecd8 52%, #fff7ed 100%);
+    border-color:#efbf8a;
+}
+
+.pagina-entregas .card-entrega-resumo.saiu-entrega h3,
+.pagina-entregas .card-entrega-resumo.saiu-entrega p{
+    color:#6f3f12;
+}
+
+.pagina-entregas .card-entrega-resumo.a-receber{
+    background:linear-gradient(135deg, #e7f0f8 0%, #f5f9fc 100%);
+    border-color:#bfd2e3;
+}
+
+.pagina-entregas .card-entrega-resumo.a-receber h3,
+.pagina-entregas .card-entrega-resumo.a-receber p{
+    color:#17324a;
+}
+
+.pagina-entregas .card-entrega-resumo.valor-receber{
+    background:linear-gradient(135deg, #fae9e6 0%, #fff7f5 100%);
+    border-color:#efc9c4;
+}
+
+.pagina-entregas .card-entrega-resumo.valor-receber h3,
+.pagina-entregas .card-entrega-resumo.valor-receber p{
+    color:#8b3430;
+}
+
+.pagina-entregas .card-entregas-pagamento-pendente{
+    border-top:5px solid #1f3347;
+}
+
+.pagina-entregas .card-entregas-pagamento-pendente .titulo-card-linha p{
+    color:#536577;
+    font-size:15px;
+    font-weight:650;
+}
+
+/* ENTREGAS - MODAL DE RECEBIMENTO */
+#modalReceberEntrega .modal-conteudo{
+    background:#172b41 !important;
+    border:1px solid rgba(255,255,255,0.14) !important;
+    box-shadow:0 24px 60px rgba(12,24,38,0.38) !important;
+    color:#ffffff !important;
+}
+
+#modalReceberEntrega .modal-conteudo h2{
+    color:#ffffff !important;
+    font-weight:850;
+    margin-top:0;
+    margin-bottom:22px;
+    line-height:1.2;
+}
+
+#modalReceberEntrega .produto-selecionado{
+    background:rgba(255,255,255,0.08) !important;
+    border:1px solid rgba(255,255,255,0.16) !important;
+    color:#ffffff !important;
+}
+
+#modalReceberEntrega .produto-selecionado strong,
+#modalReceberEntrega .produto-selecionado span{
+    color:#ffffff !important;
+}
+
+#modalReceberEntrega select,
+#modalReceberEntrega input{
+    background:#ffffff !important;
+    color:#111111 !important;
+    border:1px solid rgba(255,255,255,0.28) !important;
+}
+
+#modalReceberEntrega button{
+    background:#ffffff !important;
+    color:#111111 !important;
+    border:1px solid rgba(255,255,255,0.24) !important;
+    box-shadow:0 10px 22px rgba(0,0,0,0.16) !important;
+}
+
+#modalReceberEntrega button:hover{
+    background:#f3f6f8 !important;
+    color:#111111 !important;
+}
+
+#modalReceberEntrega .btn-secondary{
+    background:#ffffff !important;
+    color:#111111 !important;
+    opacity:0.94;
+}
+
+/* ENTREGA DETALHE - ITENS DA ENTREGA */
+.pagina-entrega-detalhe .page-hero-entrega-detalhe{
+    gap:18px;
+}
+
+.pagina-entrega-detalhe .page-hero-entrega-detalhe .btn-secondary{
+    min-width:96px;
+}
+
+.entrega-detalhe-mensagem{
+    margin-bottom:16px;
+}
+
+.entrega-detalhe-grid{
+    display:grid;
+    grid-template-columns:minmax(0, 1.4fr) minmax(280px, .6fr);
+    gap:16px;
+    align-items:start;
+    margin-bottom:16px;
+}
+
+.pagina-entrega-detalhe .card{
+    min-width:0;
+}
+
+.entrega-detalhe-info-grid{
+    display:grid;
+    grid-template-columns:repeat(2, minmax(0, 1fr));
+    gap:12px;
+}
+
+.entrega-detalhe-info{
+    min-width:0;
+    padding:12px 14px;
+    border:1px solid rgba(31,51,71,0.09);
+    border-radius:10px;
+    background:#fbfcf8;
+}
+
+.entrega-detalhe-info span,
+.entrega-detalhe-observacao span,
+.resumo-entrega-detalhe span{
+    display:block;
+    color:#536577;
+    font-size:12.5px;
+    font-weight:800;
+    letter-spacing:.02em;
+    text-transform:uppercase;
+}
+
+.entrega-detalhe-info strong{
+    display:block;
+    margin-top:5px;
+    color:#172b41;
+    font-size:15px;
+    font-weight:850;
+    line-height:1.25;
+    overflow-wrap:anywhere;
+}
+
+.entrega-detalhe-observacao{
+    margin-top:12px;
+    padding:12px 14px;
+    border:1px solid rgba(31,51,71,0.09);
+    border-radius:10px;
+    background:#f6faf6;
+}
+
+.entrega-detalhe-observacao p{
+    margin:6px 0 0;
+    color:#1f3347;
+    font-size:14px;
+    font-weight:650;
+    line-height:1.35;
+}
+
+.resumo-entrega-detalhe{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.resumo-entrega-detalhe p{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    margin:0;
+    padding:12px 0;
+    border-bottom:1px solid rgba(31,51,71,0.09);
+}
+
+.resumo-entrega-detalhe p:last-child{
+    border-bottom:0;
+}
+
+.resumo-entrega-detalhe strong{
+    color:#172b41;
+    font-size:16px;
+    font-weight:900;
+    white-space:nowrap;
+}
+
+.resumo-entrega-detalhe .total{
+    margin-top:2px;
+    padding:14px 14px;
+    border:0;
+    border-radius:10px;
+    background:#e7f0f8;
+}
+
+.resumo-entrega-detalhe .total strong{
+    font-size:20px;
+}
+
+.tabela-scroll-entrega-detalhe{
+    max-height:none;
+}
+
+.tabela-scroll-entrega-detalhe table{
+    min-width:760px;
+}
+
+.tabela-scroll-entrega-detalhe th,
+.tabela-scroll-entrega-detalhe td{
+    vertical-align:middle;
+}
+
+.tabela-scroll-entrega-detalhe th:nth-child(2),
+.tabela-scroll-entrega-detalhe th:nth-child(3),
+.tabela-scroll-entrega-detalhe td:nth-child(2),
+.tabela-scroll-entrega-detalhe td:nth-child(3){
+    text-align:center;
+}
+
+.tabela-scroll-entrega-detalhe th:nth-child(4),
+.tabela-scroll-entrega-detalhe th:nth-child(5),
+.tabela-scroll-entrega-detalhe td:nth-child(4),
+.tabela-scroll-entrega-detalhe td:nth-child(5){
+    text-align:right;
+    white-space:nowrap;
+}
+
+.entrega-detalhe-produto{
+    color:#172b41;
+    font-weight:850;
+}
+
+.entrega-detalhe-sem-itens{
+    color:#536577;
+    font-weight:750;
+    text-align:center;
+}
+
+.menu-global-acoes-entrega .botao-ver-itens-entrega{
+    background:#e7f0f8 !important;
+    border:1px solid #bfd2e3 !important;
+    color:#17324a !important;
+    font-weight:850 !important;
+}
+
+.menu-global-acoes-entrega .botao-ver-itens-entrega:hover{
+    background:#d9e9f5 !important;
+}
+
+@media(max-width:1250px){
+    .pagina-entregas .cards-resumo-entregas{
+        grid-template-columns:repeat(2, minmax(0, 1fr));
+    }
+
+    .entrega-detalhe-grid{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:720px){
+    .pagina-entregas .cards-resumo-entregas{
+        grid-template-columns:1fr;
+    }
+
+    .entrega-detalhe-info-grid{
+        grid-template-columns:1fr;
+    }
+
+    .pagina-entrega-detalhe .page-hero-entrega-detalhe{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+}
+
+/* FINANCEIRO DEFINITIVO - VALE AGRO */
+
+.pagina-financeiro{
+    padding-top:22px;
+}
+
+.pagina-financeiro .cabecalho-pagina-financeiro{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:16px;
+    margin-bottom:16px;
+}
+
+.pagina-financeiro .cabecalho-pagina-financeiro h1{
+    margin:2px 0 5px;
+    color:#172b41;
+    font-size:36px;
+    font-weight:900;
+    line-height:1.15;
+}
+
+.pagina-financeiro .cabecalho-pagina-financeiro p{
+    margin:0;
+    color:#52616f;
+    font-size:18px;
+    font-weight:500;
+    line-height:1.4;
+    max-width:760px;
+}
+
+.pagina-financeiro .card-filtro-financeiro,
+.pagina-financeiro .card-resumo-periodo-financeiro,
+.pagina-financeiro .card-grafico-financeiro,
+.pagina-financeiro .card-historico-financeiro{
+    background:#fbfdf9;
+    border:1px solid #dfe8dc;
+    border-radius:12px;
+    box-shadow:0 14px 34px rgba(35,58,46,0.08);
+}
+
+.pagina-financeiro .card-filtro-financeiro{
+    margin-bottom:16px;
+}
+
+.pagina-financeiro .titulo-card-linha h2{
+    color:#172b41 !important;
+    font-size:26px !important;
+    font-weight:800 !important;
+    line-height:1.2;
+}
+
+.pagina-financeiro .titulo-card-linha p{
+    color:#52616f !important;
+    font-size:18px !important;
+    line-height:1.4 !important;
+    font-weight:600 !important;
+    margin-top:4px;
+    margin-bottom:0;
+}
+
+.pagina-financeiro .form-grid-filtro-financeiro{
+    display:grid;
+    grid-template-columns:minmax(210px, 1.2fr) repeat(4, minmax(130px, .8fr)) minmax(110px, .5fr);
+    gap:10px;
+    align-items:center;
+}
+
+.pagina-financeiro .form-grid-historico-financeiro{
+    display:grid;
+    grid-template-columns:minmax(210px, 1.2fr) repeat(4, minmax(120px, .8fr)) minmax(150px, .7fr) minmax(130px, .65fr);
+    gap:10px;
+    align-items:center;
+    margin-bottom:14px;
+}
+
+.pagina-financeiro .form-grid-filtro-financeiro select,
+.pagina-financeiro .form-grid-filtro-financeiro input,
+.pagina-financeiro .form-grid-filtro-financeiro button,
+.pagina-financeiro .form-grid-historico-financeiro select,
+.pagina-financeiro .form-grid-historico-financeiro input,
+.pagina-financeiro .form-grid-historico-financeiro button{
+    height:40px;
+    margin:0;
+}
+
+.pagina-financeiro .form-grid-filtro-financeiro button,
+.pagina-financeiro .form-grid-historico-financeiro button{
+    min-width:0;
+    border-radius:8px;
+    font-weight:800;
+}
+
+.pagina-financeiro .cards-financeiro-principal,
+.pagina-financeiro .cards-financeiro-secundario{
+    display:grid;
+    grid-template-columns:repeat(4, minmax(0, 1fr));
+    gap:14px;
+    align-items:stretch;
+    margin-bottom:16px;
+}
+
+.pagina-financeiro .card-financeiro-resumo{
+    position:relative;
+    min-height:128px;
+    height:100%;
+    padding:20px 20px 18px 24px;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    gap:14px;
+    background:linear-gradient(180deg, #ffffff 0%, #f8fbf6 100%);
+    border:1px solid #dfe8dc;
+    border-radius:12px;
+    box-shadow:0 14px 32px rgba(35,58,46,0.09);
+}
+
+.pagina-financeiro .card-financeiro-resumo::before{
+    content:"";
+    position:absolute;
+    left:0;
+    top:0;
+    bottom:0;
+    width:6px;
+    border-radius:12px 0 0 12px;
+    background:#8aa096;
+}
+
+.pagina-financeiro .card-financeiro-resumo h3{
+    margin:0;
+    color:#5c6a61;
+    font-size:13px;
+    font-weight:800;
+    line-height:1.25;
+    text-transform:uppercase;
+    letter-spacing:.03em;
+}
+
+.pagina-financeiro .card-financeiro-resumo p{
+    margin:0;
+    color:#172431;
+    font-size:clamp(21px, 2vw, 28px);
+    line-height:1.08;
+    font-weight:900;
+    overflow-wrap:anywhere;
+}
+
+.pagina-financeiro .card-financeiro-resumo.total{
+    background:#172b41;
+    border-color:#172b41;
+    box-shadow:0 18px 38px rgba(23,43,65,0.22);
+}
+
+.pagina-financeiro .card-financeiro-resumo.total h3,
+.pagina-financeiro .card-financeiro-resumo.total p,
+.pagina-financeiro .card-financeiro-resumo.total *{
+    color:#ffffff !important;
+}
+
+.pagina-financeiro .card-financeiro-resumo.total::before{ display:none; }
+.pagina-financeiro .card-financeiro-resumo.venda::before{ background:#1f9d67; }
+.pagina-financeiro .card-financeiro-resumo.prazo::before{ background:#2d7fc2; }
+.pagina-financeiro .card-financeiro-resumo.entrega::before{ background:#45a6b8; }
+.pagina-financeiro .card-financeiro-resumo.abatimento::before{ background:#c95b58; }
+.pagina-financeiro .card-financeiro-resumo.gerado::before{ background:#d79a25; }
+.pagina-financeiro .card-financeiro-resumo.vendas::before{ background:#718096; }
+.pagina-financeiro .card-financeiro-resumo.ticket::before{ background:#397f5b; }
+
+.pagina-financeiro .financeiro-grid-analise{
+    display:grid;
+    grid-template-columns:minmax(0, 1fr) minmax(340px, .85fr);
+    gap:16px;
+    align-items:stretch;
+    margin-bottom:16px;
+}
+
+.pagina-financeiro .card-resumo-periodo-financeiro,
+.pagina-financeiro .card-grafico-financeiro{
+    min-height:310px;
+}
+
+.pagina-financeiro .tabela-resumo-financeiro{
+    width:100%;
+    border-collapse:collapse;
+}
+
+.pagina-financeiro .tabela-resumo-financeiro td{
+    padding:11px 10px;
+    color:#334238;
+    font-size:14px;
+    border-bottom:1px solid #edf2eb;
+}
+
+.pagina-financeiro .tabela-resumo-financeiro td:last-child{
+    text-align:right;
+    color:#16251d;
+    font-weight:900;
+}
+
+.pagina-financeiro .linha-resumo-total-financeiro{
+    background:#eef7ef;
+}
+
+.pagina-financeiro .linha-resumo-total-financeiro td{
+    color:#143d2c;
+    font-weight:900;
+}
+
+.pagina-financeiro .area-grafico-financeiro{
+    height:235px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.pagina-financeiro .card-historico-financeiro{
+    margin-bottom:16px;
+    overflow:hidden;
+}
+
+.pagina-financeiro .botao-pdf-financeiro{
+    background:#5f6f64;
+    color:#ffffff;
+}
+
+.pagina-financeiro .botao-pdf-financeiro:hover{
+    background:#4b5d51;
+}
+
+.pagina-financeiro .tabela-scroll-financeiro{
+    max-height:380px;
+    border:1px solid #e8eee5;
+    border-radius:10px;
+}
+
+.pagina-financeiro .card-historico-financeiro table th,
+.pagina-financeiro .card-historico-financeiro table td{
+    padding:10px 11px;
+    font-size:13px;
+}
+
+.pagina-financeiro .card-historico-financeiro table th{
+    color:#4f5e55;
+    background:#f2f6ef;
+}
+
+.pagina-financeiro .card-historico-financeiro table td:nth-child(5){
+    font-weight:900;
+}
+
+.pagina-financeiro .linha-historico-financeiro:hover{
+    background:#f3faf3;
+}
+
+.pagina-financeiro .total-historico-financeiro{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    margin-top:14px;
+    padding:14px 16px;
+    border-radius:10px;
+    background:#f2f7ef;
+    border:1px solid #dce9d7;
+}
+
+.pagina-financeiro .total-historico-financeiro span{
+    display:block;
+    color:#5f6f64;
+    font-size:12px;
+    font-weight:800;
+    margin-bottom:4px;
+    text-transform:uppercase;
+    letter-spacing:.03em;
+}
+
+.pagina-financeiro .total-historico-financeiro strong{
+    color:#143d2c;
+    font-size:26px;
+    font-weight:900;
+}
+
+.pagina-financeiro .total-historico-financeiro small{
+    color:#5f6f64;
+    font-size:13px;
+    font-weight:800;
+}
+
+.pagina-financeiro .tag-financeiro{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    min-width:135px;
+    min-height:28px;
+    padding:5px 10px;
+    border-radius:999px;
+    font-size:11px;
+    font-weight:800;
+    white-space:nowrap;
+}
+
+.pagina-financeiro .tag-financeiro-entrada{
+    background:#e4f6eb;
+    border:1px solid #bce5cb;
+    color:#176b46;
+}
+
+.pagina-financeiro .tag-financeiro-pendente{
+    background:#fff5dc;
+    border:1px solid #f0d28c;
+    color:#8a5f0a;
+}
+
+.pagina-financeiro .tag-financeiro-saida{
+    background:#fae8e7;
+    border:1px solid #edc4c1;
+    color:#a94442;
+}
+
+.pagina-financeiro .tag-financeiro-neutro{
+    background:#edf1f4;
+    border:1px solid #d4dde4;
+    color:#52616f;
+}
+
+.pagina-financeiro .valor-financeiro-entrada{
+    color:#176b46;
+    font-weight:900;
+}
+
+.pagina-financeiro .valor-financeiro-pendente{
+    color:#9a6a09;
+    font-weight:900;
+}
+
+.pagina-financeiro .valor-financeiro-saida{
+    color:#a94442;
+    font-weight:900;
+}
+
+.pagina-financeiro .acoes-financeiro{
+    display:flex;
+    gap:6px;
+    flex-wrap:wrap;
+}
+
+.pagina-financeiro .botao-reimprimir-financeiro,
+.pagina-financeiro .botao-cancelar-financeiro{
+    height:32px;
+    padding:0 10px;
+    border-radius:7px;
+    font-size:11px;
+}
+
+.pagina-financeiro .botao-reimprimir-financeiro{
+    background:#5f6f64;
+}
+
+.pagina-financeiro .botao-cancelar-financeiro{
+    background:#a94442;
+}
+
+@media(max-width:1350px){
+    .pagina-financeiro .cards-financeiro-principal,
+    .pagina-financeiro .cards-financeiro-secundario{
+        grid-template-columns:repeat(2, minmax(0, 1fr));
+    }
+
+    .pagina-financeiro .financeiro-grid-analise,
+    .pagina-financeiro .form-grid-filtro-financeiro,
+    .pagina-financeiro .form-grid-historico-financeiro{
+        grid-template-columns:1fr 1fr;
+    }
+}
+
+@media(max-width:760px){
+    .pagina-financeiro .cards-financeiro-principal,
+    .pagina-financeiro .cards-financeiro-secundario,
+    .pagina-financeiro .financeiro-grid-analise,
+    .pagina-financeiro .form-grid-filtro-financeiro,
+    .pagina-financeiro .form-grid-historico-financeiro{
+        grid-template-columns:1fr;
+    }
+
+    .pagina-financeiro .total-historico-financeiro{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+}
+
+/* SIDEBAR DEFINITIVA - VALE AGRO */
+
+.layout{
+    display:flex !important;
+    align-items:stretch !important;
+}
+
+.layout > .sidebar{
+    position:relative !important;
+    flex:0 0 88px !important;
+    width:88px !important;
+    min-width:88px !important;
+    max-width:88px !important;
+    min-height:100vh !important;
+    padding:22px 18px !important;
+    overflow:hidden !important;
+    background:#172b41 !important;
+    color:#ffffff !important;
+    box-shadow:10px 0 26px rgba(15,32,50,0.16) !important;
+    transition:flex-basis 260ms ease, width 260ms ease, min-width 260ms ease, max-width 260ms ease, box-shadow 260ms ease !important;
+}
+
+.layout > .sidebar:hover,
+.layout > .sidebar:focus-within{
+    flex-basis:270px !important;
+    width:270px !important;
+    min-width:270px !important;
+    max-width:270px !important;
+    box-shadow:14px 0 34px rgba(15,32,50,0.20) !important;
+}
+
+.layout > .sidebar .logo{
+    width:52px !important;
+    min-width:52px !important;
+    max-width:52px !important;
+    height:52px !important;
+    min-height:52px !important;
+    max-height:52px !important;
+    margin:0 auto 24px !important;
+    padding:0 !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    background:transparent !important;
+    border:none !important;
+    outline:none !important;
+    border-radius:14px !important;
+    box-shadow:none !important;
+    overflow:hidden !important;
+    aspect-ratio:auto !important;
+    transition:width 260ms ease, min-width 260ms ease, max-width 260ms ease, height 260ms ease, min-height 260ms ease, max-height 260ms ease, padding 260ms ease !important;
+}
+
+.layout > .sidebar:hover .logo,
+.layout > .sidebar:focus-within .logo{
+    width:104px !important;
+    min-width:104px !important;
+    max-width:104px !important;
+    height:104px !important;
+    min-height:104px !important;
+    max-height:104px !important;
+    padding:10px !important;
+}
+
+.layout > .sidebar .logo img{
+    display:block !important;
+    width:52px !important;
+    min-width:0 !important;
+    max-width:52px !important;
+    height:52px !important;
+    min-height:0 !important;
+    max-height:52px !important;
+    object-fit:contain !important;
+    object-position:center !important;
+    border-radius:12px !important;
+    aspect-ratio:auto !important;
+    filter:none !important;
+    box-shadow:none !important;
+    transform:none !important;
+    transition:width 260ms ease, max-width 260ms ease, height 260ms ease, max-height 260ms ease !important;
+}
+
+.layout > .sidebar:hover .logo img,
+.layout > .sidebar:focus-within .logo img{
+    width:84px !important;
+    max-width:84px !important;
+    height:84px !important;
+    max-height:84px !important;
+}
+
+.layout > .sidebar nav{
+    width:100% !important;
+    display:flex !important;
+    flex-direction:column !important;
+    gap:8px !important;
+}
+
+.layout > .sidebar nav a{
+    width:52px !important;
+    min-width:52px !important;
+    max-width:52px !important;
+    height:48px !important;
+    min-height:48px !important;
+    max-height:48px !important;
+    padding:0 !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    gap:0 !important;
+    color:rgba(255,255,255,0.88) !important;
+    background:transparent !important;
+    border-radius:12px !important;
+    text-decoration:none !important;
+    font-size:0 !important;
+    font-weight:800 !important;
+    line-height:1.2 !important;
+    white-space:nowrap !important;
+    overflow:hidden !important;
+    box-shadow:none !important;
+    transition:width 260ms ease, min-width 260ms ease, max-width 260ms ease, padding 260ms ease, gap 260ms ease, font-size 160ms ease, background 180ms ease, color 180ms ease !important;
+}
+
+.layout > .sidebar:hover nav a,
+.layout > .sidebar:focus-within nav a{
+    width:100% !important;
+    min-width:100% !important;
+    max-width:100% !important;
+    padding:0 16px !important;
+    justify-content:flex-start !important;
+    gap:12px !important;
+    font-size:14px !important;
+}
+
+.layout > .sidebar nav a:hover{
+    background:rgba(255,255,255,0.10) !important;
+    color:#ffffff !important;
+    transform:none !important;
+}
+
+.layout > .sidebar nav a.ativo,
+.layout > .sidebar nav a.ativo:hover{
+    background:#ffffff !important;
+    color:#172b41 !important;
+    box-shadow:none !important;
+}
+
+.layout > .sidebar nav a::before{
+    content:"" !important;
+    width:24px !important;
+    height:24px !important;
+    min-width:24px !important;
+    flex:0 0 24px !important;
+    margin:0 !important;
+    color:currentColor !important;
+    background:currentColor !important;
+    -webkit-mask:var(--nav-icon) center / 20px 20px no-repeat !important;
+    mask:var(--nav-icon) center / 20px 20px no-repeat !important;
+}
+
+.layout > .sidebar nav a:nth-child(1){
+    --nav-icon:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' d='M4 13h6V4H4v9Zm10 7h6V4h-6v16ZM4 20h6v-4H4v4Z'/%3E%3C/svg%3E");
+}
+
+.layout > .sidebar nav a:nth-child(2){
+    --nav-icon:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' d='M4 7.5 12 3l8 4.5v9L12 21l-8-4.5v-9Zm8 4.5 8-4.5M12 12 4 7.5m8 4.5V21'/%3E%3C/svg%3E");
+}
+
+.layout > .sidebar nav a:nth-child(3){
+    --nav-icon:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' d='M6 6h15l-2 8H8L6 3H3m6 17a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm9 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z'/%3E%3C/svg%3E");
+}
+
+.layout > .sidebar nav a:nth-child(4){
+    --nav-icon:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' d='M7 3h10l2 4v14H5V7l2-4Zm-2 4h14M9 12h6m-6 4h4'/%3E%3C/svg%3E");
+}
+
+.layout > .sidebar nav a:nth-child(5){
+    --nav-icon:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' d='M3 7h11v10H3V7Zm11 4h4l3 3v3h-7v-6ZM7 20a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm11 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z'/%3E%3C/svg%3E");
+}
+
+.layout > .sidebar nav a:nth-child(6){
+    --nav-icon:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' d='M6 3h9l3 3v15H6V3Zm8 0v4h4M9 12h6M9 16h4'/%3E%3C/svg%3E");
+}
+
+.layout > .sidebar nav a:nth-child(7){
+    --nav-icon:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' d='M7 7h11l-3-3m3 3-3 3M17 17H6l3 3m-3-3 3-3'/%3E%3C/svg%3E");
+}
+
+.layout > .sidebar nav a:nth-child(8){
+    --nav-icon:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' d='M4 19V5m0 14h16M8 16v-5m5 5V8m5 8v-7'/%3E%3C/svg%3E");
+}
+
+.layout > .conteudo{
+    flex:1 1 auto !important;
+    min-width:0 !important;
+    max-width:none !important;
+}
+
+@media(max-width:900px){
+    .layout{
+        display:block !important;
+    }
+
+    .layout > .sidebar{
+        width:100% !important;
+        min-width:0 !important;
+        max-width:none !important;
+        min-height:auto !important;
+        padding:16px !important;
+    }
+
+    .layout > .sidebar .logo{
+        width:92px !important;
+        min-width:92px !important;
+        max-width:92px !important;
+        height:92px !important;
+        min-height:92px !important;
+        max-height:92px !important;
+        margin:0 auto 14px !important;
+        padding:9px !important;
+    }
+
+    .layout > .sidebar .logo img{
+        width:74px !important;
+        max-width:74px !important;
+        height:74px !important;
+        max-height:74px !important;
+        object-fit:contain !important;
+    }
+
+    .layout > .sidebar nav{
+        gap:7px !important;
+    }
+}
+
+/* AJUSTES OPERACIONAIS PONTUAIS - UX VALE AGRO */
+
+textarea{
+    resize:none !important;
+}
+
+.modal-produto-edicao{
+    background:#17324a !important;
+    color:#f8faf7 !important;
+    border:1px solid rgba(255,255,255,0.10) !important;
+    box-shadow:0 26px 70px rgba(12,31,48,0.36) !important;
+}
+
+.modal-produto-edicao h2{
+    color:#ffffff !important;
+}
+
+.modal-produto-edicao input,
+.modal-produto-edicao select,
+.modal-produto-edicao textarea{
+    background:#ffffff !important;
+    color:#17231d !important;
+    border:1px solid rgba(23,50,74,0.18) !important;
+}
+
+.acoes-modal-produto button:first-child{
+    background:#ffffff !important;
+    color:#17324a !important;
+    border:1px solid rgba(255,255,255,0.72) !important;
+    box-shadow:0 10px 22px rgba(0,0,0,0.18) !important;
+}
+
+.acoes-modal-produto .btn-secondary{
+    background:rgba(255,255,255,0.10) !important;
+    color:#ffffff !important;
+    border:1px solid rgba(255,255,255,0.28) !important;
+}
+
+.area-entrega-venda #freteEntregaVenda{
+    font-weight:800;
+    color:#163525;
+}
+
+.card-movimentacoes-unificado{
+    overflow:hidden;
+}
+
+.card-movimentacoes-unificado .form-grid-filtros-movimentacao{
+    margin-bottom:14px;
+}
+
+.card-movimentacoes-unificado #resultadosProdutosFiltro:empty,
+.card-movimentacoes-unificado #produtoFiltroSelecionado:empty{
+    display:none;
+}
+
+.pagina-movimentacoes .card-nova-movimentacao #resultadosProdutosMov:empty,
+.pagina-movimentacoes .card-nova-movimentacao #produtoSelecionadoMov:empty{
+    display:none;
+}
+
+.divisor-movimentacoes-unificado{
+    height:1px;
+    margin:20px 0;
+    background:linear-gradient(90deg, transparent, rgba(35,58,46,0.16), transparent);
+}
+
+.card-movimentacoes-unificado .aviso-movimentacao{
+    margin-top:10px;
+}

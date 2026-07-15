@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Importar A Prazo - VALE AGRO</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<div class="layout">
+    <aside class="sidebar">
+        <div class="logo">
+            <img src="../img/logo-vale-agro.jpg" alt="VALE AGRO">
+        </div>
+
+        <nav>
+            <a href="../index.html">Dashboard</a>
+            <a href="estoque.html">Estoque</a>
+            <a href="vendas.html">Vendas</a>
+            <a href="orcamentos.html">Orçamentos</a>
+            <a href="entregas.html">Entregas</a>
+            <a href="fiados.html" class="ativo">A Prazo</a>
+            <a href="movimentacoes.html">Movimentações</a>
+            <a href="financeiro.html">Financeiro</a>
+        </nav>
+    </aside>
+
+    <main class="conteudo pagina-importar-fiado">
+        <div class="cabecalho-importar-fiado">
+            <div>
+                <button onclick="voltarAPrazo()" class="botao-voltar-importacao">Voltar</button>
+
+                <h1>Importar Conta A Prazo do Papel</h1>
+                <p>Cadastre no sistema contas antigas que estavam anotadas no papel.</p>
+            </div>
+        </div>
+
+        <div class="card card-aviso-importacao">
+            <div class="aviso-importacao-conteudo">
+                <div>
+                    <h2>Antes de importar</h2>
+
+                    <p>
+                        Esta tela serve apenas para lançar contas antigas na ficha A Prazo do cliente.
+                        A importação não altera estoque, não cria venda no caixa e não entra no financeiro como venda do dia.
+                    </p>
+                </div>
+
+                <div class="selo-importacao">
+                    Conta antiga
+                </div>
+            </div>
+        </div>
+
+        <div class="card card-dados-importacao">
+            <div class="titulo-card-linha">
+                <div>
+                    <h2>Dados do Cliente</h2>
+                    <p>Informe os dados principais da conta que será importada.</p>
+                </div>
+            </div>
+
+            <div class="form-grid form-grid-importacao-cliente">
+                <div class="campo-sugestao campo-sugestao-importacao">
+                    <input
+                        id="clienteImportacao"
+                        placeholder="Nome do cliente"
+                        autocomplete="off"
+                        oninput="pesquisarClienteImportacao()"
+                        onfocus="pesquisarClienteImportacao()"
+                    >
+                    <div id="resultadosClientesImportacao" class="resultados-produtos sugestoes-venda sugestoes-importacao"></div>
+                </div>
+
+                <input id="telefoneImportacao" placeholder="Telefone">
+
+                <div class="campo-sugestao campo-sugestao-importacao">
+                    <input
+                        id="cidadeImportacao"
+                        placeholder="Cidade"
+                        autocomplete="off"
+                        oninput="pesquisarCidadeImportacao()"
+                        onfocus="pesquisarCidadeImportacao()"
+                    >
+                    <div id="resultadosCidadesImportacao" class="resultados-produtos sugestoes-venda sugestoes-importacao"></div>
+                </div>
+
+                <input id="dataImportacao" type="date">
+            </div>
+        </div>
+
+        <div class="card card-itens-importacao">
+            <div class="titulo-card-linha">
+                <div>
+                    <h2>Itens da Conta</h2>
+                    <p>Lance produto por produto, igual está no papel. Caso não tenha quantidade exata, use quantidade 1 e informe o valor total.</p>
+                </div>
+            </div>
+
+            <div class="importacao-itens-layout">
+                <section class="importacao-busca-produto">
+                    <div class="titulo-subcard-importacao">
+                        <div>
+                            <h3>Buscar Produto</h3>
+                            <p>Digite o nome, código, categoria ou observação do produto.</p>
+                        </div>
+                    </div>
+
+                    <div class="campo-busca-produto-importacao">
+                        <input
+                            id="buscaProdutoImportacao"
+                            placeholder="Digite o nome, código, categoria ou observação do produto"
+                            autocomplete="off"
+                            oninput="pesquisarProdutoImportacao()"
+                            onfocus="pesquisarProdutoImportacao()"
+                        >
+
+                        <div id="resultadosProdutosImportacao" class="resultados-produtos resultados-produtos-importacao"></div>
+                    </div>
+                </section>
+
+                <section class="importacao-carrinho">
+                    <div class="titulo-subcard-importacao titulo-carrinho-importacao">
+                        <div>
+                            <h3>Itens da Conta / Carrinho</h3>
+                            <p>Edite quantidade, valor unitário e observação antes de salvar.</p>
+                        </div>
+
+                        <button onclick="adicionarItemManualImportacaoAPrazo()" class="botao-adicionar-importacao">
+                            Adicionar item manual
+                        </button>
+                    </div>
+
+                    <div class="tabela-carrinho-importacao">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Produto</th>
+                                    <th>Qtd</th>
+                                    <th>Unidade</th>
+                                    <th>Valor Unit.</th>
+                                    <th>Total</th>
+                                    <th>Observação</th>
+                                    <th>Ação</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabelaItensImportacao"></tbody>
+                        </table>
+                    </div>
+
+                    <div class="barra-total-importacao">
+                        <div class="total-importacao-box">
+                            <span>Total da conta</span>
+                            <strong id="totalImportacaoAPrazo">R$ 0,00</strong>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <div class="card card-finalizar-importacao">
+            <div class="finalizar-importacao-conteudo">
+                <div>
+                    <h2>Finalizar Importação</h2>
+
+                    <p>
+                        Confira os dados antes de salvar. Depois de importar, a conta aparecerá na ficha A Prazo do cliente.
+                    </p>
+                </div>
+
+                <button onclick="salvarImportacaoAPrazo()" class="botao-salvar-importacao">
+                    Salvar importação
+                </button>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script src="../js/consulta-produto.js"></script>
+<script src="../js/ui-feedback.js"></script>
+<script src="../js/importar-a-prazo.js"></script>
+
+</body>
+</html>

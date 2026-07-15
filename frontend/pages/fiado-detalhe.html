@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Detalhe A Prazo - VALE AGRO</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<div class="layout">
+    <aside class="sidebar">
+        <div class="logo">
+            <img src="../img/logo-vale-agro.jpg" alt="VALE AGRO">
+        </div>
+
+        <nav>
+            <a href="../index.html">Dashboard</a>
+            <a href="estoque.html">Estoque</a>
+            <a href="vendas.html">Vendas</a>
+            <a href="orcamentos.html">Orçamentos</a>
+            <a href="entregas.html">Entregas</a>
+            <a href="fiados.html" class="ativo">A Prazo</a>
+            <a href="movimentacoes.html">Movimentacoes</a>
+            <a href="financeiro.html">Financeiro</a>
+        </nav>
+    </aside>
+
+    <main class="conteudo pagina-fiado-detalhe">
+        <div class="cabecalho-fiado-detalhe">
+            <button onclick="voltarFiados()" class="btn-secondary">Voltar</button>
+
+            <div>
+                <h1 id="nomeClienteFiado">Cliente</h1>
+                <p>Controle de compras, pagamentos e produtos em aberto.</p>
+            </div>
+        </div>
+
+        <div class="cards cards-resumo-fiado-detalhe">
+            <div class="card card-resumo-secundario-fiado">
+                <h3>Total em Compras</h3>
+                <p id="totalComprasCliente">R$ 0,00</p>
+            </div>
+
+            <div class="card card-resumo-secundario-fiado">
+                <h3>Total Recebido</h3>
+                <p id="totalRecebidoCliente">R$ 0,00</p>
+            </div>
+
+            <div class="card card-caixa-liquido card-saldo-principal-fiado">
+                <h3>Saldo Atual</h3>
+                <p id="saldoAtualCliente">R$ 0,00</p>
+            </div>
+
+            <div class="card card-retirada-resumo card-valor-vencido-fiado">
+                <h3>Valor Vencido</h3>
+                <p id="valorVencidoCliente">R$ 0,00</p>
+            </div>
+
+            <div class="card card-resumo-secundario-fiado">
+                <h3>Valor no Prazo</h3>
+                <p id="valorNoPrazoCliente">R$ 0,00</p>
+            </div>
+
+            <div class="card card-situacao-fiado">
+                <h3>Situacao</h3>
+                <p id="situacaoCliente">-</p>
+            </div>
+        </div>
+
+        <div class="tabs-fiado-detalhe" role="tablist" aria-label="Areas do cliente a prazo">
+            <button type="button" class="tab-fiado ativo" data-fiado-tab="produtos">Produtos em Aberto</button>
+            <button type="button" class="tab-fiado" data-fiado-tab="pagamentos">Pagamentos</button>
+            <button type="button" class="tab-fiado" data-fiado-tab="historico">Historico</button>
+            <button type="button" class="tab-fiado" data-fiado-tab="extrato">Extrato</button>
+        </div>
+
+        <div class="painel-fiado-tab ativo" data-fiado-section="produtos">
+            <div id="areaProdutosPagamentoFiado" class="card card-baixa-produtos-fiado card-produtos-pagamento-fiado area-produtos-pagamento-fiado">
+                <div class="titulo-card-linha">
+                    <div>
+                        <h2>Produtos em Aberto</h2>
+                        <p>Selecione os produtos que o cliente deseja pagar e siga para a tela de pagamento.</p>
+                    </div>
+                </div>
+
+                <div class="barra-acoes-baixa-fiado">
+                    <div class="grupo-acoes-selecao-fiado">
+                        <button onclick="selecionarComprasVencidasParaPagamento()">Selecionar Vencidos</button>
+                        <button onclick="selecionarTodasComprasAbertasParaPagamento()" class="btn-secondary">Selecionar Todos</button>
+                        <button onclick="limparSelecaoPagamentoItens()" class="btn-danger">Limpar Selecao</button>
+                        <button type="button" id="btnReceberValorParcialConta" onclick="irParaPagamentoValorFicha()" class="fiado-btn-valor-parcial">
+                            Receber valor parcial da conta
+                        </button>
+                    </div>
+                </div>
+
+                <div id="resumoSelecaoProdutosFiado" class="resumo-selecao-produtos-fiado sem-selecao">
+                    <div class="resumo-selecao-info-fiado">
+                        <span id="textoResumoSelecaoPagamento">Nenhum produto selecionado.</span>
+                        <strong class="resumo-selecao-dados-fiado">
+                            <span id="quantidadeItensSelecionadosPagamento">0</span>
+                            <span id="textoItensSelecionadosPagamento">itens selecionados</span> | Total
+                            <span id="totalSelecionadoPagamentoItens">R$ 0,00</span>
+                        </strong>
+                    </div>
+
+                    <button id="botaoFinalizarPagamentoSelecionados" onclick="irParaPagamentoFiadoSelecionado()" disabled hidden>
+                        Finalizar pagamento dos selecionados
+                    </button>
+                </div>
+
+                <div class="tabela-scroll tabela-scroll-produtos-abater">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="coluna-pagar-fiado">Pagar</th>
+                                <th>Data/Hora</th>
+                                <th>Produto</th>
+                                <th>Qtd</th>
+                                <th>Valor Original</th>
+                                <th>Ja Pago</th>
+                                <th>Saldo Aberto</th>
+                                <th>Dias</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabelaProdutosParaAbater"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card card-pagamento-unico-fiado pagamento-fiado-finalizacao" hidden aria-hidden="true">
+                <div class="titulo-card-linha">
+                    <div>
+                        <h2>Pagamento</h2>
+                        <p>Selecione os produtos na tabela, informe o recebimento e confirme a baixa.</p>
+                    </div>
+                </div>
+
+                <div class="checkout-pagamento-fiado">
+                    <section class="checkout-bloco-fiado checkout-bloco-tipo-fiado">
+                        <div class="form-grid form-grid-forma-pagamento-fiado">
+                            <div class="campo-venda campo-pagamento-fiado">
+                                <label>Forma de pagamento</label>
+                                <select id="formaPagamentoFiadoUnificado" onchange="calcularTrocoPagamentoUnificado()">
+                                    <option value="DINHEIRO">Dinheiro</option>
+                                    <option value="PIX">PIX</option>
+                                    <option value="CARTAO_DEBITO">Cartao de Debito</option>
+                                    <option value="CARTAO_CREDITO">Cartao de Credito</option>
+                                </select>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="checkout-bloco-fiado checkout-bloco-valores-fiado">
+                        <h3>Valores</h3>
+
+                        <div class="form-grid form-grid-valores-pagamento-fiado">
+                            <div class="campo-venda campo-pagamento-fiado">
+                                <label>Valor do pagamento</label>
+                                <input id="valorPagamentoFiadoUnificado" placeholder="R$ 0,00" readonly>
+                            </div>
+
+                            <div class="campo-venda campo-pagamento-fiado campo-valor-recebido-fiado">
+                                <label>Valor recebido</label>
+                                <input id="valorRecebidoFiadoUnificado" placeholder="R$ 0,00" oninput="calcularTrocoPagamentoUnificado()">
+                            </div>
+
+                            <div class="campo-venda campo-pagamento-fiado destaque-troco-fiado campo-troco-fiado">
+                                <label>Troco</label>
+                                <input id="trocoPagamentoFiadoUnificado" placeholder="R$ 0,00" readonly>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="checkout-bloco-fiado checkout-bloco-observacao-fiado">
+                        <div class="campo-venda campo-pagamento-fiado campo-observacao-fiado">
+                            <label>Observação do pagamento</label>
+                            <input id="observacaoPagamentoFiadoUnificado" placeholder="Ex: pagamento parcial, combinado com cliente...">
+                        </div>
+                    </section>
+
+                    <section class="checkout-bloco-fiado checkout-bloco-resumo-fiado">
+                        <h3>Resumo</h3>
+
+                        <div class="resumo-baixa-produtos-fiado">
+                            <div class="resumo-total-selecionado-oculto" aria-hidden="true">
+                                <span>Total Selecionado</span>
+                                <strong id="totalSelecionadoPagamentoItensDesativado">R$ 0,00</strong>
+                            </div>
+
+                            <div>
+                                <span>Itens Selecionados</span>
+                                <strong id="quantidadeItensSelecionadosPagamentoDesativado">0</strong>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="checkout-bloco-fiado checkout-bloco-acoes-fiado">
+                        <div class="botoes-fiado-detalhe">
+                            <button onclick="confirmarPagamentoFiadoUnificado()">Confirmar Pagamento</button>
+                            <button onclick="reimprimirComprovanteFiadoUnificado()" class="btn-secondary">Reimprimir Comprovante</button>
+                        </div>
+
+                        <small class="aviso-baixa-produtos-fiado">
+                            Para receber tudo, use Selecionar Todos na tabela de produtos em aberto.
+                        </small>
+                    </section>
+                </div>
+            </div>
+        </div>
+
+        <div class="painel-fiado-tab painel-produtos-consulta-legado" data-fiado-section="produtos-consulta" hidden>
+            <div class="card card-produtos-abertos-fiado">
+                <div class="titulo-card-linha">
+                    <div>
+                        <h2>Produtos em Aberto</h2>
+                        <p>Consulte os produtos pendentes do cliente, separados por vencidos e no prazo.</p>
+                    </div>
+                </div>
+
+                <div class="grupo-produtos-abertos-fiado grupo-vencidos-fiado">
+                    <h3>Vencidos</h3>
+
+                    <div class="tabela-scroll tabela-scroll-produtos-consulta-fiado">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Data/Hora</th>
+                                    <th>Produto</th>
+                                    <th>Qtd</th>
+                                    <th>Valor Original</th>
+                                    <th>Ja Pago</th>
+                                    <th>Saldo Aberto</th>
+                                    <th>Dias</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabelaComprasVencidas"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="grupo-produtos-abertos-fiado grupo-prazo-fiado">
+                    <h3>No prazo e proximos do vencimento</h3>
+
+                    <div class="tabela-scroll tabela-scroll-produtos-consulta-fiado">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Data/Hora</th>
+                                    <th>Produto</th>
+                                    <th>Qtd</th>
+                                    <th>Valor Original</th>
+                                    <th>Ja Pago</th>
+                                    <th>Saldo Aberto</th>
+                                    <th>Dias</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabelaComprasNoPrazo"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card card-pagamentos-fiado painel-fiado-tab" data-fiado-section="pagamentos">
+            <h2>Pagamentos</h2>
+
+            <div class="tabela-scroll tabela-scroll-detalhe-menor">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Data/Hora</th>
+                            <th>Valor</th>
+                            <th>Forma</th>
+                            <th>Valor Recebido</th>
+                            <th>Troco</th>
+                            <th>Observacao</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabelaPagamentosCliente"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card card-historico-completo-fiado painel-fiado-tab" data-fiado-section="historico">
+            <h2>Historico Completo do Cliente</h2>
+
+            <div class="tabela-scroll tabela-scroll-detalhe-historico">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Data/Hora</th>
+                            <th>Tipo</th>
+                            <th>Produto</th>
+                            <th>Qtd</th>
+                            <th>Valor Unit.</th>
+                            <th>Total</th>
+                            <th>Ja Pago</th>
+                            <th>Saldo</th>
+                            <th>Observacao</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabelaHistoricoCliente"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card card-extrato-limpo-fiado painel-fiado-tab" data-fiado-section="extrato">
+            <div class="titulo-card-linha">
+                <div>
+                    <h2>Extrato do Cliente</h2>
+                    <p>Imprima a relacao completa de compras, pagamentos, saldo vencido e saldo no prazo.</p>
+                </div>
+            </div>
+
+            <div class="extrato-resumo-fiado">
+                <span>O documento usa os dados atuais do cliente e abre a impressao em uma nova janela.</span>
+            </div>
+
+            <div class="botoes-fiado-detalhe">
+                <button onclick="imprimirExtratoCliente()" class="btn-secondary">Imprimir Extrato</button>
+            </div>
+        </div>
+
+        <div style="display:none;">
+            <input id="valorPagamentoHistorico">
+            <input id="valorEntreguePagamento">
+            <input id="trocoPagamentoHistorico">
+            <input id="observacaoPagamentoHistorico">
+
+            <select id="formaPagamentoItensFiado"></select>
+            <input id="valorPagamentoItensFiado">
+            <input id="valorRecebidoItensFiado">
+            <input id="trocoPagamentoItensFiado">
+            <input id="observacaoPagamentoItensFiado">
+        </div>
+    </main>
+</div>
+
+<script src="../js/consulta-produto.js"></script>
+<script src="../js/ui-feedback.js"></script>
+<script src="../js/fiado-detalhe.js"></script>
+
+</body>
+</html>

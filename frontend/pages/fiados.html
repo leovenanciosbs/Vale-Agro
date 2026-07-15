@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Prazo - VALE AGRO</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<div class="layout">
+    <aside class="sidebar">
+        <div class="logo">
+            <img src="../img/logo-vale-agro.jpg" alt="VALE AGRO">
+        </div>
+
+        <nav>
+            <a href="../index.html">Dashboard</a>
+            <a href="estoque.html">Estoque</a>
+            <a href="vendas.html">Vendas</a>
+            <a href="orcamentos.html">Orçamentos</a>
+            <a href="entregas.html">Entregas</a>
+            <a href="fiados.html" class="ativo">A Prazo</a>
+            <a href="movimentacoes.html">Movimentações</a>
+            <a href="financeiro.html">Financeiro</a>
+        </nav>
+    </aside>
+
+    <main class="conteudo pagina-fiados">
+        <div class="cabecalho-pagina-fiados">
+            <div>
+                <span class="eyebrow">Controle de clientes</span>
+                <h1>Controle A Prazo</h1>
+                <p>Acompanhe clientes com saldo em aberto, contas próximas do vencimento e contas em atraso.</p>
+            </div>
+        </div>
+
+        <div class="cards cards-resumo-fiados">
+            <div class="card card-resumo-fiado dentro">
+                <h3>Dentro do Prazo</h3>
+                <p id="totalDentroPrazo">0</p>
+            </div>
+
+            <div class="card card-resumo-fiado perto">
+                <h3>Perto do Vencimento</h3>
+                <p id="totalPertoVencimento">0</p>
+            </div>
+
+            <div class="card card-resumo-fiado atraso">
+                <h3>Em Atraso</h3>
+                <p id="totalEmAtraso">0</p>
+            </div>
+
+            <div class="card card-resumo-fiado total">
+                <h3>Total em Aberto</h3>
+                <p id="totalFiadoAberto">R$ 0,00</p>
+            </div>
+        </div>
+
+        <div class="card card-importacao-fiado">
+            <div class="conteudo-importacao-fiado">
+                <div>
+                    <h2>Importação de Contas Antigas</h2>
+
+                    <p>
+                        Transfira para o sistema contas a prazo que estavam no papel. Essa importação não altera estoque e não entra no financeiro como venda do dia.
+                    </p>
+                </div>
+
+                <a href="importar-a-prazo.html">
+                    <button class="botao-importar-fiado">
+                        Importar conta do papel
+                    </button>
+                </a>
+            </div>
+        </div>
+
+        <div class="card card-clientes-fiados">
+            <div class="titulo-card-linha">
+                <div>
+                    <h2>Clientes com Conta em Aberto</h2>
+                    <p>Abra o cliente para consultar compras, saldo, pagamentos e imprimir extrato.</p>
+                </div>
+            </div>
+
+            <div class="barra-produtos-estoque barra-clientes-fiados">
+                <input
+                    id="buscaDevedor"
+                    placeholder="Pesquisar cliente por nome..."
+                    oninput="filtrarDevedores()"
+                >
+            </div>
+
+            <div class="tabela-scroll tabela-scroll-fiados">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Cliente</th>
+                            <th>Saldo</th>
+                            <th>Compra em Aberto</th>
+                            <th>Dias</th>
+                            <th>Situação</th>
+                            <th>Gerenciar</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabelaResumoFiados"></tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script src="../js/consulta-produto.js"></script>
+<script src="../js/ui-feedback.js"></script>
+<script src="../js/fiados.js"></script>
+
+</body>
+</html>

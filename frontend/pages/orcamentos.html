@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Orçamentos - VALE AGRO</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<div class="layout">
+    <aside class="sidebar">
+        <div class="logo">
+            <img src="../img/logo-vale-agro.jpg" alt="VALE AGRO">
+        </div>
+
+        <nav>
+            <a href="../index.html">Dashboard</a>
+            <a href="estoque.html">Estoque</a>
+            <a href="vendas.html">Vendas</a>
+            <a href="orcamentos.html" class="ativo">Orçamentos</a>
+            <a href="entregas.html">Entregas</a>
+            <a href="fiados.html">A Prazo</a>
+            <a href="movimentacoes.html">Movimentações</a>
+            <a href="financeiro.html">Financeiro</a>
+        </nav>
+    </aside>
+
+    <main class="conteudo pagina-orcamentos">
+        <div class="page-hero page-hero-orcamentos">
+            <div>
+                <span class="eyebrow">Propostas comerciais</span>
+                <h1>Orçamentos</h1>
+                <p>Monte propostas rápidas sem baixar estoque, gerar venda ou lançar financeiro.</p>
+            </div>
+        </div>
+
+        <div class="card card-novo-orcamento">
+            <div class="titulo-card-linha">
+                <div>
+                    <h2>Novo Orçamento</h2>
+                </div>
+            </div>
+
+            <section class="orcamento-secao orcamento-secao-cliente">
+                <h3>Dados do Cliente</h3>
+
+                <div class="form-grid form-grid-orcamento-cliente">
+                    <label class="campo-sugestao-orcamento campo-cliente-orcamento">
+                        <span>Cliente</span>
+                        <input
+                            id="orcamentoCliente"
+                            placeholder="Nome do cliente"
+                            autocomplete="off"
+                            oninput="pesquisarClienteOrcamento()"
+                            onfocus="pesquisarClienteOrcamento()"
+                        >
+                        <div id="resultadoClientesOrcamento" class="resultado-clientes-orcamento"></div>
+                    </label>
+
+                    <label>
+                        <span>Telefone</span>
+                        <input id="orcamentoTelefone" placeholder="Telefone">
+                    </label>
+
+                    <label class="campo-sugestao-orcamento">
+                        <span>Cidade</span>
+                        <input
+                            id="orcamentoCidade"
+                            placeholder="Cidade"
+                            autocomplete="off"
+                            oninput="pesquisarCidadeOrcamento()"
+                        >
+                        <div id="resultadoCidadesOrcamento" class="resultado-produtos-orcamento resultado-cidades-orcamento"></div>
+                    </label>
+                </div>
+            </section>
+
+            <section class="orcamento-secao">
+                <h3>Produtos</h3>
+
+                <div class="form-grid form-grid-orcamento-produto">
+                    <div class="campo-sugestao-orcamento">
+                        <label for="orcamentoBuscaProduto">Produto</label>
+                        <input
+                            id="orcamentoBuscaProduto"
+                            placeholder="Buscar produto por nome ou código"
+                            autocomplete="off"
+                            oninput="pesquisarProdutoOrcamento()"
+                        >
+                        <div id="resultadoProdutosOrcamento" class="resultado-produtos-orcamento"></div>
+                    </div>
+
+                    <label>
+                        <span>Quantidade</span>
+                        <input id="orcamentoQuantidade" placeholder="Qtd" oninput="atualizarPreviewItemOrcamento()">
+                    </label>
+
+                    <label>
+                        <span>Valor unitário</span>
+                        <input id="orcamentoValorUnitario" placeholder="Unitário" oninput="atualizarPreviewItemOrcamento()">
+                    </label>
+
+                    <button type="button" onclick="adicionarItemOrcamento()">Adicionar Item</button>
+                </div>
+
+                <div id="produtoSelecionadoOrcamento" class="produto-selecionado-orcamento">
+                    Selecione um produto para ver preço e estoque atual.
+                </div>
+            </section>
+
+            <section class="orcamento-secao">
+                <h3>Itens do Orçamento</h3>
+
+                <div class="tabela-scroll tabela-scroll-orcamentos">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Produto</th>
+                                <th>Código</th>
+                                <th>Qtd</th>
+                                <th>Unitário</th>
+                                <th>Total</th>
+                                <th>Ação</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabelaItensOrcamento"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="orcamento-secao orcamento-secao-resumo">
+                <h3>Resumo</h3>
+
+                <div class="orcamento-totalizadores">
+                    <div>
+                        <span>Subtotal</span>
+                        <strong id="orcamentoSubtotal">R$ 0,00</strong>
+                    </div>
+
+                    <div>
+                        <label for="orcamentoDesconto">Desconto</label>
+                        <input id="orcamentoDesconto" placeholder="0,00" oninput="atualizarTotaisOrcamento()">
+                    </div>
+
+                    <div>
+                        <label for="orcamentoFrete">Frete</label>
+                        <input id="orcamentoFrete" placeholder="0,00" oninput="atualizarTotaisOrcamento()">
+                    </div>
+
+                    <div class="total-final-orcamento">
+                        <span>Total</span>
+                        <strong id="orcamentoTotal">R$ 0,00</strong>
+                    </div>
+                </div>
+            </section>
+
+            <div class="acoes-orcamento">
+                <button type="button" onclick="salvarOrcamento()">Salvar Orçamento</button>
+                <button type="button" class="btn-secondary" onclick="limparOrcamento()">Limpar</button>
+            </div>
+        </div>
+
+        <div class="card card-lista-orcamentos">
+            <div class="titulo-card-linha">
+                <div>
+                    <h2>Histórico de Orçamentos</h2>
+                </div>
+            </div>
+
+            <div class="form-grid form-grid-filtros-orcamento">
+                <input id="filtroOrcamentoBusca" placeholder="Buscar cliente ou número" oninput="renderizarListaOrcamentos()">
+                <select id="filtroOrcamentoStatus" onchange="renderizarListaOrcamentos()">
+                    <option value="">Todos os status</option>
+                    <option value="ABERTO">Aberto</option>
+                    <option value="APROVADO">Aprovado</option>
+                    <option value="CANCELADO">Cancelado</option>
+                    <option value="EXPIRADO">Expirado</option>
+                </select>
+            </div>
+
+            <div class="tabela-scroll tabela-scroll-orcamentos">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Número</th>
+                            <th>Emissão</th>
+                            <th>Cliente</th>
+                            <th>Telefone</th>
+                            <th>Cidade</th>
+                            <th>Total</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabelaOrcamentos"></tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+</div>
+
+<div id="modalDetalheOrcamento" class="modal">
+    <div class="modal-conteudo modal-detalhe-orcamento">
+        <div id="conteudoDetalheOrcamento"></div>
+
+        <div class="acoes-orcamento">
+            <button type="button" onclick="imprimirOrcamentoAtual()">Imprimir</button>
+            <button type="button" class="btn-secondary" onclick="fecharDetalheOrcamento()">Fechar</button>
+        </div>
+    </div>
+</div>
+
+<script src="../js/consulta-produto.js"></script>
+<script src="../js/ui-feedback.js"></script>
+<script src="../js/orcamentos.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Prazo em Atraso - VALE AGRO</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<div class="layout">
+    <aside class="sidebar">
+        <div class="logo">
+            <img src="../img/logo-vale-agro.jpg" alt="VALE AGRO">
+        </div>
+
+        <nav>
+            <a href="../index.html">Dashboard</a>
+            <a href="estoque.html">Estoque</a>
+            <a href="vendas.html">Vendas</a>
+            <a href="orcamentos.html">Orçamentos</a>
+            <a href="entregas.html">Entregas</a>
+            <a href="fiados.html" class="ativo">A Prazo</a>
+            <a href="movimentacoes.html">Movimentações</a>
+            <a href="financeiro.html">Financeiro</a>
+        </nav>
+    </aside>
+
+    <main class="conteudo pagina-acao-rapida pagina-fiados-atrasados">
+        <div class="page-hero">
+            <div>
+                <span class="eyebrow">Cobrança prioritária</span>
+                <h1>A Prazo em Atraso</h1>
+                <p>Veja clientes em atraso e acesse rapidamente cobrança ou detalhes da conta.</p>
+            </div>
+        </div>
+
+        <div class="cards cards-resumo-cobranca">
+            <div class="card card-resumo-cobranca card-clientes-atraso">
+                <h3>Clientes em Atraso</h3>
+                <p id="totalClientesAtrasados">0</p>
+            </div>
+
+            <div class="card card-resumo-cobranca card-valor-pendente">
+                <h3>Valor Pendente</h3>
+                <p id="totalValorAtrasado">R$ 0,00</p>
+            </div>
+        </div>
+
+        <div class="card card-clientes-cobranca">
+            <h2>Clientes para Cobrança</h2>
+
+            <div class="tabela-scroll tabela-scroll-fiados-atrasados">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Cliente</th>
+                            <th>Telefone</th>
+                            <th>Cidade</th>
+                            <th>Saldo</th>
+                            <th>Dias</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabelaFiadosAtrasados"></tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script src="../js/consulta-produto.js"></script>
+<script src="../js/ui-feedback.js"></script>
+<script src="../js/fiados-atrasados.js"></script>
+
+</body>
+</html>

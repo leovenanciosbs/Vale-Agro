@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Itens da Entrega - VALE AGRO</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<div class="layout">
+    <aside class="sidebar">
+        <div class="logo">
+            <img src="../img/logo-vale-agro.jpg" alt="VALE AGRO">
+        </div>
+
+        <nav>
+            <a href="../index.html">Dashboard</a>
+            <a href="estoque.html">Estoque</a>
+            <a href="vendas.html">Vendas</a>
+            <a href="orcamentos.html">Orçamentos</a>
+            <a href="entregas.html" class="ativo">Entregas</a>
+            <a href="fiados.html">A Prazo</a>
+            <a href="movimentacoes.html">Movimentações</a>
+            <a href="financeiro.html">Financeiro</a>
+        </nav>
+    </aside>
+
+    <main class="conteudo pagina-entrega-detalhe">
+        <div class="page-hero page-hero-entrega-detalhe">
+            <div>
+                <span class="eyebrow">Consulta de entrega</span>
+                <h1 id="tituloEntregaDetalhe">Detalhes da Entrega</h1>
+                <p>Consulte os dados da entrega e os itens vendidos.</p>
+            </div>
+
+            <button onclick="voltarEntregas()" class="btn-secondary">Voltar</button>
+        </div>
+
+        <div id="mensagemEntregaDetalhe" class="produto-selecionado entrega-detalhe-mensagem" style="display:none;"></div>
+
+        <div class="entrega-detalhe-grid">
+            <section class="card card-entrega-dados-detalhe">
+                <h2>Dados da entrega</h2>
+
+                <div class="entrega-detalhe-info-grid">
+                    <div class="entrega-detalhe-info">
+                        <span>Cliente</span>
+                        <strong id="clienteEntregaDetalhe">-</strong>
+                    </div>
+
+                    <div class="entrega-detalhe-info">
+                        <span>Telefone</span>
+                        <strong id="telefoneEntregaDetalhe">-</strong>
+                    </div>
+
+                    <div class="entrega-detalhe-info">
+                        <span>Endereço</span>
+                        <strong id="enderecoEntregaDetalhe">-</strong>
+                    </div>
+
+                    <div class="entrega-detalhe-info">
+                        <span>Bairro/Cidade</span>
+                        <strong id="cidadeEntregaDetalhe">-</strong>
+                    </div>
+
+                    <div class="entrega-detalhe-info">
+                        <span>Status</span>
+                        <strong id="statusEntregaDetalhe">-</strong>
+                    </div>
+
+                    <div class="entrega-detalhe-info">
+                        <span>Pagamento</span>
+                        <strong id="pagamentoEntregaDetalhe">-</strong>
+                    </div>
+                </div>
+
+                <div id="observacaoEntregaDetalheBox" class="entrega-detalhe-observacao" style="display:none;">
+                    <span>Observação</span>
+                    <p id="observacaoEntregaDetalhe">-</p>
+                </div>
+            </section>
+
+            <section class="card card-entrega-resumo-detalhe">
+                <h2>Resumo</h2>
+
+                <div class="resumo-entrega-detalhe">
+                    <p>
+                        <span>Subtotal dos produtos</span>
+                        <strong id="subtotalItensEntregaDetalhe">R$ 0,00</strong>
+                    </p>
+
+                    <p id="linhaFreteEntregaDetalhe" style="display:none;">
+                        <span>Frete</span>
+                        <strong id="freteEntregaDetalhe">R$ 0,00</strong>
+                    </p>
+
+                    <p class="total">
+                        <span>Total final</span>
+                        <strong id="totalEntregaDetalhe">R$ 0,00</strong>
+                    </p>
+                </div>
+            </section>
+        </div>
+
+        <section class="card card-entrega-itens-detalhe">
+            <h2>Itens da entrega</h2>
+
+            <div class="tabela-scroll tabela-scroll-entrega-detalhe">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Produto</th>
+                            <th>Qtd</th>
+                            <th>Unidade</th>
+                            <th>Valor unitário</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabelaItensEntregaDetalhe">
+                        <tr>
+                            <td colspan="5">Carregando itens da entrega...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+</div>
+
+<script src="../js/consulta-produto.js"></script>
+<script src="../js/ui-feedback.js"></script>
+<script src="../js/entrega-detalhe.js"></script>
+
+</body>
+</html>

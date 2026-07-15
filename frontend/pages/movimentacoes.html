@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Movimentações - VALE AGRO</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<div class="layout">
+    <aside class="sidebar">
+        <div class="logo">
+            <img src="../img/logo-vale-agro.jpg" alt="VALE AGRO">
+        </div>
+
+        <nav>
+            <a href="../index.html">Dashboard</a>
+            <a href="estoque.html">Estoque</a>
+            <a href="vendas.html">Vendas</a>
+            <a href="orcamentos.html">Orçamentos</a>
+            <a href="entregas.html">Entregas</a>
+            <a href="fiados.html">A Prazo</a>
+            <a href="movimentacoes.html" class="ativo">Movimentações</a>
+            <a href="financeiro.html">Financeiro</a>
+        </nav>
+    </aside>
+
+    <main class="conteudo pagina-movimentacoes">
+        <div class="cabecalho-pagina-movimentacoes">
+            <div>
+                <span class="eyebrow">Historico operacional</span>
+                <h1>Movimentação de Estoque</h1>
+                <p>Controle entradas, saídas manuais, perdas e ajustes de produtos.</p>
+            </div>
+        </div>
+
+        <div class="cards cards-movimentacao-resumo">
+            <div class="card card-resumo-mov entrada">
+                <h3>Entradas</h3>
+                <p id="totalEntradas">0</p>
+            </div>
+
+            <div class="card card-resumo-mov saida">
+                <h3>Saídas</h3>
+                <p id="totalSaidas">0</p>
+            </div>
+
+            <div class="card card-resumo-mov perda">
+                <h3>Perdas</h3>
+                <p id="totalPerdas">0</p>
+            </div>
+
+            <div class="card card-resumo-mov ajuste">
+                <h3>Ajustes</h3>
+                <p id="totalAjustes">0</p>
+            </div>
+        </div>
+
+        <div class="card card-nova-movimentacao">
+            <div class="titulo-card-linha">
+                <div>
+                    <h2>Nova Movimentação</h2>
+                    <p>Use para entrada manual, perda, saída manual ou ajuste de estoque.</p>
+                </div>
+            </div>
+
+            <div class="form-grid form-grid-movimentacao">
+                <input
+                    id="buscaProdutoMov"
+                    placeholder="Pesquisar produto"
+                    oninput="pesquisarProdutoMovimentacao()"
+                    autocomplete="off"
+                >
+
+                <select id="tipoMovimentacao">
+                    <option value="ENTRADA">Entrada</option>
+                    <option value="SAIDA">Saída Manual</option>
+                    <option value="PERDA">Perda</option>
+                    <option value="AJUSTE">Ajuste de Estoque</option>
+                </select>
+
+                <input
+                    id="quantidadeMovimentacao"
+                    placeholder="Quantidade"
+                >
+
+                <input
+                    id="observacaoMovimentacao"
+                    placeholder="Observação / motivo"
+                >
+
+                <button class="botao-principal-movimentacao" onclick="salvarMovimentacao()">
+                    Registrar
+                </button>
+            </div>
+
+            <div id="resultadosProdutosMov" class="resultados-produtos"></div>
+            <div id="produtoSelecionadoMov" class="produto-selecionado"></div>
+        </div>
+
+        <div class="card card-historico-movimentacoes card-movimentacoes-unificado">
+            <div class="titulo-card-linha">
+                <div>
+                    <h2>Filtros</h2>
+                    <p>Localize movimentações por período, tipo ou produto.</p>
+                </div>
+            </div>
+
+            <div class="form-grid form-grid-filtros-movimentacao">
+                <select id="filtroPeriodo" onchange="verificarPeriodoPersonalizado()">
+                    <option value="HOJE">Hoje</option>
+                    <option value="7DIAS">Últimos 7 dias</option>
+                    <option value="30DIAS">Últimos 30 dias</option>
+                    <option value="MES">Este mês</option>
+                    <option value="ANO">Este ano</option>
+                    <option value="MES_ANO">Mês e ano exato</option>
+                    <option value="PERSONALIZADO">Personalizado</option>
+                </select>
+
+                <select id="filtroAno" style="display:none;"></select>
+
+                <select id="filtroMes" style="display:none;">
+                    <option value="01">Janeiro</option>
+                    <option value="02">Fevereiro</option>
+                    <option value="03">Março</option>
+                    <option value="04">Abril</option>
+                    <option value="05">Maio</option>
+                    <option value="06">Junho</option>
+                    <option value="07">Julho</option>
+                    <option value="08">Agosto</option>
+                    <option value="09">Setembro</option>
+                    <option value="10">Outubro</option>
+                    <option value="11">Novembro</option>
+                    <option value="12">Dezembro</option>
+                </select>
+
+                <input id="dataInicial" type="date" style="display:none;">
+                <input id="dataFinal" type="date" style="display:none;">
+
+                <select id="filtroTipo">
+                    <option value="">Todos os tipos</option>
+                    <option value="ENTRADA">Entrada</option>
+                    <option value="SAIDA">Saída Manual</option>
+                    <option value="PERDA">Perda</option>
+                    <option value="AJUSTE">Ajuste</option>
+                    <option value="VENDA">Venda</option>
+                    <option value="CANCELAMENTO_VENDA">Cancelamento de Venda</option>
+                    <option value="CANCELAMENTO_MOVIMENTACAO">Cancelamento de Movimentação</option>
+                </select>
+
+                <input
+                    id="buscaProdutoFiltro"
+                    placeholder="Pesquisar produto no histórico"
+                    oninput="pesquisarProdutoFiltro()"
+                    autocomplete="off"
+                >
+
+                <button onclick="carregarMovimentacoes()">Filtrar</button>
+                <button onclick="limparProdutoFiltro()" class="botao-secundario-mov">Limpar Produto</button>
+                <button onclick="limparFiltros()" class="botao-secundario-mov">Limpar Tudo</button>
+            </div>
+
+            <div id="resultadosProdutosFiltro" class="resultados-produtos"></div>
+            <div id="produtoFiltroSelecionado" class="produto-selecionado"></div>
+
+            <div class="divisor-movimentacoes-unificado"></div>
+
+            <div class="titulo-card-linha">
+                <div>
+                    <h2>Histórico de Movimentações</h2>
+                    <p>Para corrigir uma movimentação lançada por engano, use a opção de cancelar.</p>
+                </div>
+            </div>
+
+            <div class="aviso-movimentacao">
+                Se a movimentação veio de uma venda, o sistema tentará cancelar a venda vinculada para devolver o estoque e ajustar o financeiro corretamente.
+            </div>
+
+            <div class="tabela-scroll tabela-scroll-movimentacoes">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Data/Hora</th>
+                            <th>Produto</th>
+                            <th>Tipo</th>
+                            <th>Qtd</th>
+                            <th>Antes</th>
+                            <th>Depois</th>
+                            <th>Observação</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabelaMovimentacoes"></tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script src="../js/consulta-produto.js"></script>
+<script src="../js/ui-feedback.js"></script>
+<script src="../js/movimentacoes.js"></script>
+
+</body>
+</html>

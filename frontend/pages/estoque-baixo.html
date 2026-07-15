@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Estoque Baixo - VALE AGRO</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<div class="layout">
+    <aside class="sidebar">
+        <div class="logo">
+            <img src="../img/logo-vale-agro.jpg" alt="VALE AGRO">
+        </div>
+
+        <nav>
+            <a href="../index.html">Dashboard</a>
+            <a href="estoque.html" class="ativo">Estoque</a>
+            <a href="vendas.html">Vendas</a>
+            <a href="orcamentos.html">Orçamentos</a>
+            <a href="entregas.html">Entregas</a>
+            <a href="fiados.html">A Prazo</a>
+            <a href="movimentacoes.html">Movimentações</a>
+            <a href="financeiro.html">Financeiro</a>
+        </nav>
+    </aside>
+
+    <main class="conteudo pagina-acao-rapida pagina-estoque-baixo">
+        <div class="page-hero">
+            <div>
+                <span class="eyebrow">Ação rápida</span>
+                <h1>Produtos com Estoque Baixo</h1>
+                <p>Priorize reposições e registre entradas para manter a loja abastecida.</p>
+            </div>
+        </div>
+
+        <div class="cards">
+            <div class="card">
+                <h3>Total de Produtos</h3>
+                <p id="totalProdutosBaixos">0</p>
+            </div>
+
+            <div class="card">
+                <h3>Situação</h3>
+                <p>Abaixo do mínimo</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Lista de Produtos</h2>
+
+            <div class="tabela-scroll tabela-scroll-estoque-baixo">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Produto</th>
+                            <th>Código</th>
+                            <th>Categoria</th>
+                            <th>Descrição/Obs.</th>
+                            <th>Estoque Atual</th>
+                            <th>Estoque Mínimo</th>
+                            <th>Falta Repor</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabelaEstoqueBaixo"></tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script src="../js/consulta-produto.js"></script>
+<script src="../js/ui-feedback.js"></script>
+<script src="../js/estoque-baixo.js"></script>
+
+</body>
+</html>
