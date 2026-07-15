@@ -11,8 +11,5 @@
       "src": "/(.*)",
       "dest": "backend/server.js"
     }
-  ],
-  "env": {
-    "DATABASE_PATH": "@database_path"
-  }
+  ]
 }
