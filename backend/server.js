@@ -170,18 +170,18 @@ async function listarFiadosAtrasados() {
             f.*,
             CASE
                 WHEN f.tipo = 'COMPRA'
-                THEN MAX(COALESCE(f.valor_pago, 0), COALESCE(pi.total_abatido, 0))
+                THEN GREATEST(COALESCE(f.valor_pago, 0), COALESCE(pi.total_abatido, 0))
                 ELSE COALESCE(f.valor_pago, 0)
             END AS valor_pago_efetivo,
             CASE
                 WHEN f.tipo = 'COMPRA'
                 AND (
                     COALESCE(f.valor_total, 0) -
-                    MAX(COALESCE(f.valor_pago, 0), COALESCE(pi.total_abatido, 0))
+                    GREATEST(COALESCE(f.valor_pago, 0), COALESCE(pi.total_abatido, 0))
                 ) > 0
                 THEN (
                     COALESCE(f.valor_total, 0) -
-                    MAX(COALESCE(f.valor_pago, 0), COALESCE(pi.total_abatido, 0))
+                    GREATEST(COALESCE(f.valor_pago, 0), COALESCE(pi.total_abatido, 0))
                 )
 
                 WHEN f.tipo = 'COMPRA' THEN 0
@@ -741,11 +741,11 @@ app.get('/dashboard', async (req, res) => {
                             CASE
                                 WHEN (
                                     COALESCE(f.valor_total, 0) -
-                                    MAX(COALESCE(f.valor_pago, 0), COALESCE(pi.total_abatido, 0))
+                                    GREATEST(COALESCE(f.valor_pago, 0), COALESCE(pi.total_abatido, 0))
                                 ) > 0
                                 THEN (
                                     COALESCE(f.valor_total, 0) -
-                                    MAX(COALESCE(f.valor_pago, 0), COALESCE(pi.total_abatido, 0))
+                                    GREATEST(COALESCE(f.valor_pago, 0), COALESCE(pi.total_abatido, 0))
                                 )
                                 ELSE 0
                             END
@@ -2583,18 +2583,18 @@ app.get('/fiados', (req, res) => {
             f.*,
             CASE
                 WHEN f.tipo = 'COMPRA'
-                THEN MAX(COALESCE(f.valor_pago, 0), COALESCE(pi.total_abatido, 0))
+                THEN GREATEST(COALESCE(f.valor_pago, 0), COALESCE(pi.total_abatido, 0))
                 ELSE COALESCE(f.valor_pago, 0)
             END AS valor_pago_efetivo,
             CASE
                 WHEN f.tipo = 'COMPRA'
                 AND (
                     COALESCE(f.valor_total, 0) -
-                    MAX(COALESCE(f.valor_pago, 0), COALESCE(pi.total_abatido, 0))
+                    GREATEST(COALESCE(f.valor_pago, 0), COALESCE(pi.total_abatido, 0))
                 ) > 0
                 THEN (
                     COALESCE(f.valor_total, 0) -
-                    MAX(COALESCE(f.valor_pago, 0), COALESCE(pi.total_abatido, 0))
+                    GREATEST(COALESCE(f.valor_pago, 0), COALESCE(pi.total_abatido, 0))
                 )
 
                 WHEN f.tipo = 'COMPRA' THEN 0
@@ -2632,11 +2632,11 @@ app.get('/fiados/resumo', (req, res) => {
                         CASE
                             WHEN (
                                 COALESCE(f.valor_total, 0) -
-                                MAX(COALESCE(f.valor_pago, 0), COALESCE(pi.total_abatido, 0))
+                                GREATEST(COALESCE(f.valor_pago, 0), COALESCE(pi.total_abatido, 0))
                             ) > 0
                             THEN (
                                 COALESCE(f.valor_total, 0) -
-                                MAX(COALESCE(f.valor_pago, 0), COALESCE(pi.total_abatido, 0))
+                                GREATEST(COALESCE(f.valor_pago, 0), COALESCE(pi.total_abatido, 0))
                             )
                             ELSE 0
                         END
@@ -2679,18 +2679,18 @@ app.get('/fiados/:cliente', (req, res) => {
             f.*,
             CASE
                 WHEN f.tipo = 'COMPRA'
-                THEN MAX(COALESCE(f.valor_pago, 0), COALESCE(pi.total_abatido, 0))
+                THEN GREATEST(COALESCE(f.valor_pago, 0), COALESCE(pi.total_abatido, 0))
                 ELSE COALESCE(f.valor_pago, 0)
             END AS valor_pago_efetivo,
             CASE
                 WHEN f.tipo = 'COMPRA'
                 AND (
                     COALESCE(f.valor_total, 0) -
-                    MAX(COALESCE(f.valor_pago, 0), COALESCE(pi.total_abatido, 0))
+                    GREATEST(COALESCE(f.valor_pago, 0), COALESCE(pi.total_abatido, 0))
                 ) > 0
                 THEN (
                     COALESCE(f.valor_total, 0) -
-                    MAX(COALESCE(f.valor_pago, 0), COALESCE(pi.total_abatido, 0))
+                    GREATEST(COALESCE(f.valor_pago, 0), COALESCE(pi.total_abatido, 0))
                 )
 
                 WHEN f.tipo = 'COMPRA' THEN 0
@@ -3007,15 +3007,15 @@ app.post('/fiados/pagamento-itens', async (req, res) => {
             `
             SELECT
                 f.*,
-                MAX(COALESCE(f.valor_pago, 0), COALESCE(pi.total_abatido, 0)) AS valor_pago_efetivo,
+                GREATEST(COALESCE(f.valor_pago, 0), COALESCE(pi.total_abatido, 0)) AS valor_pago_efetivo,
                 CASE
                     WHEN (
                         COALESCE(f.valor_total, 0) -
-                        MAX(COALESCE(f.valor_pago, 0), COALESCE(pi.total_abatido, 0))
+                        GREATEST(COALESCE(f.valor_pago, 0), COALESCE(pi.total_abatido, 0))
                     ) > 0
                     THEN (
                         COALESCE(f.valor_total, 0) -
-                        MAX(COALESCE(f.valor_pago, 0), COALESCE(pi.total_abatido, 0))
+                        GREATEST(COALESCE(f.valor_pago, 0), COALESCE(pi.total_abatido, 0))
                     )
                     ELSE 0
                 END AS saldo_aberto
@@ -3332,15 +3332,15 @@ app.post('/fiados/pagamento-valor', async (req, res) => {
             `
             SELECT
                 f.*,
-                MAX(COALESCE(f.valor_pago, 0), COALESCE(pi.total_abatido, 0)) AS valor_pago_efetivo,
+                GREATEST(COALESCE(f.valor_pago, 0), COALESCE(pi.total_abatido, 0)) AS valor_pago_efetivo,
                 CASE
                     WHEN (
                         COALESCE(f.valor_total, 0) -
-                        MAX(COALESCE(f.valor_pago, 0), COALESCE(pi.total_abatido, 0))
+                        GREATEST(COALESCE(f.valor_pago, 0), COALESCE(pi.total_abatido, 0))
                     ) > 0
                     THEN (
                         COALESCE(f.valor_total, 0) -
-                        MAX(COALESCE(f.valor_pago, 0), COALESCE(pi.total_abatido, 0))
+                        GREATEST(COALESCE(f.valor_pago, 0), COALESCE(pi.total_abatido, 0))
                     )
                     ELSE 0
                 END AS saldo_aberto
@@ -3358,7 +3358,7 @@ app.post('/fiados/pagamento-valor', async (req, res) => {
             AND COALESCE(f.cancelado, 0) = 0
             AND (
                 COALESCE(f.valor_total, 0) -
-                MAX(COALESCE(f.valor_pago, 0), COALESCE(pi.total_abatido, 0))
+                GREATEST(COALESCE(f.valor_pago, 0), COALESCE(pi.total_abatido, 0))
             ) > 0
             ORDER BY f.data ASC, f.hora ASC, f.id ASC
             `,
