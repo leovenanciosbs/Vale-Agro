@@ -2659,7 +2659,28 @@ app.get('/fiados/resumo', (req, res) => {
         ) pi ON pi.fiado_id = f.id
         WHERE COALESCE(f.cancelado, 0) = 0
         GROUP BY f.cliente_nome
-        HAVING saldo > 0
+        HAVING SUM(
+                CASE
+                    WHEN f.tipo = 'COMPRA' THEN
+                        CASE
+                            WHEN (
+                                COALESCE(f.valor_total, 0) -
+                                GREATEST(COALESCE(f.valor_pago, 0), COALESCE(pi.total_abatido, 0))
+                            ) > 0
+                            THEN (
+                                COALESCE(f.valor_total, 0) -
+                                GREATEST(COALESCE(f.valor_pago, 0), COALESCE(pi.total_abatido, 0))
+                            )
+                            ELSE 0
+                        END
+
+                    WHEN f.tipo = 'PAGAMENTO'
+                    AND COALESCE(f.origem, '') NOT IN ('PAGAMENTO_ITENS', 'PAGAMENTO_VALOR')
+                    THEN -COALESCE(f.valor_total, 0)
+
+                    ELSE 0
+                END
+            ) > 0
         ORDER BY f.cliente_nome ASC
         `,
         [],
