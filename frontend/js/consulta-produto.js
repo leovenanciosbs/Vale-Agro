@@ -143,7 +143,7 @@ async function carregarProdutosConsultaProduto() {
     try {
         resultado.innerHTML = '<p class="mensagem-consulta-produto">Carregando produtos...</p>';
 
-        const resposta = await fetch('http://localhost:3000/produtos');
+        const resposta = await fetch('https://vale-agro-alpha.vercel.app/produtos');
         const produtos = await resposta.json();
 
         if (!resposta.ok) {

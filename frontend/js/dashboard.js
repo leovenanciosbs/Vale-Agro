@@ -129,7 +129,7 @@ async function carregarDashboard() {
     if (periodo.dataFinal) params.append('dataFinal', periodo.dataFinal);
 
     try {
-        const resposta = await fetch(`http://localhost:3000/dashboard?${params.toString()}`);
+        const resposta = await fetch(`https://vale-agro-alpha.vercel.app/dashboard?${params.toString()}`);
         const dados = await resposta.json();
 
         if (!resposta.ok) {
@@ -233,7 +233,7 @@ async function registrarRetiradaCaixa() {
     }
 
     try {
-        const resposta = await fetch('http://localhost:3000/retiradas-caixa', {
+        const resposta = await fetch('https://vale-agro-alpha.vercel.app/retiradas-caixa', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

@@ -378,7 +378,7 @@ async function carregarFinanceiro() {
     if (periodo.dataFinal) params.append('dataFinal', periodo.dataFinal);
 
     try {
-        const resposta = await fetch(`http://localhost:3000/financeiro?${params.toString()}`);
+        const resposta = await fetch(`https://vale-agro-alpha.vercel.app/financeiro?${params.toString()}`);
         const dados = await resposta.json();
 
         preencherTexto('totalRecebido', formatarMoeda(dados.totalRecebido));
@@ -409,7 +409,7 @@ async function carregarHistoricoFinanceiro() {
     if (periodo.dataFinal) params.append('dataFinal', periodo.dataFinal);
 
     try {
-        const resposta = await fetch(`http://localhost:3000/financeiro?${params.toString()}`);
+        const resposta = await fetch(`https://vale-agro-alpha.vercel.app/financeiro?${params.toString()}`);
         const dados = await resposta.json();
 
         ultimoHistoricoFinanceiro = dados.historico || [];
@@ -649,7 +649,7 @@ async function cancelarVendaFinanceiro(vendaId) {
     if (motivo === null) return;
 
     try {
-        const resposta = await fetch(`http://localhost:3000/vendas/${vendaId}/cancelar`, {
+        const resposta = await fetch(`https://vale-agro-alpha.vercel.app/vendas/${vendaId}/cancelar`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -683,7 +683,7 @@ async function carregarClientesParaComprovante() {
     }
 
     try {
-        const resposta = await fetch('http://localhost:3000/clientes');
+        const resposta = await fetch('https://vale-agro-alpha.vercel.app/clientes');
         clientesComprovanteCache = await resposta.json();
     } catch (erro) {
         clientesComprovanteCache = [];
@@ -739,7 +739,7 @@ async function reimprimirComprovanteFinanceiro(vendaId) {
     janelaComprovante.document.close();
 
     try {
-        const resposta = await fetch(`http://localhost:3000/vendas/${vendaId}/comprovante`);
+        const resposta = await fetch(`https://vale-agro-alpha.vercel.app/vendas/${vendaId}/comprovante`);
         const dados = await resposta.json();
 
         if (!resposta.ok || dados.erro) {

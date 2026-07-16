@@ -166,13 +166,13 @@ function produtoCombinaComBuscaVenda(produto, termo) {
 }
 
 async function carregarProdutosVenda() {
-    const resposta = await fetch('http://localhost:3000/produtos');
+    const resposta = await fetch('https://vale-agro-alpha.vercel.app/produtos');
     produtosVenda = await resposta.json();
 }
 
 async function carregarClientesVenda() {
     try {
-        const resposta = await fetch('http://localhost:3000/clientes');
+        const resposta = await fetch('https://vale-agro-alpha.vercel.app/clientes');
         clientesVenda = await resposta.json();
     } catch (erro) {
         clientesVenda = [];
@@ -1164,7 +1164,7 @@ async function finalizarVenda() {
     }));
 
     try {
-        const resposta = await fetch('http://localhost:3000/vendas', {
+        const resposta = await fetch('https://vale-agro-alpha.vercel.app/vendas', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

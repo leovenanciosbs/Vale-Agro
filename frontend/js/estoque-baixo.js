@@ -1,6 +1,6 @@
 async function carregarEstoqueBaixo() {
     try {
-        const resposta = await fetch('http://localhost:3000/estoque-baixo');
+        const resposta = await fetch('https://vale-agro-alpha.vercel.app/estoque-baixo');
         const produtos = await resposta.json();
 
         document.getElementById('totalProdutosBaixos').textContent = produtos.length;

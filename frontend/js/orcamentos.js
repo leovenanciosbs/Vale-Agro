@@ -192,7 +192,7 @@ function clienteCombinaOrcamento(cliente, termo) {
 }
 
 async function carregarProdutosOrcamento() {
-    const resposta = await fetch('http://localhost:3000/produtos');
+    const resposta = await fetch('https://vale-agro-alpha.vercel.app/produtos');
     const produtos = await resposta.json();
 
     if (!resposta.ok) {
@@ -204,7 +204,7 @@ async function carregarProdutosOrcamento() {
 
 async function carregarClientesOrcamento() {
     try {
-        const resposta = await fetch('http://localhost:3000/clientes');
+        const resposta = await fetch('https://vale-agro-alpha.vercel.app/clientes');
         const clientes = await resposta.json();
 
         clientesOrcamento = resposta.ok && Array.isArray(clientes) ? clientes : [];
@@ -215,7 +215,7 @@ async function carregarClientesOrcamento() {
 }
 
 async function carregarOrcamentos() {
-    const resposta = await fetch('http://localhost:3000/orcamentos');
+    const resposta = await fetch('https://vale-agro-alpha.vercel.app/orcamentos');
     const orcamentos = await resposta.json();
 
     if (!resposta.ok) {
@@ -619,7 +619,7 @@ async function salvarOrcamento() {
     };
 
     try {
-        const resposta = await fetch('http://localhost:3000/orcamentos', {
+        const resposta = await fetch('https://vale-agro-alpha.vercel.app/orcamentos', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -723,7 +723,7 @@ function renderizarListaOrcamentos() {
 }
 
 async function buscarOrcamento(id) {
-    const resposta = await fetch(`http://localhost:3000/orcamentos/${id}`);
+    const resposta = await fetch(`https://vale-agro-alpha.vercel.app/orcamentos/${id}`);
     const dados = await resposta.json();
 
     if (!resposta.ok || dados.erro) {
@@ -828,7 +828,7 @@ async function cancelarOrcamento(id) {
     if (!confirmar) return;
 
     try {
-        const resposta = await fetch(`http://localhost:3000/orcamentos/${id}/status`, {
+        const resposta = await fetch(`https://vale-agro-alpha.vercel.app/orcamentos/${id}/status`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'
@@ -864,7 +864,7 @@ async function removerOrcamentoHistorico(id) {
     if (!confirmar) return;
 
     try {
-        const resposta = await fetch(`http://localhost:3000/orcamentos/${id}/remover-historico`, {
+        const resposta = await fetch(`https://vale-agro-alpha.vercel.app/orcamentos/${id}/remover-historico`, {
             method: 'PATCH'
         });
         const dados = await resposta.json();

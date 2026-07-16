@@ -65,7 +65,7 @@ function escaparJs(valor) {
 
 async function carregarFiadosAtrasados() {
     try {
-        const resposta = await fetch('http://localhost:3000/fiados-atrasados');
+        const resposta = await fetch('https://vale-agro-alpha.vercel.app/fiados-atrasados');
         const clientes = await resposta.json();
 
         const totalPendente = clientes.reduce((soma, item) => {

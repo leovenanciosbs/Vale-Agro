@@ -179,7 +179,7 @@ function renderizarResultadoVazioImportacao(elemento, mensagem) {
 
 async function carregarClientesImportacaoAPrazo() {
     try {
-        const resposta = await fetch('http://localhost:3000/clientes');
+        const resposta = await fetch('https://vale-agro-alpha.vercel.app/clientes');
         const dados = await resposta.json();
         clientesImportacaoAPrazo = Array.isArray(dados) ? dados : [];
     } catch (erro) {
@@ -190,7 +190,7 @@ async function carregarClientesImportacaoAPrazo() {
 
 async function carregarProdutosImportacaoAPrazo() {
     try {
-        const resposta = await fetch('http://localhost:3000/produtos');
+        const resposta = await fetch('https://vale-agro-alpha.vercel.app/produtos');
         const dados = await resposta.json();
         produtosImportacaoAPrazo = Array.isArray(dados) ? dados : [];
     } catch (erro) {
@@ -706,7 +706,7 @@ async function salvarImportacaoAPrazo() {
     }
 
     try {
-        const resposta = await fetch('http://localhost:3000/fiados/importar-a-prazo', {
+        const resposta = await fetch('https://vale-agro-alpha.vercel.app/fiados/importar-a-prazo', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

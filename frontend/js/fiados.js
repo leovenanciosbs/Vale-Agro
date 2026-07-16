@@ -180,10 +180,10 @@ function ordenarResumoFiados(lista) {
 
 async function carregarResumoFiados() {
     try {
-        const respostaResumo = await fetch('http://localhost:3000/fiados/resumo');
+        const respostaResumo = await fetch('https://vale-agro-alpha.vercel.app/fiados/resumo');
         const resumo = await respostaResumo.json();
 
-        const respostaMovimentos = await fetch('http://localhost:3000/fiados');
+        const respostaMovimentos = await fetch('https://vale-agro-alpha.vercel.app/fiados');
         const movimentos = await respostaMovimentos.json();
 
         listaFiadosResumo = resumo.map(item => {

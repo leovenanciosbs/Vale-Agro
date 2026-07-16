@@ -177,7 +177,7 @@ async function carregarDadosClienteComplementares() {
     if (!cliente) return;
 
     try {
-        const resposta = await fetch('http://localhost:3000/clientes');
+        const resposta = await fetch('https://vale-agro-alpha.vercel.app/clientes');
         const clientes = await resposta.json();
         const clienteNormalizado = normalizarTextoBusca(cliente);
         const encontrado = (clientes || []).find(item => {
@@ -423,8 +423,8 @@ async function registrarPagamentoItensFiadoUnificado(dadosPagamento) {
     const saldoAnterior = Number(pagamentoAPrazoAtual?.saldo_anterior || dadosPagamento.totalSelecionado || 0);
     const modoValorLivre = ehModoValorLivre();
     const urlPagamento = modoValorLivre
-        ? 'http://localhost:3000/fiados/pagamento-valor'
-        : 'http://localhost:3000/fiados/pagamento-itens';
+        ? 'https://vale-agro-alpha.vercel.app/fiados/pagamento-valor'
+        : 'https://vale-agro-alpha.vercel.app/fiados/pagamento-itens';
     const corpoPagamento = modoValorLivre
         ? {
             cliente_nome: cliente,

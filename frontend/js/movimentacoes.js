@@ -184,7 +184,7 @@ function verificarPeriodoPersonalizado() {
 }
 
 async function carregarProdutosMovimentacao() {
-    const resposta = await fetch('http://localhost:3000/produtos');
+    const resposta = await fetch('https://vale-agro-alpha.vercel.app/produtos');
     produtosMovimentacao = await resposta.json();
 }
 
@@ -357,7 +357,7 @@ async function salvarMovimentacao() {
         return;
     }
 
-    const resposta = await fetch('http://localhost:3000/movimentacoes-estoque', {
+    const resposta = await fetch('https://vale-agro-alpha.vercel.app/movimentacoes-estoque', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -402,7 +402,7 @@ async function carregarMovimentacoes() {
     if (tipo) params.append('tipo', tipo);
     if (produtoFiltroSelecionado) params.append('produto', produtoFiltroSelecionado);
 
-    const resposta = await fetch(`http://localhost:3000/movimentacoes-estoque?${params.toString()}`);
+    const resposta = await fetch(`https://vale-agro-alpha.vercel.app/movimentacoes-estoque?${params.toString()}`);
     const dados = await resposta.json();
 
     renderizarMovimentacoes(dados);
@@ -486,7 +486,7 @@ async function cancelarMovimentacao(id) {
     if (motivo === null) return;
 
     try {
-        const resposta = await fetch(`http://localhost:3000/movimentacoes-estoque/${id}/cancelar`, {
+        const resposta = await fetch(`https://vale-agro-alpha.vercel.app/movimentacoes-estoque/${id}/cancelar`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -524,7 +524,7 @@ async function buscarMovimentacaoNaTela(id) {
     if (tipo) params.append('tipo', tipo);
     if (produtoFiltroSelecionado) params.append('produto', produtoFiltroSelecionado);
 
-    const resposta = await fetch(`http://localhost:3000/movimentacoes-estoque?${params.toString()}`);
+    const resposta = await fetch(`https://vale-agro-alpha.vercel.app/movimentacoes-estoque?${params.toString()}`);
     const dados = await resposta.json();
 
     return dados.find(item => Number(item.id) === Number(id)) || null;
