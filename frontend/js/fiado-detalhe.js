@@ -382,7 +382,7 @@ async function carregarDetalheCliente() {
 
     document.getElementById('nomeClienteFiado').textContent = clienteSelecionado;
 
-    const resposta = await fetch(`https://vale-agro-alpha.vercel.app/fiados/${encodeURIComponent(clienteSelecionado)}`);
+    const resposta = await fetch(`/fiados/${encodeURIComponent(clienteSelecionado)}`);
     const historico = await resposta.json();
 
     ultimoHistoricoCliente = historico.sort(compararPorDataHoraId);
@@ -835,7 +835,7 @@ async function registrarPagamentoItensFiadoUnificado() {
     if (!confirmar) return;
 
     try {
-        const resposta = await fetch('https://vale-agro-alpha.vercel.app/fiados/pagamento-itens', {
+        const resposta = await fetch('/fiados/pagamento-itens', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -945,7 +945,7 @@ async function registrarPagamentoGeralFiadoUnificado() {
     if (!confirmar) return;
 
     try {
-        const resposta = await fetch('https://vale-agro-alpha.vercel.app/fiados/pagamento', {
+        const resposta = await fetch('/fiados/pagamento', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({

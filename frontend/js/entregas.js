@@ -524,7 +524,7 @@ async function carregarEntregas() {
     if (dataFinal) params.append('dataFinal', dataFinal);
 
     try {
-        const resposta = await fetch(`https://vale-agro-alpha.vercel.app/entregas?${params.toString()}`);
+        const resposta = await fetch(`/entregas?${params.toString()}`);
         entregasLista = await resposta.json();
 
         renderizarEntregas();
@@ -753,7 +753,7 @@ async function atualizarStatusEntrega(id, status) {
     }
 
     try {
-        const resposta = await fetch(`https://vale-agro-alpha.vercel.app/entregas/${id}/status`, {
+        const resposta = await fetch(`/entregas/${id}/status`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -793,7 +793,7 @@ async function transferirEntregaParaPrazo(id) {
     if (!confirmar) return;
 
     try {
-        const resposta = await fetch(`https://vale-agro-alpha.vercel.app/entregas/${id}/transferir-a-prazo`, {
+        const resposta = await fetch(`/entregas/${id}/transferir-a-prazo`, {
             method: 'POST'
         });
 
@@ -871,7 +871,7 @@ async function confirmarRecebimentoEntrega() {
     if (!confirmar) return;
 
     try {
-        const resposta = await fetch(`https://vale-agro-alpha.vercel.app/entregas/${id}/receber`, {
+        const resposta = await fetch(`/entregas/${id}/receber`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'

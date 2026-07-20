@@ -213,7 +213,7 @@ async function carregarEntregaDetalhe() {
     }
 
     try {
-        const resposta = await fetch(`https://vale-agro-alpha.vercel.app/entregas/${encodeURIComponent(id)}`);
+        const resposta = await fetch(`/entregas/${encodeURIComponent(id)}`);
         const dados = await resposta.json();
 
         if (!resposta.ok) {

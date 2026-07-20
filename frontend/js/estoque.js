@@ -168,7 +168,7 @@ function campoTemPalavraComecandoComBusca(valor, termo) {
 
 async function carregarProdutos() {
     try {
-        const resposta = await fetch('https://vale-agro-alpha.vercel.app/produtos');
+        const resposta = await fetch('/produtos');
         listaProdutos = await resposta.json();
 
         atualizarResumoEstoque(listaProdutos);
@@ -277,7 +277,7 @@ async function salvarProduto() {
     }
 
     try {
-        const resposta = await fetch('https://vale-agro-alpha.vercel.app/produtos', {
+        const resposta = await fetch('/produtos', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -377,7 +377,7 @@ async function salvarEdicaoProduto() {
     }
 
     try {
-        const resposta = await fetch(`https://vale-agro-alpha.vercel.app/produtos/${produtoEditandoId}`, {
+        const resposta = await fetch(`/produtos/${produtoEditandoId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -424,7 +424,7 @@ async function removerProduto(id) {
     }
 
     try {
-        const resposta = await fetch(`https://vale-agro-alpha.vercel.app/produtos/${id}`, {
+        const resposta = await fetch(`/produtos/${id}`, {
             method: 'DELETE'
         });
 
