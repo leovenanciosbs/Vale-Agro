@@ -106,6 +106,10 @@ function formatarPrecoComUnidadeVenda(valor, unidade) {
     return `${formatarMoeda(valor)} / ${normalizarUnidadeMedidaVenda(unidade)}`;
 }
 
+function compararIds(a, b) {
+    return String(a ?? '').trim() === String(b ?? '').trim();
+}
+
 function validarQuantidadeProdutoVenda(item, quantidade) {
     if (!item || quantidade <= 0) {
         return false;
@@ -166,16 +170,30 @@ function produtoCombinaComBuscaVenda(produto, termo) {
 }
 
 async function carregarProdutosVenda() {
-    const resposta = await fetch('/produtos');
-    produtosVenda = await resposta.json();
+    try {
+        const resposta = await fetch('/produtos');
+        if (!resposta.ok) {
+            throw new Error('Erro ao carregar lista de produtos.');
+        }
+
+        produtosVenda = await resposta.json();
+    } catch (erro) {
+        produtosVenda = [];
+        mostrarMensagemSistema('Não foi possível carregar os produtos. Verifique se o servidor está rodando.', 'erro');
+    }
 }
 
 async function carregarClientesVenda() {
     try {
         const resposta = await fetch('/clientes');
+        if (!resposta.ok) {
+            throw new Error('Erro ao carregar lista de clientes.');
+        }
+
         clientesVenda = await resposta.json();
     } catch (erro) {
         clientesVenda = [];
+        mostrarMensagemSistema('Não foi possível carregar os clientes. Verifique se o servidor está rodando.', 'erro');
     }
 }
 
@@ -271,7 +289,7 @@ function pesquisarClienteVenda() {
 }
 
 function selecionarClienteVenda(id) {
-    const cliente = clientesVenda.find(item => item.id === id);
+    const cliente = clientesVenda.find(item => compararIds(item.id, id));
 
     if (!cliente) return;
 
@@ -351,7 +369,7 @@ function pesquisarClienteAbatimentoVenda() {
 }
 
 function selecionarClienteAbatimentoVenda(id) {
-    const cliente = clientesVenda.find(item => item.id === id);
+    const cliente = clientesVenda.find(item => compararIds(item.id, id));
 
     if (!cliente) return;
 
@@ -430,7 +448,7 @@ function pesquisarClienteEntregaVenda() {
 }
 
 function selecionarClienteEntregaVenda(id) {
-    const cliente = clientesVenda.find(item => item.id === id);
+    const cliente = clientesVenda.find(item => compararIds(item.id, id));
 
     if (!cliente) return;
 
@@ -581,7 +599,7 @@ function selecionarCidadeEntregaVenda(cidade) {
 }
 
 function adicionarProdutoCarrinho(id) {
-    const produto = produtosVenda.find(item => item.id === id);
+    const produto = produtosVenda.find(item => compararIds(item.id, id));
 
     if (!produto) return;
 
@@ -595,7 +613,7 @@ function adicionarProdutoCarrinho(id) {
         return;
     }
 
-    const existente = carrinho.find(item => item.id === id);
+    const existente = carrinho.find(item => compararIds(item.id, id));
 
     if (existente) {
         existente.quantidade += 1;
@@ -618,7 +636,7 @@ function adicionarProdutoCarrinho(id) {
 }
 
 function alterarQuantidade(id, novaQuantidade) {
-    const item = carrinho.find(produto => produto.id === id);
+    const item = carrinho.find(produto => compararIds(produto.id, id));
 
     if (!item) return;
 
@@ -640,7 +658,7 @@ function alterarQuantidade(id, novaQuantidade) {
 }
 
 function alterarPrecoUnitario(id, novoPreco) {
-    const item = carrinho.find(produto => produto.id === id);
+    const item = carrinho.find(produto => compararIds(produto.id, id));
 
     if (!item) return;
 

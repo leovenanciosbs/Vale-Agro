@@ -3,11 +3,17 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
+const connectionString = process.env.DATABASE_URL || process.env.SUPABASE_DB_URL;
+
+if (!connectionString) {
+  throw new Error('DATABASE_URL or SUPABASE_DB_URL must be defined to connect to Supabase/Postgres.');
+}
+
+const useSsl = String(process.env.DB_SSL || 'true').toLowerCase() === 'true';
+
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
+  connectionString,
+  ssl: useSsl ? { rejectUnauthorized: false } : false
 });
 
 function convertSql(sql) {
